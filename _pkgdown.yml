@@ -1,0 +1,28 @@
+url: https://stefanosbalaskas.github.io/gp3ml/
+
+template:
+  bootstrap: 5
+
+development:
+  mode: auto
+
+home:
+  title: gp3ml
+  description: >
+    Leakage-safe predictive validation and governance for
+    Gazepoint research workflows.
+
+navbar:
+  structure:
+    left: [reference, news]
+    right: [github]
+  components:
+    github:
+      icon: fa-github
+      href: https://github.com/stefanosbalaskas/gp3ml
+      aria-label: GitHub
+
+reference:
+- title: Package
+  contents:
+  - gp3ml-package

@@ -1,0 +1,29 @@
+Package: gp3ml
+Type: Package
+Title: Leakage-Safe Predictive Validation for Gazepoint Research
+Version: 0.0.0.9000
+Authors@R: c(
+ person(
+ given = "Stefanos",
+ family = "Balaskas",
+ email = "s.balaskas@ac.upatras.gr",
+ role = c("aut", "cre"),
+ comment = c(ORCID = "0000-0003-2444-9796")
+ )
+ )
+Description: Provides governance and validation infrastructure for predictive workflows using
+           Gazepoint-derived research data. The package is designed for explicitly labelled,
+           non-sensitive methodological and experimental outcomes. Its planned scope includes role
+           validation, feature provenance, leakage auditing, group-aware resampling contracts,
+           calibration assessment, and reproducibility reporting. It does not provide person
+           identification, health inference, protected-attribute prediction, or direct inference of
+           emotion, stress, mental state, cognition, comprehension, personality, deception, or intent.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Depends: R (>= 4.1.0)
+Suggests: knitr, pkgdown, rmarkdown, testthat (>= 3.0.0)
+Roxygen: list(markdown = TRUE)
+Config/testthat/edition: 3
+Config/roxygen2/version: 8.0.0
+URL: https://stefanosbalaskas.github.io/gp3ml/, https://github.com/stefanosbalaskas/gp3ml
+BugReports: https://github.com/stefanosbalaskas/gp3ml/issues
