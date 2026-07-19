@@ -33,6 +33,18 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.0.9000" id="gp3ml-0009000">gp3ml 0.0.0.9000<a class="anchor" aria-label="anchor" href="#gp3ml-0009000"></a></h2>
 <div class="section level3">
+<h3 id="group-aware-resampling-milestone-0-0-0-9000">Group-aware resampling milestone<a class="anchor" aria-label="anchor" href="#group-aware-resampling-milestone-0-0-0-9000"></a></h3>
+<ul><li>Added <code><a href="../reference/create_gazepoint_group_folds.html">create_gazepoint_group_folds()</a></code> for deterministic repeated group-aware V-fold plans.</li>
+<li>Required an explicit predictive-generalization target and a passing feature-provenance manifest before fold construction.</li>
+<li>Added support for new trials among known participants, new participants, new stimuli, and simultaneous new-participant and new-stimulus generalization.</li>
+<li>Added crossed participant-stimulus assessment blocks with explicit accounting for excluded cross-block rows.</li>
+<li>Added <code><a href="../reference/validate_gazepoint_group_folds.html">validate_gazepoint_group_folds()</a></code> for fold counts, source-row accounting, assessment coverage, partition consistency, provenance, and leakage-audit validation.</li>
+<li>Added <code><a href="../reference/audit_gazepoint_group_folds.html">audit_gazepoint_group_folds()</a></code> for aggregating embedded fold-level leakage audits.</li>
+<li>Added print methods and <code><a href="../reference/write_gazepoint_group_folds_csv.html">write_gazepoint_group_folds_csv()</a></code> for machine-readable summaries and optional fold export.</li>
+<li>Added deterministic synthetic tests for all supported targets, repeated folds, invalid requests, auditing, and CSV output.</li>
+<li>No preprocessing, automated feature selection, tuning, nested resampling, or model fitting was introduced.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="group-aware-holdout-splitting-milestone-0-0-0-9000">Group-aware holdout-splitting milestone<a class="anchor" aria-label="anchor" href="#group-aware-holdout-splitting-milestone-0-0-0-9000"></a></h3>
 <ul><li>Added <code><a href="../reference/split_gazepoint_ml_data.html">split_gazepoint_ml_data()</a></code> for deterministic group-aware analysis and assessment partitions.</li>
 <li>Required an explicit predictive-generalization target and a passing feature-provenance manifest before splitting.</li>

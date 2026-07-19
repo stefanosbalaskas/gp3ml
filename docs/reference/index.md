@@ -44,3 +44,22 @@ Create and validate deterministic grouped holdout partitions.
   : Print group-aware split validation
 - [`write_gazepoint_ml_split_csv()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_ml_split_csv.md)
   : Write group-aware split tables to CSV
+
+## Group-aware resampling
+
+Create, validate, audit, and export deterministic grouped folds.
+
+- [`create_gazepoint_group_folds()`](https://stefanosbalaskas.github.io/gp3ml/reference/create_gazepoint_group_folds.md)
+  : Create deterministic group-aware Gazepoint resampling folds
+- [`validate_gazepoint_group_folds()`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_group_folds.md)
+  : Validate group-aware Gazepoint resampling folds
+- [`audit_gazepoint_group_folds()`](https://stefanosbalaskas.github.io/gp3ml/reference/audit_gazepoint_group_folds.md)
+  : Aggregate leakage audits across group-aware folds
+- [`print(`*`<gazepoint_group_folds>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_group_folds.md)
+  : Print group-aware Gazepoint resampling folds
+- [`print(`*`<gazepoint_group_folds_validation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_group_folds_validation.md)
+  : Print group-aware fold validation
+- [`print(`*`<gazepoint_group_folds_audit>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_group_folds_audit.md)
+  : Print aggregated group-fold leakage auditing
+- [`write_gazepoint_group_folds_csv()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_group_folds_csv.md)
+  : Write group-aware resampling tables to CSV
