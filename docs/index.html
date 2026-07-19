@@ -200,6 +200,34 @@
 <p>The splitter creates one deterministic holdout split. It does not perform preprocessing, automated feature selection, cross-validation, nested resampling, or model fitting.</p>
 </div>
 <div class="section level2">
+<h2 id="group-aware-resampling">Group-aware resampling<a class="anchor" aria-label="anchor" href="#group-aware-resampling"></a>
+</h2>
+<p><code><a href="reference/create_gazepoint_group_folds.html">create_gazepoint_group_folds()</a></code> creates deterministic repeated grouped V-fold plans for the same explicit generalization targets supported by the holdout splitter. A passing feature-provenance manifest is required, and every analysis-assessment pair is checked using the leakage audit.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">folds</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_gazepoint_group_folds.html">create_gazepoint_group_folds</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">split_data</span>,</span>
+<span>  outcome <span class="op">=</span> <span class="st">"outcome"</span>,</span>
+<span>  predictors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"fixation_duration"</span>,</span>
+<span>    <span class="st">"pupil_change"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  feature_manifest <span class="op">=</span> <span class="va">manifest</span>,</span>
+<span>  generalization_target <span class="op">=</span> <span class="st">"new_participants"</span>,</span>
+<span>  participant_id <span class="op">=</span> <span class="st">"participant_id"</span>,</span>
+<span>  trial_id <span class="op">=</span> <span class="st">"trial_id"</span>,</span>
+<span>  v <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  repeats <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  seed <span class="op">=</span> <span class="fl">17</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">folds</span></span>
+<span><span class="va">folds</span><span class="op">$</span><span class="va">validation</span></span>
+<span><span class="va">folds</span><span class="op">$</span><span class="va">audit</span></span></code></pre></div>
+<p>Supported targets are new trials among known participants, new participants, new stimuli, and simultaneous new-participant and new-stimulus generalization. For simultaneous participant and stimulus generalization, <code>v</code> may contain separate participant and stimulus fold counts. Crossed assessment blocks preserve strict separation in both dimensions, while cross-block rows are explicitly assigned to the excluded partition.</p>
+<p><code><a href="reference/validate_gazepoint_group_folds.html">validate_gazepoint_group_folds()</a></code> checks fold counts, source-row accounting, assessment coverage, materialized partitions, feature provenance, and embedded leakage audits. <code><a href="reference/audit_gazepoint_group_folds.html">audit_gazepoint_group_folds()</a></code> aggregates the fold-level audits. Assignments, summaries, validation tables, audit tables, and optionally materialized partitions can be exported using <code><a href="reference/write_gazepoint_group_folds_csv.html">write_gazepoint_group_folds_csv()</a></code>.</p>
+<p>The fold planner does not perform preprocessing, automated feature selection, tuning, nested resampling, or model fitting.</p>
+</div>
+<div class="section level2">
 <h2 id="prohibited-uses">Prohibited uses<a class="anchor" aria-label="anchor" href="#prohibited-uses"></a>
 </h2>
 <p>The package does not support person identification, health inference, protected-attribute prediction, or direct inference of emotion, stress, mental state, cognition, comprehension, personality, deception, or intent.</p>
@@ -212,8 +240,8 @@
 <div class="section level2">
 <h2 id="development-status">Development status<a class="anchor" aria-label="anchor" href="#development-status"></a>
 </h2>
-<p>Version <code>0.0.0.9000</code> includes structured leakage auditing, feature-provenance manifests, deterministic group-aware holdout splitting, validation diagnostics, and machine-readable CSV export.</p>
-<p>No model-training interface, automated feature selection, cross-validation, nested resampling, or preprocessing engine has been implemented.</p>
+<p>Version <code>0.0.0.9000</code> includes structured leakage auditing, feature-provenance manifests, deterministic group-aware holdout splitting, repeated grouped resampling plans, fold validation, aggregated leakage auditing, and machine-readable CSV export.</p>
+<p>No model-training interface, automated feature selection, tuning, nested resampling, or preprocessing engine has been implemented.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">

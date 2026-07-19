@@ -201,6 +201,58 @@ The splitter creates one deterministic holdout split. It does not
 perform preprocessing, automated feature selection, cross-validation,
 nested resampling, or model fitting.
 
+## Group-aware resampling
+
+[`create_gazepoint_group_folds()`](https://stefanosbalaskas.github.io/gp3ml/reference/create_gazepoint_group_folds.md)
+creates deterministic repeated grouped V-fold plans for the same
+explicit generalization targets supported by the holdout splitter. A
+passing feature-provenance manifest is required, and every
+analysis-assessment pair is checked using the leakage audit.
+
+``` r
+
+folds <- create_gazepoint_group_folds(
+  data = split_data,
+  outcome = "outcome",
+  predictors = c(
+    "fixation_duration",
+    "pupil_change"
+  ),
+  feature_manifest = manifest,
+  generalization_target = "new_participants",
+  participant_id = "participant_id",
+  trial_id = "trial_id",
+  v = 4,
+  repeats = 2,
+  seed = 17
+)
+
+folds
+folds$validation
+folds$audit
+```
+
+Supported targets are new trials among known participants, new
+participants, new stimuli, and simultaneous new-participant and
+new-stimulus generalization. For simultaneous participant and stimulus
+generalization, `v` may contain separate participant and stimulus fold
+counts. Crossed assessment blocks preserve strict separation in both
+dimensions, while cross-block rows are explicitly assigned to the
+excluded partition.
+
+[`validate_gazepoint_group_folds()`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_group_folds.md)
+checks fold counts, source-row accounting, assessment coverage,
+materialized partitions, feature provenance, and embedded leakage
+audits.
+[`audit_gazepoint_group_folds()`](https://stefanosbalaskas.github.io/gp3ml/reference/audit_gazepoint_group_folds.md)
+aggregates the fold-level audits. Assignments, summaries, validation
+tables, audit tables, and optionally materialized partitions can be
+exported using
+[`write_gazepoint_group_folds_csv()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_group_folds_csv.md).
+
+The fold planner does not perform preprocessing, automated feature
+selection, tuning, nested resampling, or model fitting.
+
 ## Prohibited uses
 
 The package does not support person identification, health inference,
@@ -217,8 +269,8 @@ See:
 
 Version `0.0.0.9000` includes structured leakage auditing,
 feature-provenance manifests, deterministic group-aware holdout
-splitting, validation diagnostics, and machine-readable CSV export.
+splitting, repeated grouped resampling plans, fold validation,
+aggregated leakage auditing, and machine-readable CSV export.
 
-No model-training interface, automated feature selection,
-cross-validation, nested resampling, or preprocessing engine has been
-implemented.
+No model-training interface, automated feature selection, tuning, nested
+resampling, or preprocessing engine has been implemented.

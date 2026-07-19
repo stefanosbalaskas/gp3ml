@@ -50,3 +50,14 @@ reference:
       - print.gazepoint_ml_split
       - print.gazepoint_ml_split_validation
       - write_gazepoint_ml_split_csv
+
+  - title: Group-aware resampling
+    desc: Create, validate, audit, and export deterministic grouped folds.
+    contents:
+      - create_gazepoint_group_folds
+      - validate_gazepoint_group_folds
+      - audit_gazepoint_group_folds
+      - print.gazepoint_group_folds
+      - print.gazepoint_group_folds_validation
+      - print.gazepoint_group_folds_audit
+      - write_gazepoint_group_folds_csv

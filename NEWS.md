@@ -1,5 +1,28 @@
 # gp3ml 0.0.0.9000
 
+## Group-aware resampling milestone
+
+- Added `create_gazepoint_group_folds()` for deterministic
+  repeated group-aware V-fold plans.
+- Required an explicit predictive-generalization target and a
+  passing feature-provenance manifest before fold construction.
+- Added support for new trials among known participants, new
+  participants, new stimuli, and simultaneous new-participant
+  and new-stimulus generalization.
+- Added crossed participant-stimulus assessment blocks with
+  explicit accounting for excluded cross-block rows.
+- Added `validate_gazepoint_group_folds()` for fold counts,
+  source-row accounting, assessment coverage, partition
+  consistency, provenance, and leakage-audit validation.
+- Added `audit_gazepoint_group_folds()` for aggregating embedded
+  fold-level leakage audits.
+- Added print methods and `write_gazepoint_group_folds_csv()`
+  for machine-readable summaries and optional fold export.
+- Added deterministic synthetic tests for all supported targets,
+  repeated folds, invalid requests, auditing, and CSV output.
+- No preprocessing, automated feature selection, tuning, nested
+  resampling, or model fitting was introduced.
+
 ## Group-aware holdout-splitting milestone
 
 - Added `split_gazepoint_ml_data()` for deterministic
