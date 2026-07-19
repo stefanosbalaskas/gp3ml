@@ -135,6 +135,74 @@ The manifest records declared provenance. It does not independently
 verify that preprocessing was executed within the stated partition
 or resampling scope.
 
+## Group-aware holdout splitting
+
+`split_gazepoint_ml_data()` creates deterministic analysis and
+assessment partitions that preserve the grouping unit implied by
+an explicit predictive-generalization target. A passing
+feature-provenance manifest is required before splitting, and the
+resulting partitions are checked using the leakage audit.
+
+```r
+split_data <- expand.grid(
+  participant_id = sprintf("P%02d", 1:8),
+  trial_id = sprintf("T%02d", 1:4),
+  KEEP.OUT.ATTRS = FALSE,
+  stringsAsFactors = FALSE
+)
+
+split_data$outcome <- as.integer(
+  seq_len(nrow(split_data)) %% 2L
+)
+
+split_data$fixation_duration <-
+  200 + seq_len(nrow(split_data))
+
+split_data$pupil_change <-
+  seq_len(nrow(split_data)) / 100
+
+split <- split_gazepoint_ml_data(
+  data = split_data,
+  outcome = "outcome",
+  predictors = c(
+    "fixation_duration",
+    "pupil_change"
+  ),
+  feature_manifest = manifest,
+  generalization_target = "new_participants",
+  participant_id = "participant_id",
+  trial_id = "trial_id",
+  assessment_prop = 0.25,
+  seed = 17
+)
+
+split
+split$validation
+```
+
+Supported generalization targets are:
+
+- `new_trials_known_participants`;
+- `new_participants`;
+- `new_stimuli`; and
+- `new_participants_and_new_stimuli`.
+
+For simultaneous participant and stimulus generalization, rows
+belonging to only one held-out dimension are placed in the
+`excluded` partition. This preserves strict separation between
+the analysis and assessment participant–stimulus blocks while
+retaining complete source-row accounting.
+
+`validate_gazepoint_ml_split()` checks partition structure,
+source-row accounting, provenance status, and the embedded leakage
+audit. Split assignments, summaries, validation checks, and
+materialized partitions can be exported using
+`write_gazepoint_ml_split_csv()`.
+
+The splitter creates one deterministic holdout split. It does not
+perform preprocessing, automated feature selection,
+cross-validation, nested resampling, or model fitting.
+
 ## Prohibited uses
 
 The package does not support person identification, health inference,
@@ -149,9 +217,11 @@ See:
 
 ## Development status
 
-Version `0.0.0.9000` includes structured leakage auditing and
-feature-provenance manifests for intended predictive variables,
-together with machine-readable CSV export.
+Version `0.0.0.9000` includes structured leakage auditing,
+feature-provenance manifests, deterministic group-aware holdout
+splitting, validation diagnostics, and machine-readable CSV
+export.
 
-No model-training interface, automated feature selection, grouped
-splitting, or resampling engine has been implemented.
+No model-training interface, automated feature selection,
+cross-validation, nested resampling, or preprocessing engine has
+been implemented.

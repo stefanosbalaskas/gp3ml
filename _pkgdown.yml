@@ -41,3 +41,12 @@ reference:
       - validate_gazepoint_feature_manifest
       - print.gazepoint_feature_manifest_validation
       - write_gazepoint_feature_manifest_csv
+
+  - title: Group-aware splitting
+    desc: Create and validate deterministic grouped holdout partitions.
+    contents:
+      - split_gazepoint_ml_data
+      - validate_gazepoint_ml_split
+      - print.gazepoint_ml_split
+      - print.gazepoint_ml_split_validation
+      - write_gazepoint_ml_split_csv

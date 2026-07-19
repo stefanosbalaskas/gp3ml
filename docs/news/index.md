@@ -2,6 +2,32 @@
 
 ## gp3ml 0.0.0.9000
 
+### Group-aware holdout-splitting milestone
+
+- Added
+  [`split_gazepoint_ml_data()`](https://stefanosbalaskas.github.io/gp3ml/reference/split_gazepoint_ml_data.md)
+  for deterministic group-aware analysis and assessment partitions.
+- Required an explicit predictive-generalization target and a passing
+  feature-provenance manifest before splitting.
+- Added support for new trials among known participants, new
+  participants, new stimuli, and simultaneous new-participant and
+  new-stimulus generalization.
+- Preserved participant-trial, participant, or stimulus groups according
+  to the declared target.
+- Added strict participant–stimulus block separation with explicit
+  accounting for excluded cross-block rows.
+- Added
+  [`validate_gazepoint_ml_split()`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_ml_split.md)
+  with source-row, partition-structure, provenance, and leakage-audit
+  checks.
+- Added print methods and
+  [`write_gazepoint_ml_split_csv()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_ml_split_csv.md)
+  for machine-readable export.
+- Added deterministic synthetic tests covering all supported
+  generalization targets and intentionally invalid requests.
+- No preprocessing, automated feature selection, resampling, or model
+  fitting was introduced.
+
 ### Feature-provenance milestone
 
 - Added

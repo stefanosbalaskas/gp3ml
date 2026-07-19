@@ -29,3 +29,18 @@ Record and validate intended predictor provenance.
   : Print feature-manifest validation
 - [`write_gazepoint_feature_manifest_csv()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_feature_manifest_csv.md)
   : Write a Gazepoint feature manifest or validation table to CSV
+
+## Group-aware splitting
+
+Create and validate deterministic grouped holdout partitions.
+
+- [`split_gazepoint_ml_data()`](https://stefanosbalaskas.github.io/gp3ml/reference/split_gazepoint_ml_data.md)
+  : Create a deterministic group-aware Gazepoint holdout split
+- [`validate_gazepoint_ml_split()`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_ml_split.md)
+  : Validate a group-aware Gazepoint holdout split
+- [`print(`*`<gazepoint_ml_split>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_ml_split.md)
+  : Print a group-aware Gazepoint split
+- [`print(`*`<gazepoint_ml_split_validation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_ml_split_validation.md)
+  : Print group-aware split validation
+- [`write_gazepoint_ml_split_csv()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_ml_split_csv.md)
+  : Write group-aware split tables to CSV
