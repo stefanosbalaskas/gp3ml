@@ -69,8 +69,53 @@
 <div class="section level2">
 <h2 id="scientific-safeguards">Scientific safeguards<a class="anchor" aria-label="anchor" href="#scientific-safeguards"></a>
 </h2>
-<p>Participant leakage is prevented by default. Stimulus grouping is required when the intended target is generalization to unseen stimuli. Preprocessing and feature selection must be estimated inside the relevant resampling folds.</p>
+<p>Participant overlap is treated as a failure when the declared target requires generalization to new participants. Stimulus overlap is treated as a failure when the declared target requires generalization to unseen stimuli. Preprocessing and feature selection must be estimated inside the relevant resampling folds.</p>
 <p>All package examples and tests will use deterministic synthetic data.</p>
+</div>
+<div class="section level2">
+<h2 id="leakage-audit-workflow">Leakage-audit workflow<a class="anchor" aria-label="anchor" href="#leakage-audit-workflow"></a>
+</h2>
+<p><code><a href="reference/audit_gazepoint_ml_leakage.html">audit_gazepoint_ml_leakage()</a></code> audits already-defined analysis and assessment partitions before predictive evaluation. It checks:</p>
+<ul>
+<li>compatibility with the declared generalization target;</li>
+<li>participant, participant-trial, and stimulus overlap;</li>
+<li>outcome and declared identifiers included as predictors;</li>
+<li>declared target-derived and post-outcome predictors;</li>
+<li>exact row overlap and repeated predictor profiles;</li>
+<li>duplicated rows and missing grouping identifiers; and</li>
+<li>identifier-like predictor names requiring manual review.</li>
+</ul>
+<p>The returned audit has an overall <code>pass</code>, <code>review</code>, or <code>fail</code> status, a complete check table, a non-passing issue table, and partition summaries. Audit tables can be exported using <code><a href="reference/write_gazepoint_ml_leakage_audit_csv.html">write_gazepoint_ml_leakage_audit_csv()</a></code>.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">analysis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  participant_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P01"</span>, <span class="st">"P02"</span><span class="op">)</span>,</span>
+<span>  trial_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T01"</span>, <span class="st">"T02"</span><span class="op">)</span>,</span>
+<span>  stimulus_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S01"</span>, <span class="st">"S02"</span><span class="op">)</span>,</span>
+<span>  outcome <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  fixation_duration <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">210</span>, <span class="fl">245</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">assessment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  participant_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P03"</span>, <span class="st">"P04"</span><span class="op">)</span>,</span>
+<span>  trial_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T03"</span>, <span class="st">"T04"</span><span class="op">)</span>,</span>
+<span>  stimulus_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"S03"</span>, <span class="st">"S04"</span><span class="op">)</span>,</span>
+<span>  outcome <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>  fixation_duration <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">275</span>, <span class="fl">230</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">audit</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/audit_gazepoint_ml_leakage.html">audit_gazepoint_ml_leakage</a></span><span class="op">(</span></span>
+<span>  analysis <span class="op">=</span> <span class="va">analysis</span>,</span>
+<span>  assessment <span class="op">=</span> <span class="va">assessment</span>,</span>
+<span>  outcome <span class="op">=</span> <span class="st">"outcome"</span>,</span>
+<span>  predictors <span class="op">=</span> <span class="st">"fixation_duration"</span>,</span>
+<span>  participant_id <span class="op">=</span> <span class="st">"participant_id"</span>,</span>
+<span>  trial_id <span class="op">=</span> <span class="st">"trial_id"</span>,</span>
+<span>  stimulus_id <span class="op">=</span> <span class="st">"stimulus_id"</span>,</span>
+<span>  generalization_target <span class="op">=</span> <span class="st">"new_participants"</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">audit</span></span></code></pre></div>
+<p>The audit identifies structural risks visible in the supplied partitions and declared variable roles. It does not establish that preprocessing or feature selection was estimated within resampling folds; those safeguards require separate provenance and resampling infrastructure.</p>
 </div>
 <div class="section level2">
 <h2 id="prohibited-uses">Prohibited uses<a class="anchor" aria-label="anchor" href="#prohibited-uses"></a>
@@ -85,7 +130,8 @@
 <div class="section level2">
 <h2 id="development-status">Development status<a class="anchor" aria-label="anchor" href="#development-status"></a>
 </h2>
-<p>Version <code>0.0.0.9000</code> is the initial governance-only bootstrap. No model-training interface has been implemented.</p>
+<p>Version <code>0.0.0.9000</code> now includes the first governance feature: structured leakage auditing for already-defined analysis and assessment partitions, together with machine-readable CSV export.</p>
+<p>No model-training interface, automated feature selection, or resampling engine has been implemented.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
