@@ -16,3 +16,16 @@ Audit partition leakage and export structured results.
   : Print a Gazepoint ML leakage audit
 - [`write_gazepoint_ml_leakage_audit_csv()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_ml_leakage_audit_csv.md)
   : Write a Gazepoint ML leakage-audit table to CSV
+
+## Feature provenance
+
+Record and validate intended predictor provenance.
+
+- [`create_gazepoint_feature_manifest()`](https://stefanosbalaskas.github.io/gp3ml/reference/create_gazepoint_feature_manifest.md)
+  : Create a Gazepoint feature-provenance manifest
+- [`validate_gazepoint_feature_manifest()`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_feature_manifest.md)
+  : Validate a Gazepoint feature-provenance manifest
+- [`print(`*`<gazepoint_feature_manifest_validation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_feature_manifest_validation.md)
+  : Print feature-manifest validation
+- [`write_gazepoint_feature_manifest_csv()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_feature_manifest_csv.md)
+  : Write a Gazepoint feature manifest or validation table to CSV

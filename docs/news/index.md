@@ -2,6 +2,25 @@
 
 ## gp3ml 0.0.0.9000
 
+### Feature-provenance milestone
+
+- Added
+  [`create_gazepoint_feature_manifest()`](https://stefanosbalaskas.github.io/gp3ml/reference/create_gazepoint_feature_manifest.md)
+  for recording predictor origins, transformations, availability stages,
+  roles, and preprocessing scopes.
+- Added
+  [`validate_gazepoint_feature_manifest()`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_feature_manifest.md)
+  with structured `pass`, `review`, and `fail` results.
+- Added checks for outcome-derived, post-outcome, identifier, and
+  prediction-time-unavailable features.
+- Added checks for incomplete provenance and preprocessing incompatible
+  with declared fold-local requirements.
+- Added
+  [`write_gazepoint_feature_manifest_csv()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_feature_manifest_csv.md)
+  for exporting manifests and validation tables.
+- Added deterministic synthetic tests for safe, incomplete, and
+  intentionally unsafe manifests.
+
 ### Leakage-audit milestone
 
 - Added

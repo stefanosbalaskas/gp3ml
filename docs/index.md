@@ -87,6 +87,50 @@ and declared variable roles. It does not establish that preprocessing or
 feature selection was estimated within resampling folds; those
 safeguards require separate provenance and resampling infrastructure.
 
+## Feature-provenance workflow
+
+[`create_gazepoint_feature_manifest()`](https://stefanosbalaskas.github.io/gp3ml/reference/create_gazepoint_feature_manifest.md)
+records the declared origin, transformation, availability, role, and
+preprocessing scope of each intended predictor.
+
+[`validate_gazepoint_feature_manifest()`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_feature_manifest.md)
+checks whether the manifest contains sufficient provenance metadata and
+identifies predictors declared as outcome-derived, post-outcome,
+unavailable at prediction time, identifiers, or incompatible with
+required fold-local preprocessing.
+
+``` r
+
+manifest <- create_gazepoint_feature_manifest(
+  features = c("fixation_duration", "pupil_change"),
+  scientific_source = c(
+    "Gazepoint fixation export",
+    "Gazepoint all-gaze export"
+  ),
+  source_table = c("fixations", "all_gaze"),
+  transformation = c(
+    "Trial-level mean",
+    "Baseline-adjusted change"
+  ),
+  availability_stage = "during_exposure",
+  prediction_time_available = TRUE,
+  preprocessing_scope = c("none", "resampling_fold"),
+  fold_local_required = c(FALSE, TRUE)
+)
+
+validation <- validate_gazepoint_feature_manifest(manifest)
+validation
+```
+
+Validation returns an overall `pass`, `review`, or `fail` status,
+together with complete check and issue tables. The manifest or its
+validation tables can be exported using
+[`write_gazepoint_feature_manifest_csv()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_feature_manifest_csv.md).
+
+The manifest records declared provenance. It does not independently
+verify that preprocessing was executed within the stated partition or
+resampling scope.
+
 ## Prohibited uses
 
 The package does not support person identification, health inference,
@@ -101,9 +145,9 @@ See:
 
 ## Development status
 
-Version `0.0.0.9000` now includes the first governance feature:
-structured leakage auditing for already-defined analysis and assessment
-partitions, together with machine-readable CSV export.
+Version `0.0.0.9000` includes structured leakage auditing and
+feature-provenance manifests for intended predictive variables, together
+with machine-readable CSV export.
 
-No model-training interface, automated feature selection, or resampling
-engine has been implemented.
+No model-training interface, automated feature selection, grouped
+splitting, or resampling engine has been implemented.

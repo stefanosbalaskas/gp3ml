@@ -118,6 +118,34 @@
 <p>The audit identifies structural risks visible in the supplied partitions and declared variable roles. It does not establish that preprocessing or feature selection was estimated within resampling folds; those safeguards require separate provenance and resampling infrastructure.</p>
 </div>
 <div class="section level2">
+<h2 id="feature-provenance-workflow">Feature-provenance workflow<a class="anchor" aria-label="anchor" href="#feature-provenance-workflow"></a>
+</h2>
+<p><code><a href="reference/create_gazepoint_feature_manifest.html">create_gazepoint_feature_manifest()</a></code> records the declared origin, transformation, availability, role, and preprocessing scope of each intended predictor.</p>
+<p><code><a href="reference/validate_gazepoint_feature_manifest.html">validate_gazepoint_feature_manifest()</a></code> checks whether the manifest contains sufficient provenance metadata and identifies predictors declared as outcome-derived, post-outcome, unavailable at prediction time, identifiers, or incompatible with required fold-local preprocessing.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">manifest</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_gazepoint_feature_manifest.html">create_gazepoint_feature_manifest</a></span><span class="op">(</span></span>
+<span>  features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixation_duration"</span>, <span class="st">"pupil_change"</span><span class="op">)</span>,</span>
+<span>  scientific_source <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Gazepoint fixation export"</span>,</span>
+<span>    <span class="st">"Gazepoint all-gaze export"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  source_table <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixations"</span>, <span class="st">"all_gaze"</span><span class="op">)</span>,</span>
+<span>  transformation <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"Trial-level mean"</span>,</span>
+<span>    <span class="st">"Baseline-adjusted change"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  availability_stage <span class="op">=</span> <span class="st">"during_exposure"</span>,</span>
+<span>  prediction_time_available <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  preprocessing_scope <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"resampling_fold"</span><span class="op">)</span>,</span>
+<span>  fold_local_required <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">validation</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/validate_gazepoint_feature_manifest.html">validate_gazepoint_feature_manifest</a></span><span class="op">(</span><span class="va">manifest</span><span class="op">)</span></span>
+<span><span class="va">validation</span></span></code></pre></div>
+<p>Validation returns an overall <code>pass</code>, <code>review</code>, or <code>fail</code> status, together with complete check and issue tables. The manifest or its validation tables can be exported using <code><a href="reference/write_gazepoint_feature_manifest_csv.html">write_gazepoint_feature_manifest_csv()</a></code>.</p>
+<p>The manifest records declared provenance. It does not independently verify that preprocessing was executed within the stated partition or resampling scope.</p>
+</div>
+<div class="section level2">
 <h2 id="prohibited-uses">Prohibited uses<a class="anchor" aria-label="anchor" href="#prohibited-uses"></a>
 </h2>
 <p>The package does not support person identification, health inference, protected-attribute prediction, or direct inference of emotion, stress, mental state, cognition, comprehension, personality, deception, or intent.</p>
@@ -130,8 +158,8 @@
 <div class="section level2">
 <h2 id="development-status">Development status<a class="anchor" aria-label="anchor" href="#development-status"></a>
 </h2>
-<p>Version <code>0.0.0.9000</code> now includes the first governance feature: structured leakage auditing for already-defined analysis and assessment partitions, together with machine-readable CSV export.</p>
-<p>No model-training interface, automated feature selection, or resampling engine has been implemented.</p>
+<p>Version <code>0.0.0.9000</code> includes structured leakage auditing and feature-provenance manifests for intended predictive variables, together with machine-readable CSV export.</p>
+<p>No model-training interface, automated feature selection, grouped splitting, or resampling engine has been implemented.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
