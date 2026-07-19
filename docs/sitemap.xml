@@ -10,7 +10,12 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/index.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_feature_manifest_validation.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_ml_leakage_audit.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_ml_split.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_ml_split_validation.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/split_gazepoint_ml_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_feature_manifest.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_ml_split.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_feature_manifest_csv.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_ml_leakage_audit_csv.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_ml_split_csv.html</loc></url>
 </urlset>

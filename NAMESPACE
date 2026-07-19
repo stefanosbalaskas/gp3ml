@@ -2,8 +2,13 @@
 
 S3method(print,gazepoint_feature_manifest_validation)
 S3method(print,gazepoint_ml_leakage_audit)
+S3method(print,gazepoint_ml_split)
+S3method(print,gazepoint_ml_split_validation)
 export(audit_gazepoint_ml_leakage)
 export(create_gazepoint_feature_manifest)
+export(split_gazepoint_ml_data)
 export(validate_gazepoint_feature_manifest)
+export(validate_gazepoint_ml_split)
 export(write_gazepoint_feature_manifest_csv)
 export(write_gazepoint_ml_leakage_audit_csv)
+export(write_gazepoint_ml_split_csv)

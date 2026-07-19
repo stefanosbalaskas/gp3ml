@@ -33,6 +33,18 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.0.9000" id="gp3ml-0009000">gp3ml 0.0.0.9000<a class="anchor" aria-label="anchor" href="#gp3ml-0009000"></a></h2>
 <div class="section level3">
+<h3 id="group-aware-holdout-splitting-milestone-0-0-0-9000">Group-aware holdout-splitting milestone<a class="anchor" aria-label="anchor" href="#group-aware-holdout-splitting-milestone-0-0-0-9000"></a></h3>
+<ul><li>Added <code><a href="../reference/split_gazepoint_ml_data.html">split_gazepoint_ml_data()</a></code> for deterministic group-aware analysis and assessment partitions.</li>
+<li>Required an explicit predictive-generalization target and a passing feature-provenance manifest before splitting.</li>
+<li>Added support for new trials among known participants, new participants, new stimuli, and simultaneous new-participant and new-stimulus generalization.</li>
+<li>Preserved participant-trial, participant, or stimulus groups according to the declared target.</li>
+<li>Added strict participant–stimulus block separation with explicit accounting for excluded cross-block rows.</li>
+<li>Added <code><a href="../reference/validate_gazepoint_ml_split.html">validate_gazepoint_ml_split()</a></code> with source-row, partition-structure, provenance, and leakage-audit checks.</li>
+<li>Added print methods and <code><a href="../reference/write_gazepoint_ml_split_csv.html">write_gazepoint_ml_split_csv()</a></code> for machine-readable export.</li>
+<li>Added deterministic synthetic tests covering all supported generalization targets and intentionally invalid requests.</li>
+<li>No preprocessing, automated feature selection, resampling, or model fitting was introduced.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="feature-provenance-milestone-0-0-0-9000">Feature-provenance milestone<a class="anchor" aria-label="anchor" href="#feature-provenance-milestone-0-0-0-9000"></a></h3>
 <ul><li>Added <code><a href="../reference/create_gazepoint_feature_manifest.html">create_gazepoint_feature_manifest()</a></code> for recording predictor origins, transformations, availability stages, roles, and preprocessing scopes.</li>
 <li>Added <code><a href="../reference/validate_gazepoint_feature_manifest.html">validate_gazepoint_feature_manifest()</a></code> with structured <code>pass</code>, <code>review</code>, and <code>fail</code> results.</li>

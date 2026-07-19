@@ -146,6 +146,60 @@
 <p>The manifest records declared provenance. It does not independently verify that preprocessing was executed within the stated partition or resampling scope.</p>
 </div>
 <div class="section level2">
+<h2 id="group-aware-holdout-splitting">Group-aware holdout splitting<a class="anchor" aria-label="anchor" href="#group-aware-holdout-splitting"></a>
+</h2>
+<p><code><a href="reference/split_gazepoint_ml_data.html">split_gazepoint_ml_data()</a></code> creates deterministic analysis and assessment partitions that preserve the grouping unit implied by an explicit predictive-generalization target. A passing feature-provenance manifest is required before splitting, and the resulting partitions are checked using the leakage audit.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">split_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span></span>
+<span>  participant_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"P%02d"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>,</span>
+<span>  trial_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"T%02d"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>,</span>
+<span>  KEEP.OUT.ATTRS <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  stringsAsFactors <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">split_data</span><span class="op">$</span><span class="va">outcome</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">split_data</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">2L</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">split_data</span><span class="op">$</span><span class="va">fixation_duration</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fl">200</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">split_data</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">split_data</span><span class="op">$</span><span class="va">pupil_change</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">split_data</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fl">100</span></span>
+<span></span>
+<span><span class="va">split</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/split_gazepoint_ml_data.html">split_gazepoint_ml_data</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">split_data</span>,</span>
+<span>  outcome <span class="op">=</span> <span class="st">"outcome"</span>,</span>
+<span>  predictors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"fixation_duration"</span>,</span>
+<span>    <span class="st">"pupil_change"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  feature_manifest <span class="op">=</span> <span class="va">manifest</span>,</span>
+<span>  generalization_target <span class="op">=</span> <span class="st">"new_participants"</span>,</span>
+<span>  participant_id <span class="op">=</span> <span class="st">"participant_id"</span>,</span>
+<span>  trial_id <span class="op">=</span> <span class="st">"trial_id"</span>,</span>
+<span>  assessment_prop <span class="op">=</span> <span class="fl">0.25</span>,</span>
+<span>  seed <span class="op">=</span> <span class="fl">17</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">split</span></span>
+<span><span class="va">split</span><span class="op">$</span><span class="va">validation</span></span></code></pre></div>
+<p>Supported generalization targets are:</p>
+<ul>
+<li>
+<code>new_trials_known_participants</code>;</li>
+<li>
+<code>new_participants</code>;</li>
+<li>
+<code>new_stimuli</code>; and</li>
+<li>
+<code>new_participants_and_new_stimuli</code>.</li>
+</ul>
+<p>For simultaneous participant and stimulus generalization, rows belonging to only one held-out dimension are placed in the <code>excluded</code> partition. This preserves strict separation between the analysis and assessment participant–stimulus blocks while retaining complete source-row accounting.</p>
+<p><code><a href="reference/validate_gazepoint_ml_split.html">validate_gazepoint_ml_split()</a></code> checks partition structure, source-row accounting, provenance status, and the embedded leakage audit. Split assignments, summaries, validation checks, and materialized partitions can be exported using <code><a href="reference/write_gazepoint_ml_split_csv.html">write_gazepoint_ml_split_csv()</a></code>.</p>
+<p>The splitter creates one deterministic holdout split. It does not perform preprocessing, automated feature selection, cross-validation, nested resampling, or model fitting.</p>
+</div>
+<div class="section level2">
 <h2 id="prohibited-uses">Prohibited uses<a class="anchor" aria-label="anchor" href="#prohibited-uses"></a>
 </h2>
 <p>The package does not support person identification, health inference, protected-attribute prediction, or direct inference of emotion, stress, mental state, cognition, comprehension, personality, deception, or intent.</p>
@@ -158,8 +212,8 @@
 <div class="section level2">
 <h2 id="development-status">Development status<a class="anchor" aria-label="anchor" href="#development-status"></a>
 </h2>
-<p>Version <code>0.0.0.9000</code> includes structured leakage auditing and feature-provenance manifests for intended predictive variables, together with machine-readable CSV export.</p>
-<p>No model-training interface, automated feature selection, grouped splitting, or resampling engine has been implemented.</p>
+<p>Version <code>0.0.0.9000</code> includes structured leakage auditing, feature-provenance manifests, deterministic group-aware holdout splitting, validation diagnostics, and machine-readable CSV export.</p>
+<p>No model-training interface, automated feature selection, cross-validation, nested resampling, or preprocessing engine has been implemented.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
