@@ -33,3 +33,11 @@ reference:
       - audit_gazepoint_ml_leakage
       - print.gazepoint_ml_leakage_audit
       - write_gazepoint_ml_leakage_audit_csv
+
+  - title: Feature provenance
+    desc: Record and validate intended predictor provenance.
+    contents:
+      - create_gazepoint_feature_manifest
+      - validate_gazepoint_feature_manifest
+      - print.gazepoint_feature_manifest_validation
+      - write_gazepoint_feature_manifest_csv

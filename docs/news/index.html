@@ -33,6 +33,15 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.0.9000" id="gp3ml-0009000">gp3ml 0.0.0.9000<a class="anchor" aria-label="anchor" href="#gp3ml-0009000"></a></h2>
 <div class="section level3">
+<h3 id="feature-provenance-milestone-0-0-0-9000">Feature-provenance milestone<a class="anchor" aria-label="anchor" href="#feature-provenance-milestone-0-0-0-9000"></a></h3>
+<ul><li>Added <code><a href="../reference/create_gazepoint_feature_manifest.html">create_gazepoint_feature_manifest()</a></code> for recording predictor origins, transformations, availability stages, roles, and preprocessing scopes.</li>
+<li>Added <code><a href="../reference/validate_gazepoint_feature_manifest.html">validate_gazepoint_feature_manifest()</a></code> with structured <code>pass</code>, <code>review</code>, and <code>fail</code> results.</li>
+<li>Added checks for outcome-derived, post-outcome, identifier, and prediction-time-unavailable features.</li>
+<li>Added checks for incomplete provenance and preprocessing incompatible with declared fold-local requirements.</li>
+<li>Added <code><a href="../reference/write_gazepoint_feature_manifest_csv.html">write_gazepoint_feature_manifest_csv()</a></code> for exporting manifests and validation tables.</li>
+<li>Added deterministic synthetic tests for safe, incomplete, and intentionally unsafe manifests.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="leakage-audit-milestone-0-0-0-9000">Leakage-audit milestone<a class="anchor" aria-label="anchor" href="#leakage-audit-milestone-0-0-0-9000"></a></h3>
 <ul><li>Added <code><a href="../reference/audit_gazepoint_ml_leakage.html">audit_gazepoint_ml_leakage()</a></code> for structured auditing of already-defined analysis and assessment partitions.</li>
 <li>Added explicit checks for participant, participant-trial, and stimulus compatibility with declared generalization targets.</li>
