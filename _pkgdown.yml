@@ -23,6 +23,13 @@ navbar:
       aria-label: GitHub
 
 reference:
-- title: Package
-  contents:
-  - gp3ml-package
+  - title: Package
+    contents:
+      - gp3ml-package
+
+  - title: Leakage auditing
+    desc: Audit partition leakage and export structured results.
+    contents:
+      - audit_gazepoint_ml_leakage
+      - print.gazepoint_ml_leakage_audit
+      - write_gazepoint_ml_leakage_audit_csv
