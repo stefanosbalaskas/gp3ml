@@ -228,6 +228,28 @@
 <p>The fold planner does not perform preprocessing, automated feature selection, tuning, nested resampling, or model fitting.</p>
 </div>
 <div class="section level2">
+<h2 id="resampling-diagnostics">Resampling diagnostics<a class="anchor" aria-label="anchor" href="#resampling-diagnostics"></a>
+</h2>
+<p><code><a href="reference/diagnose_gazepoint_group_folds.html">diagnose_gazepoint_group_folds()</a></code> evaluates the balance, coverage, outcome representation, and exclusions of an existing grouped resampling plan. Diagnostics remain downstream of fold construction and do not modify assignments or fit models.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fold_diagnostics</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/diagnose_gazepoint_group_folds.html">diagnose_gazepoint_group_folds</a></span><span class="op">(</span><span class="va">folds</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">fold_diagnostics</span></span>
+<span><span class="va">fold_diagnostics</span><span class="op">$</span><span class="va">repeat_metrics</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fold_diagnostics</span><span class="op">$</span><span class="va">outcome_balance</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fold_diagnostics</span><span class="op">$</span><span class="va">assessment_coverage</span><span class="op">)</span></span></code></pre></div>
+<p><code><a href="reference/validate_gazepoint_fold_diagnostics.html">validate_gazepoint_fold_diagnostics()</a></code> reports <code>pass</code>, <code>review</code>, or <code>fail</code> findings for fold counts, partition accounting, non-empty partitions, assessment coverage, fold-size imbalance, group presence, outcome-level presence, embedded leakage audits, and source-plan status.</p>
+<p>For crossed new-participant and new-stimulus designs, <code>exclusion_summary</code> reports the rows intentionally excluded because they belong to only one held dimension rather than the strict crossed assessment block.</p>
+<p>All diagnostic tables can be exported for review and reporting:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/write_gazepoint_fold_diagnostics_csv.html">write_gazepoint_fold_diagnostics_csv</a></span><span class="op">(</span></span>
+<span>  <span class="va">fold_diagnostics</span>,</span>
+<span>  directory <span class="op">=</span> <span class="st">"resampling-diagnostics"</span>,</span>
+<span>  prefix <span class="op">=</span> <span class="st">"gazepoint_folds"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Diagnostics do not perform preprocessing, automated feature selection, hyperparameter tuning, nested resampling, or model fitting.</p>
+</div>
+<div class="section level2">
 <h2 id="prohibited-uses">Prohibited uses<a class="anchor" aria-label="anchor" href="#prohibited-uses"></a>
 </h2>
 <p>The package does not support person identification, health inference, protected-attribute prediction, or direct inference of emotion, stress, mental state, cognition, comprehension, personality, deception, or intent.</p>

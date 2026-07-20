@@ -33,6 +33,20 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.0.9000" id="gp3ml-0009000">gp3ml 0.0.0.9000<a class="anchor" aria-label="anchor" href="#gp3ml-0009000"></a></h2>
 <div class="section level3">
+<h3 id="resampling-diagnostics-milestone-0-0-0-9000">Resampling diagnostics milestone<a class="anchor" aria-label="anchor" href="#resampling-diagnostics-milestone-0-0-0-9000"></a></h3>
+<ul><li>Added <code><a href="../reference/diagnose_gazepoint_group_folds.html">diagnose_gazepoint_group_folds()</a></code> for structured diagnostics of grouped resampling plans.</li>
+<li>Added fold-level and repeat-level summaries of analysis, assessment, and excluded row counts.</li>
+<li>Added assessment fold-size imbalance ratios with configurable review and failure thresholds.</li>
+<li>Added group-balance summaries for participant, participant-trial, and stimulus units.</li>
+<li>Added assessment-coverage diagnostics verifying that each source row is assessed exactly once per repeat.</li>
+<li>Added categorical outcome-level representation and continuous numeric outcome summaries by fold and partition.</li>
+<li>Added explicit exclusion summaries for crossed participant-by-stimulus resampling designs.</li>
+<li>Added <code><a href="../reference/validate_gazepoint_fold_diagnostics.html">validate_gazepoint_fold_diagnostics()</a></code> with structured <code>pass</code>, <code>review</code>, and <code>fail</code> findings.</li>
+<li>Added print methods and <code><a href="../reference/write_gazepoint_fold_diagnostics_csv.html">write_gazepoint_fold_diagnostics_csv()</a></code> for eight machine-readable diagnostic tables.</li>
+<li>Added deterministic regression coverage across all four supported generalization targets.</li>
+<li>This milestone does not introduce preprocessing, feature selection, tuning, nested resampling, or model fitting.</li>
+</ul></div>
+<div class="section level3">
 <h3 id="group-aware-resampling-milestone-0-0-0-9000">Group-aware resampling milestone<a class="anchor" aria-label="anchor" href="#group-aware-resampling-milestone-0-0-0-9000"></a></h3>
 <ul><li>Added <code><a href="../reference/create_gazepoint_group_folds.html">create_gazepoint_group_folds()</a></code> for deterministic repeated group-aware V-fold plans.</li>
 <li>Required an explicit predictive-generalization target and a passing feature-provenance manifest before fold construction.</li>

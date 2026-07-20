@@ -8,9 +8,12 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/audit_gazepoint_ml_leakage.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/create_gazepoint_feature_manifest.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/create_gazepoint_group_folds.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/diagnose_gazepoint_group_folds.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/gp3ml-package.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/index.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_feature_manifest_validation.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_fold_diagnostics.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_fold_diagnostics_validation.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_group_folds.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_group_folds_audit.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_group_folds_validation.html</loc></url>
@@ -19,9 +22,11 @@
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_ml_split_validation.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/split_gazepoint_ml_data.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_feature_manifest.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_fold_diagnostics.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_group_folds.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_ml_split.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_feature_manifest_csv.html</loc></url>
+<url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_fold_diagnostics_csv.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_group_folds_csv.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_ml_leakage_audit_csv.html</loc></url>
 <url><loc>https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_ml_split_csv.html</loc></url>
