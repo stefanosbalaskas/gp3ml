@@ -253,6 +253,48 @@ exported using
 The fold planner does not perform preprocessing, automated feature
 selection, tuning, nested resampling, or model fitting.
 
+## Resampling diagnostics
+
+[`diagnose_gazepoint_group_folds()`](https://stefanosbalaskas.github.io/gp3ml/reference/diagnose_gazepoint_group_folds.md)
+evaluates the balance, coverage, outcome representation, and exclusions
+of an existing grouped resampling plan. Diagnostics remain downstream of
+fold construction and do not modify assignments or fit models.
+
+``` r
+
+fold_diagnostics <- diagnose_gazepoint_group_folds(folds)
+
+fold_diagnostics
+fold_diagnostics$repeat_metrics
+head(fold_diagnostics$outcome_balance)
+head(fold_diagnostics$assessment_coverage)
+```
+
+[`validate_gazepoint_fold_diagnostics()`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_fold_diagnostics.md)
+reports `pass`, `review`, or `fail` findings for fold counts, partition
+accounting, non-empty partitions, assessment coverage, fold-size
+imbalance, group presence, outcome-level presence, embedded leakage
+audits, and source-plan status.
+
+For crossed new-participant and new-stimulus designs,
+`exclusion_summary` reports the rows intentionally excluded because they
+belong to only one held dimension rather than the strict crossed
+assessment block.
+
+All diagnostic tables can be exported for review and reporting:
+
+``` r
+
+write_gazepoint_fold_diagnostics_csv(
+  fold_diagnostics,
+  directory = "resampling-diagnostics",
+  prefix = "gazepoint_folds"
+)
+```
+
+Diagnostics do not perform preprocessing, automated feature selection,
+hyperparameter tuning, nested resampling, or model fitting.
+
 ## Prohibited uses
 
 The package does not support person identification, health inference,
@@ -340,3 +382,18 @@ Create, validate, audit, and export deterministic grouped folds.
   : Print aggregated group-fold leakage auditing
 - [`write_gazepoint_group_folds_csv()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_group_folds_csv.md)
   : Write group-aware resampling tables to CSV
+
+## Resampling diagnostics
+
+Diagnose fold balance, coverage, exclusions, and outcome representation.
+
+- [`diagnose_gazepoint_group_folds()`](https://stefanosbalaskas.github.io/gp3ml/reference/diagnose_gazepoint_group_folds.md)
+  : Diagnose group-aware Gazepoint resampling folds
+- [`validate_gazepoint_fold_diagnostics()`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_fold_diagnostics.md)
+  : Validate Gazepoint fold diagnostics
+- [`print(`*`<gazepoint_fold_diagnostics>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_fold_diagnostics.md)
+  : Print Gazepoint fold diagnostics
+- [`print(`*`<gazepoint_fold_diagnostics_validation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_fold_diagnostics_validation.md)
+  : Print Gazepoint fold-diagnostics validation
+- [`write_gazepoint_fold_diagnostics_csv()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_fold_diagnostics_csv.md)
+  : Write Gazepoint fold diagnostics to CSV files

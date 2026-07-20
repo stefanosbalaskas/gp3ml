@@ -63,3 +63,18 @@ Create, validate, audit, and export deterministic grouped folds.
   : Print aggregated group-fold leakage auditing
 - [`write_gazepoint_group_folds_csv()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_group_folds_csv.md)
   : Write group-aware resampling tables to CSV
+
+## Resampling diagnostics
+
+Diagnose fold balance, coverage, exclusions, and outcome representation.
+
+- [`diagnose_gazepoint_group_folds()`](https://stefanosbalaskas.github.io/gp3ml/reference/diagnose_gazepoint_group_folds.md)
+  : Diagnose group-aware Gazepoint resampling folds
+- [`validate_gazepoint_fold_diagnostics()`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_fold_diagnostics.md)
+  : Validate Gazepoint fold diagnostics
+- [`print(`*`<gazepoint_fold_diagnostics>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_fold_diagnostics.md)
+  : Print Gazepoint fold diagnostics
+- [`print(`*`<gazepoint_fold_diagnostics_validation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/print.gazepoint_fold_diagnostics_validation.md)
+  : Print Gazepoint fold-diagnostics validation
+- [`write_gazepoint_fold_diagnostics_csv()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_fold_diagnostics_csv.md)
+  : Write Gazepoint fold diagnostics to CSV files

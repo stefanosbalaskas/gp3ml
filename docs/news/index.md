@@ -2,6 +2,34 @@
 
 ## gp3ml 0.0.0.9000
 
+### Resampling diagnostics milestone
+
+- Added
+  [`diagnose_gazepoint_group_folds()`](https://stefanosbalaskas.github.io/gp3ml/reference/diagnose_gazepoint_group_folds.md)
+  for structured diagnostics of grouped resampling plans.
+- Added fold-level and repeat-level summaries of analysis, assessment,
+  and excluded row counts.
+- Added assessment fold-size imbalance ratios with configurable review
+  and failure thresholds.
+- Added group-balance summaries for participant, participant-trial, and
+  stimulus units.
+- Added assessment-coverage diagnostics verifying that each source row
+  is assessed exactly once per repeat.
+- Added categorical outcome-level representation and continuous numeric
+  outcome summaries by fold and partition.
+- Added explicit exclusion summaries for crossed participant-by-stimulus
+  resampling designs.
+- Added
+  [`validate_gazepoint_fold_diagnostics()`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_fold_diagnostics.md)
+  with structured `pass`, `review`, and `fail` findings.
+- Added print methods and
+  [`write_gazepoint_fold_diagnostics_csv()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_fold_diagnostics_csv.md)
+  for eight machine-readable diagnostic tables.
+- Added deterministic regression coverage across all four supported
+  generalization targets.
+- This milestone does not introduce preprocessing, feature selection,
+  tuning, nested resampling, or model fitting.
+
 ### Group-aware resampling milestone
 
 - Added
