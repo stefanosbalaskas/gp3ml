@@ -357,8 +357,8 @@ Repository-aware evaluation across materialized grouped folds, governed
 model comparison and tuning, and nested grouped resampling remain
 separate post-release milestones.
 
-## Links
+## Project resources
 
-- Package website: publication pending for the first formal release.
+- [Package website](https://stefanosbalaskas.github.io/gp3ml/)
 - [Source repository](https://github.com/stefanosbalaskas/gp3ml)
 - [Issue tracker](https://github.com/stefanosbalaskas/gp3ml/issues)
