@@ -29,6 +29,29 @@ assess_gazepoint_calibration(
 
 \item{seed}{Deterministic random seed.}
 }
+\value{
+A \code{gp3ml_calibration_assessment} object containing calibration summaries, reliability-bin results, bootstrap intervals, and assessment settings.
+}
 \description{
 Calibration assessment with bootstrap uncertainty
+}
+\examples{
+truth <- factor(
+  rep(rep(c("pass", "review"), 5), 10),
+  levels = c("pass", "review")
+)
+probability <- rep(
+  seq(0.10, 0.90, length.out = 10),
+  each = 10
+)
+
+assessment <- assess_gazepoint_calibration(
+  truth = truth,
+  probability = probability,
+  positive = "review",
+  bins = 5L,
+  bootstrap = 10L,
+  seed = 101L
+)
+assessment
 }

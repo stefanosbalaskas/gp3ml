@@ -23,6 +23,26 @@ create_gazepoint_reproducibility_report(
 
 \item{project_path}{Project directory recorded in the report.}
 }
+\value{
+A \code{gp3ml_reproducibility_report} object containing runtime information, object and data fingerprints, seeds, Git metadata, notes, and prohibited uses.
+}
 \description{
 Create a reproducibility report
+}
+\examples{
+example_data <- data.frame(
+  trial_id = sprintf("T\%02d", 1:6),
+  fixation_duration = c(190, 205, 198, 214, 202, 220),
+  stringsAsFactors = FALSE
+)
+report <- create_gazepoint_reproducibility_report(
+  objects = list(
+    fixation_values = example_data$fixation_duration
+  ),
+  data = example_data,
+  seeds = list(example = 101L),
+  notes = "Synthetic documentation example.",
+  project_path = tempdir()
+)
+report
 }

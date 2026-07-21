@@ -19,6 +19,53 @@
 #' @param external_validation Optional external-validation result.
 #' @param limitations Character vector describing model limitations.
 #' @param ethical_review Optional ethical-review information.
+#'
+#' @examples
+#' training_data <- data.frame(
+#'   participant_id = rep(sprintf("P%02d", 1:12), each = 2),
+#'   trial_id = sprintf("T%02d", 1:24),
+#'   stimulus_id = rep(c("S01", "S02"), 12),
+#'   fixation_duration = 180 + seq_len(24),
+#'   pupil_change = sin(seq_len(24) / 3),
+#'   stringsAsFactors = FALSE
+#' )
+#' training_data$quality_status <- factor(
+#'   c(
+#'     "pass", "review", "pass", "review", "review", "pass",
+#'     "review", "pass", "pass", "review", "review", "pass",
+#'     "review", "pass", "review", "pass", "pass", "review",
+#'     "pass", "review", "review", "pass", "pass", "review"
+#'   ),
+#'   levels = c("pass", "review")
+#' )
+#' task <- declare_gazepoint_task(
+#'   data = training_data,
+#'   outcome = "quality_status",
+#'   purpose = "Predict predefined recording-quality review status",
+#'   task_type = "classification",
+#'   unit_id = "trial_id",
+#'   participant_id = "participant_id",
+#'   stimulus_id = "stimulus_id",
+#'   generalization_target = "new_participants",
+#'   positive = "review"
+#' )
+#' model <- train_gazepoint_classifier(
+#'   data = training_data,
+#'   task = task,
+#'   predictors = c("fixation_duration", "pupil_change"),
+#'   engine = "glm",
+#'   seed = 101L
+#' )
+#' card <- create_gazepoint_model_card(
+#'   model = model,
+#'   intended_use = paste(
+#'     "Support manual review of predefined",
+#'     "recording-quality status"
+#'   ),
+#'   limitations = "Synthetic example for documentation."
+#' )
+#' card
+#' @return A `gp3ml_model_card` object containing task, model, governance, evaluation, calibration, provenance, external-validation, and limitation metadata.
 #' @export
 create_gazepoint_model_card <- function(
     model,
@@ -117,6 +164,60 @@ create_gazepoint_model_card <- function(
 #' @param path Destination file path.
 #' @param format Output format: Markdown or JSON.
 #' @param overwrite Whether an existing file may be replaced.
+#'
+#' @examples
+#' training_data <- data.frame(
+#'   participant_id = rep(sprintf("P%02d", 1:12), each = 2),
+#'   trial_id = sprintf("T%02d", 1:24),
+#'   stimulus_id = rep(c("S01", "S02"), 12),
+#'   fixation_duration = 180 + seq_len(24),
+#'   pupil_change = sin(seq_len(24) / 3),
+#'   stringsAsFactors = FALSE
+#' )
+#' training_data$quality_status <- factor(
+#'   c(
+#'     "pass", "review", "pass", "review", "review", "pass",
+#'     "review", "pass", "pass", "review", "review", "pass",
+#'     "review", "pass", "review", "pass", "pass", "review",
+#'     "pass", "review", "review", "pass", "pass", "review"
+#'   ),
+#'   levels = c("pass", "review")
+#' )
+#' task <- declare_gazepoint_task(
+#'   data = training_data,
+#'   outcome = "quality_status",
+#'   purpose = "Predict predefined recording-quality review status",
+#'   task_type = "classification",
+#'   unit_id = "trial_id",
+#'   participant_id = "participant_id",
+#'   stimulus_id = "stimulus_id",
+#'   generalization_target = "new_participants",
+#'   positive = "review"
+#' )
+#' model <- train_gazepoint_classifier(
+#'   data = training_data,
+#'   task = task,
+#'   predictors = c("fixation_duration", "pupil_change"),
+#'   engine = "glm",
+#'   seed = 101L
+#' )
+#' card <- create_gazepoint_model_card(
+#'   model = model,
+#'   intended_use = paste(
+#'     "Support manual review of predefined",
+#'     "recording-quality status"
+#'   ),
+#'   limitations = "Synthetic example for documentation."
+#' )
+#' output <- tempfile(fileext = ".md")
+#' write_gazepoint_model_card(
+#'   card = card,
+#'   path = output,
+#'   format = "markdown"
+#' )
+#' file.exists(output)
+#' unlink(output)
+#' @return The destination path, returned invisibly after the model card is written.
 #' @export
 write_gazepoint_model_card <- function(card, path, format = c("markdown", "json"), overwrite = FALSE) {
   format <- match.arg(format)
@@ -161,6 +262,61 @@ write_gazepoint_model_card <- function(card, path, format = c("markdown", "json"
 #' @param threshold Classification probability threshold.
 #' @param bootstrap Number of calibration bootstrap replicates.
 #' @param seed Deterministic random seed.
+#'
+#' @examples
+#' training_data <- data.frame(
+#'   participant_id = rep(sprintf("P%02d", 1:12), each = 2),
+#'   trial_id = sprintf("T%02d", 1:24),
+#'   stimulus_id = rep(c("S01", "S02"), 12),
+#'   fixation_duration = 180 + seq_len(24),
+#'   pupil_change = sin(seq_len(24) / 3),
+#'   stringsAsFactors = FALSE
+#' )
+#' training_data$quality_status <- factor(
+#'   c(
+#'     "pass", "review", "pass", "review", "review", "pass",
+#'     "review", "pass", "pass", "review", "review", "pass",
+#'     "review", "pass", "review", "pass", "pass", "review",
+#'     "pass", "review", "review", "pass", "pass", "review"
+#'   ),
+#'   levels = c("pass", "review")
+#' )
+#' task <- declare_gazepoint_task(
+#'   data = training_data,
+#'   outcome = "quality_status",
+#'   purpose = "Predict predefined recording-quality review status",
+#'   task_type = "classification",
+#'   unit_id = "trial_id",
+#'   participant_id = "participant_id",
+#'   stimulus_id = "stimulus_id",
+#'   generalization_target = "new_participants",
+#'   positive = "review"
+#' )
+#' model <- train_gazepoint_classifier(
+#'   data = training_data,
+#'   task = task,
+#'   predictors = c("fixation_duration", "pupil_change"),
+#'   engine = "glm",
+#'   seed = 101L
+#' )
+#' external_data <- training_data
+#' external_data$participant_id <- rep(
+#'   sprintf("E%02d", 1:12),
+#'   each = 2
+#' )
+#' external_data$trial_id <- sprintf("ET%02d", 1:24)
+#' external_data$fixation_duration <-
+#'   external_data$fixation_duration + 4
+#' external_data$pupil_change <- cos(seq_len(24) / 4)
+#' validation <- evaluate_external_validation(
+#'   model = model,
+#'   external_data = external_data,
+#'   label = "synthetic_external",
+#'   bootstrap = 10L,
+#'   seed = 101L
+#' )
+#' validation
+#' @return A `gp3ml_external_validation` object containing external predictions, performance metrics, calibration results where applicable, predictor-shift diagnostics, a dataset fingerprint, and task metadata.
 #' @export
 evaluate_external_validation <- function(model, external_data, label = "external", threshold = model$threshold, bootstrap = 200L, seed = 1L) {
   .gp3ml_assert_data(external_data)
@@ -185,6 +341,65 @@ evaluate_external_validation <- function(model, external_data, label = "external
 #' @param validation A `gp3ml_external_validation` object.
 #' @param development_metrics Optional development-sample metrics.
 #' @param limitations Character vector describing report limitations.
+#'
+#' @examples
+#' training_data <- data.frame(
+#'   participant_id = rep(sprintf("P%02d", 1:12), each = 2),
+#'   trial_id = sprintf("T%02d", 1:24),
+#'   stimulus_id = rep(c("S01", "S02"), 12),
+#'   fixation_duration = 180 + seq_len(24),
+#'   pupil_change = sin(seq_len(24) / 3),
+#'   stringsAsFactors = FALSE
+#' )
+#' training_data$quality_status <- factor(
+#'   c(
+#'     "pass", "review", "pass", "review", "review", "pass",
+#'     "review", "pass", "pass", "review", "review", "pass",
+#'     "review", "pass", "review", "pass", "pass", "review",
+#'     "pass", "review", "review", "pass", "pass", "review"
+#'   ),
+#'   levels = c("pass", "review")
+#' )
+#' task <- declare_gazepoint_task(
+#'   data = training_data,
+#'   outcome = "quality_status",
+#'   purpose = "Predict predefined recording-quality review status",
+#'   task_type = "classification",
+#'   unit_id = "trial_id",
+#'   participant_id = "participant_id",
+#'   stimulus_id = "stimulus_id",
+#'   generalization_target = "new_participants",
+#'   positive = "review"
+#' )
+#' model <- train_gazepoint_classifier(
+#'   data = training_data,
+#'   task = task,
+#'   predictors = c("fixation_duration", "pupil_change"),
+#'   engine = "glm",
+#'   seed = 101L
+#' )
+#' external_data <- training_data
+#' external_data$participant_id <- rep(
+#'   sprintf("E%02d", 1:12),
+#'   each = 2
+#' )
+#' external_data$trial_id <- sprintf("ET%02d", 1:24)
+#' external_data$fixation_duration <-
+#'   external_data$fixation_duration + 4
+#' external_data$pupil_change <- cos(seq_len(24) / 4)
+#' validation <- evaluate_external_validation(
+#'   model = model,
+#'   external_data = external_data,
+#'   label = "synthetic_external",
+#'   bootstrap = 10L,
+#'   seed = 101L
+#' )
+#' report <- create_external_validation_report(
+#'   validation = validation,
+#'   limitations = "Synthetic external-validation example."
+#' )
+#' report
+#' @return A `gp3ml_external_validation_report` object containing the validation result, optional development metrics, limitations, and prohibited-use information.
 #' @export
 create_external_validation_report <- function(validation, development_metrics = NULL, limitations = character()) {
   if (!inherits(validation, "gp3ml_external_validation")) .gp3ml_stop("Supply `evaluate_external_validation()` output.")
@@ -196,6 +411,65 @@ create_external_validation_report <- function(validation, development_metrics = 
 #' @param report A `gp3ml_external_validation_report` object.
 #' @param path Destination Markdown file path.
 #' @param overwrite Whether an existing file may be replaced.
+#'
+#' @examples
+#' training_data <- data.frame(
+#'   participant_id = rep(sprintf("P%02d", 1:12), each = 2),
+#'   trial_id = sprintf("T%02d", 1:24),
+#'   stimulus_id = rep(c("S01", "S02"), 12),
+#'   fixation_duration = 180 + seq_len(24),
+#'   pupil_change = sin(seq_len(24) / 3),
+#'   stringsAsFactors = FALSE
+#' )
+#' training_data$quality_status <- factor(
+#'   c(
+#'     "pass", "review", "pass", "review", "review", "pass",
+#'     "review", "pass", "pass", "review", "review", "pass",
+#'     "review", "pass", "review", "pass", "pass", "review",
+#'     "pass", "review", "review", "pass", "pass", "review"
+#'   ),
+#'   levels = c("pass", "review")
+#' )
+#' task <- declare_gazepoint_task(
+#'   data = training_data,
+#'   outcome = "quality_status",
+#'   purpose = "Predict predefined recording-quality review status",
+#'   task_type = "classification",
+#'   unit_id = "trial_id",
+#'   participant_id = "participant_id",
+#'   stimulus_id = "stimulus_id",
+#'   generalization_target = "new_participants",
+#'   positive = "review"
+#' )
+#' model <- train_gazepoint_classifier(
+#'   data = training_data,
+#'   task = task,
+#'   predictors = c("fixation_duration", "pupil_change"),
+#'   engine = "glm",
+#'   seed = 101L
+#' )
+#' external_data <- training_data
+#' external_data$participant_id <- rep(
+#'   sprintf("E%02d", 1:12),
+#'   each = 2
+#' )
+#' external_data$trial_id <- sprintf("ET%02d", 1:24)
+#' external_data$fixation_duration <-
+#'   external_data$fixation_duration + 4
+#' external_data$pupil_change <- cos(seq_len(24) / 4)
+#' validation <- evaluate_external_validation(
+#'   model = model,
+#'   external_data = external_data,
+#'   label = "synthetic_external",
+#'   bootstrap = 10L,
+#'   seed = 101L
+#' )
+#' report <- create_external_validation_report(validation)
+#' output <- tempfile(fileext = ".md")
+#' write_external_validation_report(report, output)
+#' file.exists(output)
+#' unlink(output)
+#' @return The destination path, returned invisibly after the Markdown report is written.
 #' @export
 write_external_validation_report <- function(report, path, overwrite = FALSE) {
   if (file.exists(path) && !overwrite) .gp3ml_stop("File exists: %s.", path)
@@ -222,6 +496,24 @@ write_external_validation_report <- function(report, path, overwrite = FALSE) {
 #' @param seeds Named list of deterministic seeds.
 #' @param notes Optional reproducibility notes.
 #' @param project_path Project directory recorded in the report.
+#'
+#' @examples
+#' example_data <- data.frame(
+#'   trial_id = sprintf("T%02d", 1:6),
+#'   fixation_duration = c(190, 205, 198, 214, 202, 220),
+#'   stringsAsFactors = FALSE
+#' )
+#' report <- create_gazepoint_reproducibility_report(
+#'   objects = list(
+#'     fixation_values = example_data$fixation_duration
+#'   ),
+#'   data = example_data,
+#'   seeds = list(example = 101L),
+#'   notes = "Synthetic documentation example.",
+#'   project_path = tempdir()
+#' )
+#' report
+#' @return A `gp3ml_reproducibility_report` object containing runtime information, object and data fingerprints, seeds, Git metadata, notes, and prohibited uses.
 #' @export
 create_gazepoint_reproducibility_report <- function(objects = list(), data = NULL, seeds = list(), notes = character(), project_path = getwd()) {
   object_hashes <- if (length(objects)) vapply(objects, .gp3ml_hash_object, character(1)) else character()
@@ -241,6 +533,27 @@ create_gazepoint_reproducibility_report <- function(objects = list(), data = NUL
 #' @param report A `gp3ml_reproducibility_report` object.
 #' @param path Destination Markdown file path.
 #' @param overwrite Whether an existing file may be replaced.
+#'
+#' @examples
+#' example_data <- data.frame(
+#'   trial_id = sprintf("T%02d", 1:6),
+#'   fixation_duration = c(190, 205, 198, 214, 202, 220),
+#'   stringsAsFactors = FALSE
+#' )
+#' report <- create_gazepoint_reproducibility_report(
+#'   objects = list(
+#'     fixation_values = example_data$fixation_duration
+#'   ),
+#'   data = example_data,
+#'   seeds = list(example = 101L),
+#'   notes = "Synthetic documentation example.",
+#'   project_path = tempdir()
+#' )
+#' output <- tempfile(fileext = ".md")
+#' write_gazepoint_reproducibility_report(report, output)
+#' file.exists(output)
+#' unlink(output)
+#' @return The destination path, returned invisibly after the reproducibility report is written.
 #' @export
 write_gazepoint_reproducibility_report <- function(report, path, overwrite = FALSE) {
   if (file.exists(path) && !overwrite) .gp3ml_stop("File exists: %s.", path)

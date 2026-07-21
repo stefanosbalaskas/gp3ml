@@ -6,11 +6,16 @@ template:
 development:
   mode: auto
 
+authors:
+  Stefanos Balaskas:
+    href: https://sites.google.com/view/stefbalaskas/
+
 home:
   title: gp3ml
   description: >
-    Leakage-safe predictive validation and governance for
-    Gazepoint research workflows.
+    Governance-first predictive modelling, leakage auditing, group-aware
+    validation, calibration, and reproducibility reporting for Gazepoint
+    research data.
 
 navbar:
   structure:
@@ -61,43 +66,45 @@ reference:
       - print.gazepoint_group_folds_validation
       - print.gazepoint_group_folds_audit
       - write_gazepoint_group_folds_csv
+
   - title: Resampling diagnostics
-    desc: Diagnose fold balance, coverage, exclusions, and outcome representation.
+    desc: Diagnose fold balance, coverage, exclusions, and outcomes.
     contents:
       - diagnose_gazepoint_group_folds
       - validate_gazepoint_fold_diagnostics
       - print.gazepoint_fold_diagnostics
       - print.gazepoint_fold_diagnostics_validation
       - write_gazepoint_fold_diagnostics_csv
+
   - title: Governed modelling core
     desc: >
-      Governance-first task declaration, preprocessing, model fitting,
-      performance assessment, calibration, uncertainty, external validation,
-      model cards, and reproducibility reporting.
+      Task governance, preprocessing, model fitting, performance,
+      calibration, uncertainty, external validation, model cards, and
+      reproducibility reporting.
     contents:
-    - declare_gazepoint_task
-    - assert_gp3ml_use_case
-    - validate_gazepoint_ml_roles
-    - gp3ml_prohibited_uses
-    - fit_gazepoint_preprocessor
-    - bake_gazepoint_preprocessor
-    - gp3ml_available_engines
-    - integrate_black_box_model
-    - fit_gazepoint_model
-    - train_gazepoint_classifier
-    - predict.gp3ml_model
-    - fit_gazepoint_deep_model
-    - gazepoint_classification_metrics
-    - gazepoint_regression_metrics
-    - gazepoint_performance_metrics
-    - bootstrap_gazepoint_metrics
-    - fit_gazepoint_calibrator
-    - apply_gazepoint_calibrator
-    - assess_gazepoint_calibration
-    - evaluate_external_validation
-    - create_external_validation_report
-    - write_external_validation_report
-    - create_gazepoint_model_card
-    - write_gazepoint_model_card
-    - create_gazepoint_reproducibility_report
-    - write_gazepoint_reproducibility_report
+      - declare_gazepoint_task
+      - assert_gp3ml_use_case
+      - validate_gazepoint_ml_roles
+      - gp3ml_prohibited_uses
+      - fit_gazepoint_preprocessor
+      - bake_gazepoint_preprocessor
+      - gp3ml_available_engines
+      - integrate_black_box_model
+      - fit_gazepoint_model
+      - train_gazepoint_classifier
+      - predict.gp3ml_model
+      - fit_gazepoint_deep_model
+      - gazepoint_classification_metrics
+      - gazepoint_regression_metrics
+      - gazepoint_performance_metrics
+      - bootstrap_gazepoint_metrics
+      - fit_gazepoint_calibrator
+      - apply_gazepoint_calibrator
+      - assess_gazepoint_calibration
+      - evaluate_external_validation
+      - create_external_validation_report
+      - write_external_validation_report
+      - create_gazepoint_model_card
+      - write_gazepoint_model_card
+      - create_gazepoint_reproducibility_report
+      - write_gazepoint_reproducibility_report

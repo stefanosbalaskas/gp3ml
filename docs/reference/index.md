@@ -4,7 +4,8 @@
 
 - [`gp3ml`](https://stefanosbalaskas.github.io/gp3ml/reference/gp3ml-package.md)
   [`gp3ml-package`](https://stefanosbalaskas.github.io/gp3ml/reference/gp3ml-package.md)
-  : gp3ml: Leakage-Safe Predictive Validation for Gazepoint Research
+  : gp3ml: Governance-First Predictive Modelling for 'Gazepoint'
+  Research
 
 ## Leakage auditing
 
@@ -66,7 +67,7 @@ Create, validate, audit, and export deterministic grouped folds.
 
 ## Resampling diagnostics
 
-Diagnose fold balance, coverage, exclusions, and outcome representation.
+Diagnose fold balance, coverage, exclusions, and outcomes.
 
 - [`diagnose_gazepoint_group_folds()`](https://stefanosbalaskas.github.io/gp3ml/reference/diagnose_gazepoint_group_folds.md)
   : Diagnose group-aware Gazepoint resampling folds
@@ -81,9 +82,9 @@ Diagnose fold balance, coverage, exclusions, and outcome representation.
 
 ## Governed modelling core
 
-Governance-first task declaration, preprocessing, model fitting,
-performance assessment, calibration, uncertainty, external validation,
-model cards, and reproducibility reporting.
+Task governance, preprocessing, model fitting, performance, calibration,
+uncertainty, external validation, model cards, and reproducibility
+reporting.
 
 - [`declare_gazepoint_task()`](https://stefanosbalaskas.github.io/gp3ml/reference/declare_gazepoint_task.md)
   : Declare a governed Gazepoint prediction task

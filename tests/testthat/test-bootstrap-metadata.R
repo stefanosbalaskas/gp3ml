@@ -1,4 +1,4 @@
-test_that("package metadata identifies the development bootstrap", {
+test_that("package metadata identifies the first formal release", {
   if (requireNamespace("gp3ml", quietly = TRUE)) {
     metadata <- utils::packageDescription("gp3ml")
     package_name <- metadata$Package
@@ -18,5 +18,5 @@ test_that("package metadata identifies the development bootstrap", {
   }
 
   expect_identical(package_name, "gp3ml")
-  expect_identical(package_version, "0.0.0.9000")
+  expect_identical(package_version, "0.1.0")
 })

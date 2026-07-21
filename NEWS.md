@@ -1,101 +1,58 @@
-# gp3ml 0.0.0.9000
+# gp3ml 0.1.0
 
-## Resampling diagnostics milestone
+## First formal release
 
-- Added `diagnose_gazepoint_group_folds()` for structured diagnostics of grouped resampling plans.
-- Added fold-level and repeat-level summaries of analysis, assessment, and excluded row counts.
-- Added assessment fold-size imbalance ratios with configurable review and failure thresholds.
-- Added group-balance summaries for participant, participant-trial, and stimulus units.
-- Added assessment-coverage diagnostics verifying that each source row is assessed exactly once per repeat.
-- Added categorical outcome-level representation and continuous numeric outcome summaries by fold and partition.
-- Added explicit exclusion summaries for crossed participant-by-stimulus resampling designs.
-- Added `validate_gazepoint_fold_diagnostics()` with structured `pass`, `review`, and `fail` findings.
-- Added print methods and `write_gazepoint_fold_diagnostics_csv()` for eight machine-readable diagnostic tables.
-- Added deterministic regression coverage across all four supported generalization targets.
-- This milestone does not introduce preprocessing, feature selection, tuning, nested resampling, or model fitting.
+* Established `gp3ml` as a governance-first package for
+  leakage-resistant predictive modelling and validation using
+  Gazepoint-derived research data.
+* Restricted supported tasks to explicitly observed, non-sensitive
+  outcomes and clearly declared scientific purposes.
+* Added explicit prohibited-use documentation covering identification,
+  authentication, diagnostic, protected-attribute, emotion, stress,
+  personality, deception, cognition, comprehension, intent, and other
+  mental-state inference.
 
-## Group-aware resampling milestone
+## Governance, provenance, and leakage protection
 
-- Added `create_gazepoint_group_folds()` for deterministic
-  repeated group-aware V-fold plans.
-- Required an explicit predictive-generalization target and a
-  passing feature-provenance manifest before fold construction.
-- Added support for new trials among known participants, new
-  participants, new stimuli, and simultaneous new-participant
-  and new-stimulus generalization.
-- Added crossed participant-stimulus assessment blocks with
-  explicit accounting for excluded cross-block rows.
-- Added `validate_gazepoint_group_folds()` for fold counts,
-  source-row accounting, assessment coverage, partition
-  consistency, provenance, and leakage-audit validation.
-- Added `audit_gazepoint_group_folds()` for aggregating embedded
-  fold-level leakage audits.
-- Added print methods and `write_gazepoint_group_folds_csv()`
-  for machine-readable summaries and optional fold export.
-- Added deterministic synthetic tests for all supported targets,
-  repeated folds, invalid requests, auditing, and CSV output.
-- No preprocessing, automated feature selection, tuning, nested
-  resampling, or model fitting was introduced.
+* Added task declaration, use-case assertion, variable-role validation,
+  and machine-readable prohibited-use helpers.
+* Added feature-provenance manifests covering predictor origins,
+  transformations, availability stages, roles, and preprocessing scope.
+* Added structured leakage audits for row, participant, participant-trial,
+  stimulus, identifier, target-derived, and post-outcome risks.
 
-## Group-aware holdout-splitting milestone
+## Group-aware validation
 
-- Added `split_gazepoint_ml_data()` for deterministic
-  group-aware analysis and assessment partitions.
-- Required an explicit predictive-generalization target and a
-  passing feature-provenance manifest before splitting.
-- Added support for new trials among known participants, new
-  participants, new stimuli, and simultaneous new-participant
-  and new-stimulus generalization.
-- Preserved participant-trial, participant, or stimulus groups
-  according to the declared target.
-- Added strict participant–stimulus block separation with
-  explicit accounting for excluded cross-block rows.
-- Added `validate_gazepoint_ml_split()` with source-row,
-  partition-structure, provenance, and leakage-audit checks.
-- Added print methods and
-  `write_gazepoint_ml_split_csv()` for machine-readable export.
-- Added deterministic synthetic tests covering all supported
-  generalization targets and intentionally invalid requests.
-- No preprocessing, automated feature selection, resampling, or
-  model fitting was introduced.
+* Added deterministic group-aware holdout splitting and repeated grouped
+  resampling for new trials among known participants, new participants,
+  new stimuli, and simultaneous new-participant and new-stimulus
+  generalization.
+* Materialized analysis, assessment, and explicitly excluded partitions
+  with complete source-row accounting and embedded leakage audits.
+* Added fold-balance, coverage, exclusion, and outcome-representation
+  diagnostics with structured pass, review, and fail findings.
 
-## Feature-provenance milestone
+## Governed modelling core
 
-- Added `create_gazepoint_feature_manifest()` for recording
-  predictor origins, transformations, availability stages,
-  roles, and preprocessing scopes.
-- Added `validate_gazepoint_feature_manifest()` with structured
-  `pass`, `review`, and `fail` results.
-- Added checks for outcome-derived, post-outcome, identifier,
-  and prediction-time-unavailable features.
-- Added checks for incomplete provenance and preprocessing
-  incompatible with declared fold-local requirements.
-- Added `write_gazepoint_feature_manifest_csv()` for exporting
-  manifests and validation tables.
-- Added deterministic synthetic tests for safe, incomplete,
-  and intentionally unsafe manifests.
+* Added fold-local preprocessing objects with separate fitting and baking
+  interfaces.
+* Added governed model engines, explicit black-box integration,
+  classification and regression metrics, calibration assessment, and
+  explicitly labelled bootstrap metric uncertainty.
+* Added external-validation evaluation and reporting without treating an
+  internal holdout as external validation.
+* Added model cards and reproducibility reports that record task purpose,
+  governance decisions, model settings, performance, calibration,
+  uncertainty, limitations, and reproducibility information.
+* Model selection remains explicit and reviewable; the package does not
+  perform autonomous black-box winner selection.
 
-## Leakage-audit milestone
+## Documentation and quality assurance
 
-- Added `audit_gazepoint_ml_leakage()` for structured auditing
-  of already-defined analysis and assessment partitions.
-- Added explicit checks for participant, participant-trial, and
-  stimulus compatibility with declared generalization targets.
-- Added checks for exact-row overlap, duplicated rows, repeated
-  predictor profiles, identifier predictors, target-derived
-  predictors, and post-outcome predictors.
-- Added `pass`, `review`, and `fail` audit statuses with complete
-  check, issue, and partition-summary tables.
-- Added `write_gazepoint_ml_leakage_audit_csv()` for
-  machine-readable audit export.
-- Added deterministic synthetic tests covering clean and
-  intentionally contaminated partitions.
-
-## Initial development bootstrap
-
-- Created the minimal R package structure.
-- Added explicit model-governance and prohibited-use statements.
-- Restricted the initial scope to validation and governance.
-- Confirmed that examples and tests will use deterministic
-  synthetic data only.
-- No model-training functions have been implemented.
+* Added machine-readable CSV, Markdown, and JSON reporting interfaces
+  where supported by the relevant object.
+* Added deterministic synthetic tests across supported generalization
+  targets, governance failures, leakage cases, model engines, metrics,
+  calibration, reporting, and serialization.
+* Added complete pkgdown reference organization for the first formal
+  release.

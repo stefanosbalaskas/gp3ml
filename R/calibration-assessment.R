@@ -4,6 +4,24 @@
 #' @param probability Uncalibrated positive-class probabilities.
 #' @param positive Label representing the positive class.
 #' @param method Calibration method: Platt scaling or isotonic regression.
+#'
+#' @examples
+#' truth <- factor(
+#'   rep(c("pass", "review"), 6),
+#'   levels = c("pass", "review")
+#' )
+#' probability <- c(
+#'   0.20, 0.70, 0.60, 0.55, 0.30, 0.80,
+#'   0.65, 0.45, 0.40, 0.75, 0.50, 0.60
+#' )
+#' calibrator <- fit_gazepoint_calibrator(
+#'   truth = truth,
+#'   probability = probability,
+#'   positive = "review",
+#'   method = "platt"
+#' )
+#' calibrator
+#' @return A fitted `gp3ml_calibrator` object containing the calibration method, fitted model, and outcome labels.
 #' @export
 fit_gazepoint_calibrator <- function(truth, probability, positive = NULL, method = c("platt", "isotonic")) {
   method <- match.arg(method)
@@ -17,6 +35,26 @@ fit_gazepoint_calibrator <- function(truth, probability, positive = NULL, method
 #'
 #' @param calibrator A fitted `gp3ml_calibrator` object.
 #' @param probability Uncalibrated probabilities to transform.
+#'
+#' @examples
+#' truth <- factor(
+#'   rep(c("pass", "review"), 6),
+#'   levels = c("pass", "review")
+#' )
+#' probability <- c(
+#'   0.20, 0.70, 0.60, 0.55, 0.30, 0.80,
+#'   0.65, 0.45, 0.40, 0.75, 0.50, 0.60
+#' )
+#' calibrator <- fit_gazepoint_calibrator(
+#'   truth = truth,
+#'   probability = probability,
+#'   positive = "review"
+#' )
+#' apply_gazepoint_calibrator(
+#'   calibrator,
+#'   probability
+#' )
+#' @return A numeric vector of calibrated probabilities, clipped to the open unit interval.
 #' @export
 apply_gazepoint_calibrator <- function(calibrator, probability) {
   p <- .gp3ml_clip_probability(probability)
@@ -47,6 +85,27 @@ apply_gazepoint_calibrator <- function(calibrator, probability) {
 #' @param bootstrap Number of bootstrap replicates.
 #' @param conf_level Confidence level for percentile intervals.
 #' @param seed Deterministic random seed.
+#'
+#' @examples
+#' truth <- factor(
+#'   rep(rep(c("pass", "review"), 5), 10),
+#'   levels = c("pass", "review")
+#' )
+#' probability <- rep(
+#'   seq(0.10, 0.90, length.out = 10),
+#'   each = 10
+#' )
+#'
+#' assessment <- assess_gazepoint_calibration(
+#'   truth = truth,
+#'   probability = probability,
+#'   positive = "review",
+#'   bins = 5L,
+#'   bootstrap = 10L,
+#'   seed = 101L
+#' )
+#' assessment
+#' @return A `gp3ml_calibration_assessment` object containing calibration summaries, reliability-bin results, bootstrap intervals, and assessment settings.
 #' @export
 assess_gazepoint_calibration <- function(truth, probability, positive = NULL, bins = 10L, bootstrap = 200L, conf_level = 0.95, seed = 1L) {
   binary <- .gp3ml_binary_values(truth, positive)

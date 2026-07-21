@@ -1,40 +1,61 @@
 
 <!-- README.md is generated from README.Rmd. Please edit README.Rmd. -->
 
-# gp3ml
+# gp3ml <img src="man/figures/logo.png" align="right" height="139" alt="gp3ml logo" />
 
-`gp3ml` is an R package under cautious development for leakage-resistant
-and group-aware predictive validation using Gazepoint-derived research
-data.
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/stefanosbalaskas/gp3ml/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stefanosbalaskas/gp3ml/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
+`gp3ml` is a governance-first R package for leakage-resistant and
+group-aware predictive modelling and validation using Gazepoint-derived
+research data.
+
+The package is designed for explicitly observed, non-sensitive outcomes
+and declared scientific purposes. It is not a generic automatic machine-
+learning wrapper and does not perform autonomous model selection.
+
+## Installation
+
+Until a public CRAN package page exists, install the current source from
+GitHub:
+
+``` r
+install.packages("remotes")
+remotes::install_github("stefanosbalaskas/gp3ml")
+```
 
 ## Scope
 
-The first development stages focus on:
+The package provides:
 
-- participant-, trial-, and stimulus-leakage auditing;
-- explicit generalization-target declarations;
-- outcome, predictor, and identifier-role validation;
-- feature-provenance manifests;
-- grouped train/test splitting;
-- grouped and nested resampling plans;
-- fold-overlap and balance diagnostics;
-- calibration and uncertainty assessment;
-- model-card and reproducibility reporting.
+- task, purpose, outcome, predictor, and identifier-role governance;
+- feature-provenance manifests and leakage auditing;
+- deterministic group-aware holdout splitting;
+- repeated grouped resampling with materialized folds;
+- fold-balance, coverage, exclusion, and outcome diagnostics;
+- fold-local preprocessing contracts;
+- governed statistical and optional machine-learning engines;
+- discrimination, error, calibration, and uncertainty assessment;
+- external-validation reports;
+- model cards and reproducibility reports.
 
-The package is not intended to be a generic wrapper around existing
-machine-learning frameworks.
+Supported predictive-generalization targets are:
+
+- new trials among known participants;
+- new participants;
+- new stimuli;
+- simultaneous new-participant and new-stimulus generalization.
 
 ## Scientific safeguards
 
 Participant overlap is treated as a failure when the declared target
 requires generalization to new participants. Stimulus overlap is treated
 as a failure when the declared target requires generalization to unseen
-stimuli. Preprocessing and feature selection must be estimated inside
-the relevant resampling folds.
-
-All package examples and tests will use deterministic synthetic data.
-
-## Leakage-audit workflow
+stimuli. Preprocessing must be estimated inside the relevant analysis
+partition or resampling fold. Package examples and tests use
+deterministic synthetic data. \## Leakage-audit workflow
 
 `audit_gazepoint_ml_leakage()` audits already-defined analysis and
 assessment partitions before predictive evaluation. It checks:
@@ -284,6 +305,26 @@ write_gazepoint_fold_diagnostics_csv(
 Diagnostics do not perform preprocessing, automated feature selection,
 hyperparameter tuning, nested resampling, or model fitting.
 
+## Governed modelling and reporting
+
+The governed modelling core provides related interfaces for:
+
+- declaring tasks and validating intended uses;
+- validating outcome, predictor, and identifier roles;
+- fitting and applying fold-local preprocessors;
+- fitting reviewable model engines and integrating externally fitted
+  black-box models under explicit governance;
+- calculating classification and regression performance metrics;
+- assessing and applying calibration;
+- producing explicitly labelled bootstrap metric uncertainty;
+- evaluating genuinely external datasets;
+- generating model cards and reproducibility reports.
+
+These interfaces do not convert row-level metrics into participant-level
+estimates merely because a split was participant-grouped. Automatic
+tuning, nested grouped resampling, and autonomous winner selection are
+outside the scope of version `0.1.0`.
+
 ## Prohibited uses
 
 The package does not support person identification, health inference,
@@ -296,12 +337,21 @@ See:
 - [`GOVERNANCE.md`](inst/governance/GOVERNANCE.md)
 - [`PROHIBITED-USE.md`](inst/governance/PROHIBITED-USE.md)
 
-## Development status
+## Release status
 
-Version `0.0.0.9000` includes structured leakage auditing,
-feature-provenance manifests, deterministic group-aware holdout
-splitting, repeated grouped resampling plans, fold validation,
-aggregated leakage auditing, and machine-readable CSV export.
+Version `0.1.0` is the first formal source release of `gp3ml`.
 
-No model-training interface, automated feature selection, tuning, nested
-resampling, or preprocessing engine has been implemented.
+It includes the governance, provenance, splitting, grouped-resampling,
+diagnostic, preprocessing, modelling, performance, calibration,
+uncertainty, external-validation, model-card, and reproducibility
+infrastructure described above.
+
+Repository-aware evaluation across materialized grouped folds, governed
+model comparison and tuning, and nested grouped resampling remain
+separate post-release milestones.
+
+## Links
+
+- Package website: publication pending for the first formal release.
+- [Source repository](https://github.com/stefanosbalaskas/gp3ml)
+- [Issue tracker](https://github.com/stefanosbalaskas/gp3ml/issues)
