@@ -11,6 +11,14 @@ gazepoint_regression_metrics(truth, prediction)
 
 \item{prediction}{Predicted numeric outcome values.}
 }
+\value{
+A one-row data frame containing the sample size, RMSE, MAE, R-squared value, and prediction correlation.
+}
 \description{
 Regression metrics
+}
+\examples{
+truth <- c(1.0, 2.0, 3.0, 4.0, 5.0)
+prediction <- c(1.1, 1.8, 3.2, 3.9, 4.8)
+gazepoint_regression_metrics(truth, prediction)
 }

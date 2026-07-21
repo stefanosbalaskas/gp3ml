@@ -11,6 +11,28 @@ apply_gazepoint_calibrator(calibrator, probability)
 
 \item{probability}{Uncalibrated probabilities to transform.}
 }
+\value{
+A numeric vector of calibrated probabilities, clipped to the open unit interval.
+}
 \description{
 Apply a fitted probability calibrator
+}
+\examples{
+truth <- factor(
+  rep(c("pass", "review"), 6),
+  levels = c("pass", "review")
+)
+probability <- c(
+  0.20, 0.70, 0.60, 0.55, 0.30, 0.80,
+  0.65, 0.45, 0.40, 0.75, 0.50, 0.60
+)
+calibrator <- fit_gazepoint_calibrator(
+  truth = truth,
+  probability = probability,
+  positive = "review"
+)
+apply_gazepoint_calibrator(
+  calibrator,
+  probability
+)
 }

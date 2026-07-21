@@ -876,6 +876,20 @@ validate_gazepoint_feature_manifest <- function(x) {
 #'   [validate_gazepoint_feature_manifest()].
 #' @param ... Additional arguments, currently unused.
 #'
+#'
+#' @examples
+#' manifest <- create_gazepoint_feature_manifest(
+#'   features = "fixation_duration",
+#'   scientific_source = "Gazepoint fixation export",
+#'   source_table = "fixations",
+#'   transformation = "Trial-level mean",
+#'   availability_stage = "during_exposure",
+#'   prediction_time_available = TRUE,
+#'   preprocessing_scope = "none",
+#'   fold_local_required = FALSE
+#' )
+#' validation <- validate_gazepoint_feature_manifest(manifest)
+#' print(validation)
 #' @return `x`, invisibly.
 #'
 #' @export

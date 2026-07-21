@@ -20,6 +20,26 @@ fit_gazepoint_calibrator(
 
 \item{method}{Calibration method: Platt scaling or isotonic regression.}
 }
+\value{
+A fitted \code{gp3ml_calibrator} object containing the calibration method, fitted model, and outcome labels.
+}
 \description{
 Fit a probability calibrator
+}
+\examples{
+truth <- factor(
+  rep(c("pass", "review"), 6),
+  levels = c("pass", "review")
+)
+probability <- c(
+  0.20, 0.70, 0.60, 0.55, 0.30, 0.80,
+  0.65, 0.45, 0.40, 0.75, 0.50, 0.60
+)
+calibrator <- fit_gazepoint_calibrator(
+  truth = truth,
+  probability = probability,
+  positive = "review",
+  method = "platt"
+)
+calibrator
 }

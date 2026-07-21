@@ -6,6 +6,12 @@
 \usage{
 gp3ml_available_engines()
 }
+\value{
+A data frame listing supported model-engine names and whether each optional engine is currently available.
+}
 \description{
 List available model engines
+}
+\examples{
+gp3ml_available_engines()
 }

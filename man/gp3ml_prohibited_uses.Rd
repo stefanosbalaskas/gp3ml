@@ -12,3 +12,6 @@ A character vector of prohibited use descriptions.
 \description{
 Prohibited gp3ml uses
 }
+\examples{
+gp3ml_prohibited_uses()
+}

@@ -13,6 +13,29 @@ write_gazepoint_reproducibility_report(report, path, overwrite = FALSE)
 
 \item{overwrite}{Whether an existing file may be replaced.}
 }
+\value{
+The destination path, returned invisibly after the reproducibility report is written.
+}
 \description{
 Write a reproducibility report
+}
+\examples{
+example_data <- data.frame(
+  trial_id = sprintf("T\%02d", 1:6),
+  fixation_duration = c(190, 205, 198, 214, 202, 220),
+  stringsAsFactors = FALSE
+)
+report <- create_gazepoint_reproducibility_report(
+  objects = list(
+    fixation_values = example_data$fixation_duration
+  ),
+  data = example_data,
+  seeds = list(example = 101L),
+  notes = "Synthetic documentation example.",
+  project_path = tempdir()
+)
+output <- tempfile(fileext = ".md")
+write_gazepoint_reproducibility_report(report, output)
+file.exists(output)
+unlink(output)
 }

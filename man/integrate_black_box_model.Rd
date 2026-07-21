@@ -29,6 +29,43 @@ integrate_black_box_model(
 
 \item{safety_declaration}{Named logical safety declarations.}
 }
+\value{
+A controlled \code{gp3ml_engine} object containing the custom fit and prediction functions, supported task types, metadata, and explicit safety declarations.
+}
 \description{
 Integrate a controlled black-box model engine
+}
+\examples{
+custom_fit <- function(x, y, task, args) {
+  training_data <- data.frame(
+    .outcome = y,
+    x,
+    check.names = FALSE
+  )
+  stats::glm(
+    .outcome ~ .,
+    data = training_data,
+    family = stats::binomial()
+  )
+}
+custom_predict <- function(fit, newdata, type, task, ...) {
+  as.numeric(stats::predict(
+    fit,
+    newdata = as.data.frame(newdata),
+    type = "response"
+  ))
+}
+engine <- integrate_black_box_model(
+  name = "custom_glm",
+  fit_fun = custom_fit,
+  predict_fun = custom_predict,
+  supports = "classification",
+  probability = TRUE,
+  safety_declaration = list(
+    prohibited_uses_acknowledged = TRUE,
+    prediction_time_inputs_only = TRUE,
+    group_aware_evaluation_required = TRUE
+  )
+)
+engine
 }

@@ -37,6 +37,27 @@
 #' @param predicted Optional predicted classes.
 #' @param positive Label representing the positive class.
 #' @param threshold Probability threshold used for class predictions.
+#'
+#' @examples
+#' truth <- factor(
+#'   rep(c("pass", "review"), 6),
+#'   levels = c("pass", "review")
+#' )
+#' probability <- c(
+#'   0.20, 0.70, 0.60, 0.55, 0.30, 0.80,
+#'   0.65, 0.45, 0.40, 0.75, 0.50, 0.60
+#' )
+#' predicted <- factor(
+#'   ifelse(probability >= 0.5, "review", "pass"),
+#'   levels = levels(truth)
+#' )
+#' gazepoint_classification_metrics(
+#'   truth = truth,
+#'   probability = probability,
+#'   predicted = predicted,
+#'   positive = "review"
+#' )
+#' @return A one-row data frame containing the sample size, threshold, class-performance measures, discrimination metrics, Brier score, and log loss.
 #' @export
 gazepoint_classification_metrics <- function(truth, probability, predicted = NULL, positive = NULL, threshold = 0.5) {
   binary <- .gp3ml_binary_values(truth, positive)
@@ -76,6 +97,12 @@ gazepoint_classification_metrics <- function(truth, probability, predicted = NUL
 #'
 #' @param truth Observed numeric outcome values.
 #' @param prediction Predicted numeric outcome values.
+#'
+#' @examples
+#' truth <- c(1.0, 2.0, 3.0, 4.0, 5.0)
+#' prediction <- c(1.1, 1.8, 3.2, 3.9, 4.8)
+#' gazepoint_regression_metrics(truth, prediction)
+#' @return A one-row data frame containing the sample size, RMSE, MAE, R-squared value, and prediction correlation.
 #' @export
 gazepoint_regression_metrics <- function(truth, prediction) {
   truth <- as.numeric(truth); prediction <- as.numeric(prediction)
@@ -100,6 +127,53 @@ gazepoint_regression_metrics <- function(truth, prediction) {
 #' @param prediction Predicted classes or numeric values.
 #' @param probability Predicted positive-class probabilities.
 #' @param threshold Probability threshold for classification.
+#'
+#' @examples
+#' example_data <- data.frame(
+#'   participant_id = rep(sprintf("P%02d", 1:12), each = 2),
+#'   trial_id = sprintf("T%02d", 1:24),
+#'   stimulus_id = rep(c("S01", "S02"), 12),
+#'   condition = rep(c("A", "B"), 12),
+#'   fixation_duration = 180 + seq_len(24),
+#'   pupil_change = sin(seq_len(24) / 3),
+#'   stringsAsFactors = FALSE
+#' )
+#' example_data$quality_status <- factor(
+#'   c(
+#'     "pass", "review", "pass", "review", "review", "pass",
+#'     "review", "pass", "pass", "review", "review", "pass",
+#'     "review", "pass", "review", "pass", "pass", "review",
+#'     "pass", "review", "review", "pass", "pass", "review"
+#'   ),
+#'   levels = c("pass", "review")
+#' )
+#' task <- declare_gazepoint_task(
+#'   data = example_data,
+#'   outcome = "quality_status",
+#'   purpose = "Predict predefined recording-quality review status",
+#'   task_type = "classification",
+#'   unit_id = "trial_id",
+#'   participant_id = "participant_id",
+#'   stimulus_id = "stimulus_id",
+#'   generalization_target = "new_participants",
+#'   positive = "review"
+#' )
+#' probability <- seq(
+#'   0.20,
+#'   0.80,
+#'   length.out = nrow(example_data)
+#' )
+#' predicted <- factor(
+#'   ifelse(probability >= 0.5, "review", "pass"),
+#'   levels = levels(example_data$quality_status)
+#' )
+#' gazepoint_performance_metrics(
+#'   task = task,
+#'   truth = example_data$quality_status,
+#'   prediction = predicted,
+#'   probability = probability
+#' )
+#' @return A one-row data frame of classification or regression metrics selected according to the governed task type.
 #' @export
 gazepoint_performance_metrics <- function(task, truth, prediction = NULL, probability = NULL, threshold = 0.5) {
   assert_gp3ml_use_case(task)
@@ -121,6 +195,56 @@ gazepoint_performance_metrics <- function(task, truth, prediction = NULL, probab
 #' @param bootstrap Number of bootstrap replicates.
 #' @param conf_level Confidence level for percentile intervals.
 #' @param seed Deterministic random seed.
+#'
+#' @examples
+#' example_data <- data.frame(
+#'   participant_id = rep(sprintf("P%02d", 1:12), each = 2),
+#'   trial_id = sprintf("T%02d", 1:24),
+#'   stimulus_id = rep(c("S01", "S02"), 12),
+#'   condition = rep(c("A", "B"), 12),
+#'   fixation_duration = 180 + seq_len(24),
+#'   pupil_change = sin(seq_len(24) / 3),
+#'   stringsAsFactors = FALSE
+#' )
+#' example_data$quality_status <- factor(
+#'   c(
+#'     "pass", "review", "pass", "review", "review", "pass",
+#'     "review", "pass", "pass", "review", "review", "pass",
+#'     "review", "pass", "review", "pass", "pass", "review",
+#'     "pass", "review", "review", "pass", "pass", "review"
+#'   ),
+#'   levels = c("pass", "review")
+#' )
+#' task <- declare_gazepoint_task(
+#'   data = example_data,
+#'   outcome = "quality_status",
+#'   purpose = "Predict predefined recording-quality review status",
+#'   task_type = "classification",
+#'   unit_id = "trial_id",
+#'   participant_id = "participant_id",
+#'   stimulus_id = "stimulus_id",
+#'   generalization_target = "new_participants",
+#'   positive = "review"
+#' )
+#' probability <- seq(
+#'   0.20,
+#'   0.80,
+#'   length.out = nrow(example_data)
+#' )
+#' predicted <- factor(
+#'   ifelse(probability >= 0.5, "review", "pass"),
+#'   levels = levels(example_data$quality_status)
+#' )
+#' uncertainty <- bootstrap_gazepoint_metrics(
+#'   task = task,
+#'   truth = example_data$quality_status,
+#'   prediction = predicted,
+#'   probability = probability,
+#'   bootstrap = 10L,
+#'   seed = 101L
+#' )
+#' uncertainty
+#' @return A `gp3ml_metric_uncertainty` object containing point estimates, percentile intervals, bootstrap draws, resampling settings, and the governed task.
 #' @export
 bootstrap_gazepoint_metrics <- function(
     task,

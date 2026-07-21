@@ -23,6 +23,29 @@ gazepoint_classification_metrics(
 
 \item{threshold}{Probability threshold used for class predictions.}
 }
+\value{
+A one-row data frame containing the sample size, threshold, class-performance measures, discrimination metrics, Brier score, and log loss.
+}
 \description{
 Binary classification metrics
+}
+\examples{
+truth <- factor(
+  rep(c("pass", "review"), 6),
+  levels = c("pass", "review")
+)
+probability <- c(
+  0.20, 0.70, 0.60, 0.55, 0.30, 0.80,
+  0.65, 0.45, 0.40, 0.75, 0.50, 0.60
+)
+predicted <- factor(
+  ifelse(probability >= 0.5, "review", "pass"),
+  levels = levels(truth)
+)
+gazepoint_classification_metrics(
+  truth = truth,
+  probability = probability,
+  predicted = predicted,
+  positive = "review"
+)
 }
