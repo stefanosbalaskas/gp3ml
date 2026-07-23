@@ -1,0 +1,17 @@
+pandoc: '3.10'
+pkgdown: 2.2.1
+pkgdown_sha: ~
+articles:
+  assigned-condition-discrimination: assigned-condition-discrimination.html
+  contaminated-manifest-leakage: contaminated-manifest-leakage.html
+  external-validation-reporting: external-validation-reporting.html
+  nested-grouped-resampling: nested-grouped-resampling.html
+  observed-behavioral-endpoint: observed-behavioral-endpoint.html
+  participant-generalization: participant-generalization.html
+  participant-stimulus-generalization: participant-stimulus-generalization.html
+  recording-quality-review: recording-quality-review.html
+  stimulus-generalization: stimulus-generalization.html
+last_built: 2026-07-23T20:15Z
+urls:
+  reference: https://stefanosbalaskas.github.io/gp3ml/reference
+  article: https://stefanosbalaskas.github.io/gp3ml/articles

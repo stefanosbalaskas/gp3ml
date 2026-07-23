@@ -331,8 +331,8 @@ deception, or intent.
 
 See:
 
-- [`GOVERNANCE.md`](inst/governance/GOVERNANCE.md)
-- [`PROHIBITED-USE.md`](inst/governance/PROHIBITED-USE.md)
+- [`GOVERNANCE.md`](https://github.com/stefanosbalaskas/gp3ml/blob/master/inst/governance/GOVERNANCE.md)
+- [`PROHIBITED-USE.md`](https://github.com/stefanosbalaskas/gp3ml/blob/master/inst/governance/PROHIBITED-USE.md)
 
 ## Release status
 
