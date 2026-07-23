@@ -1,0 +1,38 @@
+---
+title: "Participant generalization"
+description: "Leakage-resistant evaluation for new participants."
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Participant generalization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Participant-grouped generalization workflow
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(gp3ml)
+```
+
+
+```{r workflow}
+data <- simulate_gazepoint_governed_data(21L, 6L, 1L, seed = 2401L)
+predictors <- c("tracking_ratio", "blink_rate", "gaze_dispersion")
+task <- create_gazepoint_synthetic_task(data, "recording_quality", "new_participants")
+manifest <- create_gazepoint_synthetic_manifest(task$outcome, predictors)
+folds <- create_gazepoint_group_folds(
+  data, task$outcome, predictors, manifest,
+  "new_participants", "participant_id", "trial_id", "stimulus_id",
+  v = 3L, repeats = 2L, seed = 2401L
+)
+audit_gazepoint_group_folds(folds)
+evaluation <- evaluate_gazepoint_group_folds(
+  folds, task, predictors, "glm", seed = 2401L
+)
+summary <- summarize_gazepoint_resample_performance(evaluation)
+summary
+```
+
+Every participant is assigned as a group. Row-level assessment metrics describe predictions under this grouped design; they are not participant-level measurements.

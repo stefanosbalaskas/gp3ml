@@ -1,0 +1,57 @@
+---
+title: "Explicitly observed behavioural endpoint"
+description: "Prediction of a recorded non-sensitive response without latent-state interpretation."
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Explicitly observed behavioural endpoint}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(gp3ml)
+```
+
+
+## Observed endpoint
+
+```{r data}
+data <- simulate_gazepoint_governed_data(18L, 6L, 1L, seed = 2301L)
+predictors <- c("tracking_ratio", "fixation_duration", "gaze_dispersion")
+task <- create_gazepoint_synthetic_task(
+  data, "observed_behavior", "new_participants"
+)
+manifest <- create_gazepoint_synthetic_manifest(task$outcome, predictors)
+folds <- create_gazepoint_group_folds(
+  data, task$outcome, predictors, manifest,
+  task$generalization_target,
+  task$participant_id, task$unit_id, task$stimulus_id,
+  v = 3L, repeats = 2L, seed = 2301L
+)
+```
+
+## Evaluate and quantify participant-cluster uncertainty
+
+```{r evaluation}
+evaluation <- evaluate_gazepoint_group_folds(
+  folds, task, predictors, "glm", seed = 2301L
+)
+predictions <- evaluation$predictions
+uncertainty <- bootstrap_gazepoint_metrics_by_unit(
+  task,
+  truth = predictions$truth,
+  prediction = factor(
+    predictions$prediction,
+    levels = levels(data$observed_response)
+  ),
+  probability = predictions$probability,
+  participant_id = predictions$participant_id,
+  unit = "participant",
+  bootstrap = 50L,
+  seed = 2301L
+)
+uncertainty
+```
+
+The endpoint is the recorded response only. The analysis does not infer intent, comprehension, cognition, or another latent construct.

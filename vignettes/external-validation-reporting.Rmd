@@ -1,0 +1,77 @@
+---
+title: "External validation and transportability reporting"
+description: "Independent-dataset declarations, shift diagnostics, and explicit not-validated status."
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{External validation and transportability reporting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(gp3ml)
+```
+
+
+## Development workflow
+
+```{r development}
+development <- simulate_gazepoint_governed_data(18L, 6L, 1L, seed = 2901L)
+predictors <- c("tracking_ratio", "blink_rate", "gaze_dispersion")
+task <- create_gazepoint_synthetic_task(development, "recording_quality", "new_participants")
+manifest <- create_gazepoint_synthetic_manifest(task$outcome, predictors)
+folds <- create_gazepoint_group_folds(
+  development, task$outcome, predictors, manifest,
+  task$generalization_target,
+  "participant_id", "trial_id", "stimulus_id",
+  v = 3L, repeats = 1L, seed = 2901L
+)
+development_evaluation <- evaluate_gazepoint_group_folds(
+  folds, task, predictors, "glm", seed = 2901L,
+  assess_calibration = TRUE, calibration_bootstrap = 0L
+)
+model <- fit_gazepoint_model(
+  development, task, predictors, "glm", seed = 2901L
+)
+```
+
+## Explicit independent external dataset
+
+```{r external}
+external <- simulate_gazepoint_governed_data(10L, 6L, 1L, seed = 2902L)
+external$participant_id <- paste0("E", external$participant_id)
+external$trial_id <- paste0("E", external$trial_id)
+external$stimulus_id <- paste0("E", external$stimulus_id)
+declaration <- declare_gazepoint_external_dataset(
+  external,
+  label = "synthetic_external_site",
+  independent = TRUE,
+  origin = "Independent deterministic synthetic generation"
+)
+report <- evaluate_gazepoint_external_transportability(
+  model,
+  development_data = development,
+  external_data = external,
+  declaration = declaration,
+  development_evaluation = development_evaluation,
+  bootstrap = 0L,
+  seed = 2902L
+)
+report
+report$performance_comparison
+report$group_coverage
+```
+
+## Explicit absence of external validation
+
+```{r absent}
+not_validated <- evaluate_gazepoint_external_transportability(
+  model,
+  development_data = development,
+  external_data = NULL
+)
+not_validated
+```
+
+An internal holdout is never renamed external validation. The external result is specific to the declared dataset and context.

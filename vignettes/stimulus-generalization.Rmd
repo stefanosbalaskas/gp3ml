@@ -1,0 +1,37 @@
+---
+title: "Stimulus generalization"
+description: "Leakage-resistant evaluation for new stimuli."
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Stimulus generalization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Stimulus-grouped generalization workflow
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(gp3ml)
+```
+
+
+```{r workflow}
+data <- simulate_gazepoint_governed_data(18L, 9L, 1L, seed = 2501L)
+predictors <- c("tracking_ratio", "fixation_duration", "gaze_dispersion")
+task <- create_gazepoint_synthetic_task(data, "recording_quality", "new_stimuli")
+manifest <- create_gazepoint_synthetic_manifest(task$outcome, predictors)
+folds <- create_gazepoint_group_folds(
+  data, task$outcome, predictors, manifest,
+  "new_stimuli", "participant_id", "trial_id", "stimulus_id",
+  v = 3L, repeats = 2L, seed = 2501L
+)
+diagnose_gazepoint_group_folds(folds)
+evaluation <- evaluate_gazepoint_group_folds(
+  folds, task, predictors, "glm", seed = 2501L
+)
+summarize_gazepoint_resample_uncertainty(evaluation, unit = "fold")
+```
+
+Stimulus-grouped assessment estimates generalization to held-out stimuli only. It does not establish participant generalization.

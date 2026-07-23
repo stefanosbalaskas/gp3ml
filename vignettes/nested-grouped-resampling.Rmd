@@ -1,0 +1,59 @@
+---
+title: "Nested grouped resampling"
+description: "Inner tuning isolated inside each outer analysis partition."
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Nested grouped resampling}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Nested grouped-resampling workflow
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(gp3ml)
+```
+
+
+```{r setup-data}
+data <- simulate_gazepoint_governed_data(18L, 6L, 1L, seed = 2801L)
+predictors <- c("tracking_ratio", "blink_rate", "gaze_dispersion")
+task <- create_gazepoint_synthetic_task(data, "recording_quality", "new_participants")
+manifest <- create_gazepoint_synthetic_manifest(task$outcome, predictors)
+outer <- create_gazepoint_group_folds(
+  data, task$outcome, predictors, manifest,
+  task$generalization_target,
+  "participant_id", "trial_id", "stimulus_id",
+  v = 3L, repeats = 1L, seed = 2801L
+)
+nested <- create_gazepoint_nested_folds(
+  outer, inner_v = 2L, inner_repeats = 1L, seed = 2801L
+)
+nested$audit
+```
+
+```{r nested-evaluation}
+grid <- create_gazepoint_tuning_grid(
+  "glm",
+  preprocessor_grid = list(center = c(TRUE, FALSE), scale = TRUE),
+  thresholds = 0.5,
+  complexity = c(1, 2),
+  interpretability = "high"
+)
+evaluation <- evaluate_gazepoint_nested_resampling(
+  nested,
+  task,
+  grid,
+  selection_metric = "brier",
+  direction = "minimize",
+  predictors = predictors,
+  minimum_success_prop = 0.5,
+  selection_rationale = "Predeclared Brier-score rule with human review.",
+  seed = 2801L
+)
+evaluation
+```
+
+Only outer-assessment predictions estimate the declared generalization target. Inner assessment partitions are used solely for tuning inside the outer analysis data.

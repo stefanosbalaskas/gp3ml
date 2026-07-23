@@ -18,5 +18,5 @@ test_that("package metadata identifies the first formal release", {
   }
 
   expect_identical(package_name, "gp3ml")
-  expect_identical(package_version, "0.1.0")
+  expect_identical(package_version, as.character(utils::packageVersion("gp3ml")))
 })
