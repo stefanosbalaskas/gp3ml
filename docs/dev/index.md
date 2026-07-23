@@ -1,12 +1,4 @@
-
-<!-- README.md is generated from README.Rmd. Please edit README.Rmd. -->
-
-# gp3ml <img src="man/figures/logo.png" align="right" height="139" alt="gp3ml logo" />
-
-<!-- badges: start -->
-
-[![R-CMD-check](https://github.com/stefanosbalaskas/gp3ml/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stefanosbalaskas/gp3ml/actions/workflows/R-CMD-check.yaml)
-<!-- badges: end -->
+# gp3ml
 
 `gp3ml` is a governance-first R package for leakage-resistant and
 group-aware predictive modelling and validation using Gazepoint-derived
@@ -22,6 +14,7 @@ Until a public CRAN package page exists, install the current source from
 GitHub:
 
 ``` r
+
 install.packages("remotes")
 remotes::install_github("stefanosbalaskas/gp3ml")
 ```
@@ -57,8 +50,9 @@ stimuli. Preprocessing must be estimated inside the relevant analysis
 partition or resampling fold. Package examples and tests use
 deterministic synthetic data. \## Leakage-audit workflow
 
-`audit_gazepoint_ml_leakage()` audits already-defined analysis and
-assessment partitions before predictive evaluation. It checks:
+[`audit_gazepoint_ml_leakage()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/audit_gazepoint_ml_leakage.md)
+audits already-defined analysis and assessment partitions before
+predictive evaluation. It checks:
 
 - compatibility with the declared generalization target;
 - participant, participant-trial, and stimulus overlap;
@@ -71,9 +65,10 @@ assessment partitions before predictive evaluation. It checks:
 The returned audit has an overall `pass`, `review`, or `fail` status, a
 complete check table, a non-passing issue table, and partition
 summaries. Audit tables can be exported using
-`write_gazepoint_ml_leakage_audit_csv()`.
+[`write_gazepoint_ml_leakage_audit_csv()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/write_gazepoint_ml_leakage_audit_csv.md).
 
 ``` r
+
 analysis <- data.frame(
   participant_id = c("P01", "P02"),
   trial_id = c("T01", "T02"),
@@ -111,17 +106,18 @@ safeguards require separate provenance and resampling infrastructure.
 
 ## Feature-provenance workflow
 
-`create_gazepoint_feature_manifest()` records the declared origin,
-transformation, availability, role, and preprocessing scope of each
-intended predictor.
+[`create_gazepoint_feature_manifest()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/create_gazepoint_feature_manifest.md)
+records the declared origin, transformation, availability, role, and
+preprocessing scope of each intended predictor.
 
-`validate_gazepoint_feature_manifest()` checks whether the manifest
-contains sufficient provenance metadata and identifies predictors
-declared as outcome-derived, post-outcome, unavailable at prediction
-time, identifiers, or incompatible with required fold-local
-preprocessing.
+[`validate_gazepoint_feature_manifest()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/validate_gazepoint_feature_manifest.md)
+checks whether the manifest contains sufficient provenance metadata and
+identifies predictors declared as outcome-derived, post-outcome,
+unavailable at prediction time, identifiers, or incompatible with
+required fold-local preprocessing.
 
 ``` r
+
 manifest <- create_gazepoint_feature_manifest(
   features = c("fixation_duration", "pupil_change"),
   scientific_source = c(
@@ -146,7 +142,7 @@ validation
 Validation returns an overall `pass`, `review`, or `fail` status,
 together with complete check and issue tables. The manifest or its
 validation tables can be exported using
-`write_gazepoint_feature_manifest_csv()`.
+[`write_gazepoint_feature_manifest_csv()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/write_gazepoint_feature_manifest_csv.md).
 
 The manifest records declared provenance. It does not independently
 verify that preprocessing was executed within the stated partition or
@@ -154,13 +150,15 @@ resampling scope.
 
 ## Group-aware holdout splitting
 
-`split_gazepoint_ml_data()` creates deterministic analysis and
-assessment partitions that preserve the grouping unit implied by an
-explicit predictive-generalization target. A passing feature-provenance
-manifest is required before splitting, and the resulting partitions are
-checked using the leakage audit.
+[`split_gazepoint_ml_data()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/split_gazepoint_ml_data.md)
+creates deterministic analysis and assessment partitions that preserve
+the grouping unit implied by an explicit predictive-generalization
+target. A passing feature-provenance manifest is required before
+splitting, and the resulting partitions are checked using the leakage
+audit.
 
 ``` r
+
 split_data <- expand.grid(
   participant_id = sprintf("P%02d", 1:8),
   trial_id = sprintf("T%02d", 1:4),
@@ -210,10 +208,11 @@ This preserves strict separation between the analysis and assessment
 participant–stimulus blocks while retaining complete source-row
 accounting.
 
-`validate_gazepoint_ml_split()` checks partition structure, source-row
-accounting, provenance status, and the embedded leakage audit. Split
-assignments, summaries, validation checks, and materialized partitions
-can be exported using `write_gazepoint_ml_split_csv()`.
+[`validate_gazepoint_ml_split()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/validate_gazepoint_ml_split.md)
+checks partition structure, source-row accounting, provenance status,
+and the embedded leakage audit. Split assignments, summaries, validation
+checks, and materialized partitions can be exported using
+[`write_gazepoint_ml_split_csv()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/write_gazepoint_ml_split_csv.md).
 
 The splitter creates one deterministic holdout split. It does not
 perform preprocessing, automated feature selection, cross-validation,
@@ -221,12 +220,14 @@ nested resampling, or model fitting.
 
 ## Group-aware resampling
 
-`create_gazepoint_group_folds()` creates deterministic repeated grouped
-V-fold plans for the same explicit generalization targets supported by
-the holdout splitter. A passing feature-provenance manifest is required,
-and every analysis-assessment pair is checked using the leakage audit.
+[`create_gazepoint_group_folds()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/create_gazepoint_group_folds.md)
+creates deterministic repeated grouped V-fold plans for the same
+explicit generalization targets supported by the holdout splitter. A
+passing feature-provenance manifest is required, and every
+analysis-assessment pair is checked using the leakage audit.
 
 ``` r
+
 folds <- create_gazepoint_group_folds(
   data = split_data,
   outcome = "outcome",
@@ -256,24 +257,28 @@ counts. Crossed assessment blocks preserve strict separation in both
 dimensions, while cross-block rows are explicitly assigned to the
 excluded partition.
 
-`validate_gazepoint_group_folds()` checks fold counts, source-row
-accounting, assessment coverage, materialized partitions, feature
-provenance, and embedded leakage audits. `audit_gazepoint_group_folds()`
+[`validate_gazepoint_group_folds()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/validate_gazepoint_group_folds.md)
+checks fold counts, source-row accounting, assessment coverage,
+materialized partitions, feature provenance, and embedded leakage
+audits.
+[`audit_gazepoint_group_folds()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/audit_gazepoint_group_folds.md)
 aggregates the fold-level audits. Assignments, summaries, validation
 tables, audit tables, and optionally materialized partitions can be
-exported using `write_gazepoint_group_folds_csv()`.
+exported using
+[`write_gazepoint_group_folds_csv()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/write_gazepoint_group_folds_csv.md).
 
 The fold planner does not perform preprocessing, automated feature
 selection, tuning, nested resampling, or model fitting.
 
 ## Resampling diagnostics
 
-`diagnose_gazepoint_group_folds()` evaluates the balance, coverage,
-outcome representation, and exclusions of an existing grouped resampling
-plan. Diagnostics remain downstream of fold construction and do not
-modify assignments or fit models.
+[`diagnose_gazepoint_group_folds()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/diagnose_gazepoint_group_folds.md)
+evaluates the balance, coverage, outcome representation, and exclusions
+of an existing grouped resampling plan. Diagnostics remain downstream of
+fold construction and do not modify assignments or fit models.
 
 ``` r
+
 fold_diagnostics <- diagnose_gazepoint_group_folds(folds)
 
 fold_diagnostics
@@ -282,10 +287,11 @@ head(fold_diagnostics$outcome_balance)
 head(fold_diagnostics$assessment_coverage)
 ```
 
-`validate_gazepoint_fold_diagnostics()` reports `pass`, `review`, or
-`fail` findings for fold counts, partition accounting, non-empty
-partitions, assessment coverage, fold-size imbalance, group presence,
-outcome-level presence, embedded leakage audits, and source-plan status.
+[`validate_gazepoint_fold_diagnostics()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/validate_gazepoint_fold_diagnostics.md)
+reports `pass`, `review`, or `fail` findings for fold counts, partition
+accounting, non-empty partitions, assessment coverage, fold-size
+imbalance, group presence, outcome-level presence, embedded leakage
+audits, and source-plan status.
 
 For crossed new-participant and new-stimulus designs,
 `exclusion_summary` reports the rows intentionally excluded because they
@@ -295,6 +301,7 @@ assessment block.
 All diagnostic tables can be exported for review and reporting:
 
 ``` r
+
 write_gazepoint_fold_diagnostics_csv(
   fold_diagnostics,
   directory = "resampling-diagnostics",

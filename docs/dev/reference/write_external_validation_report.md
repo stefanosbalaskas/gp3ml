@@ -1,0 +1,90 @@
+# Write an external-validation report
+
+Write an external-validation report
+
+## Usage
+
+``` r
+write_external_validation_report(report, path, overwrite = FALSE)
+```
+
+## Arguments
+
+- report:
+
+  A `gp3ml_external_validation_report` object.
+
+- path:
+
+  Destination Markdown file path.
+
+- overwrite:
+
+  Whether an existing file may be replaced.
+
+## Value
+
+The destination path, returned invisibly after the Markdown report is
+written.
+
+## Examples
+
+``` r
+training_data <- data.frame(
+  participant_id = rep(sprintf("P%02d", 1:12), each = 2),
+  trial_id = sprintf("T%02d", 1:24),
+  stimulus_id = rep(c("S01", "S02"), 12),
+  fixation_duration = 180 + seq_len(24),
+  pupil_change = sin(seq_len(24) / 3),
+  stringsAsFactors = FALSE
+)
+training_data$quality_status <- factor(
+  c(
+    "pass", "review", "pass", "review", "review", "pass",
+    "review", "pass", "pass", "review", "review", "pass",
+    "review", "pass", "review", "pass", "pass", "review",
+    "pass", "review", "review", "pass", "pass", "review"
+  ),
+  levels = c("pass", "review")
+)
+task <- declare_gazepoint_task(
+  data = training_data,
+  outcome = "quality_status",
+  purpose = "Predict predefined recording-quality review status",
+  task_type = "classification",
+  unit_id = "trial_id",
+  participant_id = "participant_id",
+  stimulus_id = "stimulus_id",
+  generalization_target = "new_participants",
+  positive = "review"
+)
+model <- train_gazepoint_classifier(
+  data = training_data,
+  task = task,
+  predictors = c("fixation_duration", "pupil_change"),
+  engine = "glm",
+  seed = 101L
+)
+external_data <- training_data
+external_data$participant_id <- rep(
+  sprintf("E%02d", 1:12),
+  each = 2
+)
+external_data$trial_id <- sprintf("ET%02d", 1:24)
+external_data$fixation_duration <-
+  external_data$fixation_duration + 4
+external_data$pupil_change <- cos(seq_len(24) / 4)
+validation <- evaluate_external_validation(
+  model = model,
+  external_data = external_data,
+  label = "synthetic_external",
+  bootstrap = 10L,
+  seed = 101L
+)
+report <- create_external_validation_report(validation)
+output <- tempfile(fileext = ".md")
+write_external_validation_report(report, output)
+file.exists(output)
+#> [1] TRUE
+unlink(output)
+```
