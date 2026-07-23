@@ -14,18 +14,56 @@ home:
   title: gp3ml
   description: >
     Governance-first predictive modelling, leakage auditing, group-aware
-    validation, calibration, and reproducibility reporting for Gazepoint
-    research data.
+    validation, calibration, target-aligned uncertainty, transportability,
+    and reproducibility reporting for Gazepoint research data.
 
 navbar:
   structure:
-    left: [reference, news]
+    left: [reference, articles, news]
     right: [github]
   components:
+    articles:
+      text: Articles
+      menu:
+        - text: Predefined recording-quality review status
+          href: articles/recording-quality-review.html
+        - text: Experimentally assigned condition discrimination
+          href: articles/assigned-condition-discrimination.html
+        - text: Explicitly observed behavioural endpoint
+          href: articles/observed-behavioral-endpoint.html
+        - text: Participant generalization
+          href: articles/participant-generalization.html
+        - text: Stimulus generalization
+          href: articles/stimulus-generalization.html
+        - text: Participant and stimulus generalization
+          href: articles/participant-stimulus-generalization.html
+        - text: Contaminated manifests and leakage
+          href: articles/contaminated-manifest-leakage.html
+        - text: Nested grouped resampling
+          href: articles/nested-grouped-resampling.html
+        - text: External validation and transportability
+          href: articles/external-validation-reporting.html
     github:
       icon: fa-github
       href: https://github.com/stefanosbalaskas/gp3ml
       aria-label: GitHub
+
+articles:
+  - title: Governed use cases
+    contents:
+      - recording-quality-review
+      - assigned-condition-discrimination
+      - observed-behavioral-endpoint
+  - title: Generalization targets
+    contents:
+      - participant-generalization
+      - stimulus-generalization
+      - participant-stimulus-generalization
+  - title: Advanced validation and reporting
+    contents:
+      - contaminated-manifest-leakage
+      - nested-grouped-resampling
+      - external-validation-reporting
 
 reference:
   - title: Package
@@ -75,6 +113,81 @@ reference:
       - print.gazepoint_fold_diagnostics
       - print.gazepoint_fold_diagnostics_validation
       - write_gazepoint_fold_diagnostics_csv
+
+  - title: Repository-aware fold evaluation
+    desc: Fit fold-local preprocessing and models across materialized grouped folds.
+    contents:
+      - evaluate_gazepoint_group_folds
+      - collect_gazepoint_fold_predictions
+      - summarize_gazepoint_resample_performance
+      - validate_gazepoint_resample_evaluation
+      - write_gazepoint_resample_evaluation
+      - print.gp3ml_resample_evaluation
+      - print.gp3ml_resample_performance_summary
+      - print.gp3ml_resample_evaluation_validation
+
+  - title: Governed comparison and tuning
+    desc: Materialize, evaluate, compare, and review explicit model candidates.
+    contents:
+      - create_gazepoint_tuning_grid
+      - tune_gazepoint_model
+      - compare_gazepoint_models
+      - select_gazepoint_model
+      - validate_gazepoint_model_tuning
+      - write_gazepoint_model_tuning
+      - print.gp3ml_tuning_grid
+      - print.gp3ml_model_tuning
+      - print.gp3ml_model_selection
+      - print.gp3ml_model_tuning_validation
+
+  - title: Nested grouped resampling
+    desc: Isolate inner tuning inside every outer analysis partition.
+    contents:
+      - create_gazepoint_nested_folds
+      - audit_gazepoint_nested_resampling
+      - validate_gazepoint_nested_folds
+      - evaluate_gazepoint_nested_resampling
+      - validate_gazepoint_nested_evaluation
+      - write_gazepoint_nested_evaluation
+      - print.gp3ml_nested_folds
+      - print.gp3ml_nested_resampling_audit
+      - print.gp3ml_nested_folds_validation
+      - print.gp3ml_nested_evaluation
+      - print.gp3ml_nested_evaluation_validation
+
+  - title: Target-aligned uncertainty
+    desc: Record observation, cluster, fold, and repeat uncertainty without relabelling units.
+    contents:
+      - bootstrap_gazepoint_metrics_by_unit
+      - summarize_gazepoint_resample_uncertainty
+      - validate_gazepoint_target_uncertainty
+      - write_gazepoint_target_uncertainty
+      - print.gp3ml_target_uncertainty
+      - print.gp3ml_resample_uncertainty
+      - print.gp3ml_uncertainty_validation
+
+  - title: External validation and transportability
+    desc: Declare independent data and report performance, drift, schema, and coverage.
+    contents:
+      - declare_gazepoint_external_dataset
+      - evaluate_gazepoint_external_transportability
+      - validate_gazepoint_transportability
+      - write_gazepoint_transportability_report
+      - print.gp3ml_external_dataset_declaration
+      - print.gp3ml_transportability_report
+      - print.gp3ml_transportability_validation
+
+  - title: Synthetic workflows and release reporting
+    desc: Deterministic demonstrations and release-ready governance records.
+    contents:
+      - simulate_gazepoint_governed_data
+      - create_gazepoint_synthetic_manifest
+      - create_gazepoint_synthetic_task
+      - create_gazepoint_release_model_card
+      - write_gazepoint_release_model_card
+      - create_gazepoint_release_evidence
+      - print.gp3ml_release_model_card
+      - print.gp3ml_release_evidence
 
   - title: Governed modelling core
     desc: >

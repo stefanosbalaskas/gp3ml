@@ -1,0 +1,67 @@
+---
+title: "Predefined recording-quality review status"
+description: "Governed grouped evaluation for an explicitly observed quality-control outcome."
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Predefined recording-quality review status}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(gp3ml)
+```
+
+
+## Scope
+
+This workflow predicts a **predefined recording-quality review status**. It does not infer health, emotion, cognition, intent, identity, or any latent state. Predictions support manual quality review.
+
+```{r data}
+data <- simulate_gazepoint_governed_data(18L, 6L, 1L, seed = 2101L)
+predictors <- c("tracking_ratio", "blink_rate", "gaze_dispersion")
+task <- create_gazepoint_synthetic_task(
+  data, "recording_quality", "new_participants"
+)
+manifest <- create_gazepoint_synthetic_manifest(task$outcome, predictors)
+```
+
+## Materialized grouped folds
+
+```{r folds}
+folds <- create_gazepoint_group_folds(
+  data = data,
+  outcome = task$outcome,
+  predictors = predictors,
+  feature_manifest = manifest,
+  generalization_target = task$generalization_target,
+  participant_id = task$participant_id,
+  trial_id = task$unit_id,
+  stimulus_id = task$stimulus_id,
+  v = 3L,
+  repeats = 2L,
+  seed = 2101L
+)
+folds$validation
+```
+
+## Fold-local evaluation
+
+```{r evaluate}
+evaluation <- evaluate_gazepoint_group_folds(
+  folds,
+  task,
+  predictors = predictors,
+  engine = "glm",
+  seed = 2101L,
+  assess_calibration = TRUE,
+  calibration_bootstrap = 0L
+)
+evaluation
+summarize_gazepoint_resample_performance(evaluation)
+```
+
+## Interpretation
+
+The metrics describe assessment-row predictions generated under participant-grouped resampling. They must not be relabelled as participant-level outcomes.

@@ -1,0 +1,52 @@
+---
+title: "Experimentally assigned condition discrimination"
+description: "A governed demonstration using an experimentally assigned label."
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Experimentally assigned condition discrimination}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(gp3ml)
+```
+
+
+## Declared task
+
+The label is the experimentally assigned condition. The workflow assesses whether predeclared measurements discriminate that assignment. It does not establish psychological interpretation or causal mechanism.
+
+```{r task}
+data <- simulate_gazepoint_governed_data(18L, 6L, 1L, seed = 2201L)
+predictors <- c("fixation_duration", "gaze_dispersion", "pupil_change")
+task <- create_gazepoint_synthetic_task(
+  data, "assigned_condition", "new_participants"
+)
+manifest <- create_gazepoint_synthetic_manifest(task$outcome, predictors)
+folds <- create_gazepoint_group_folds(
+  data, task$outcome, predictors, manifest,
+  task$generalization_target,
+  task$participant_id, task$unit_id, task$stimulus_id,
+  v = 3L, repeats = 1L, seed = 2201L
+)
+```
+
+## Explicit candidate grid
+
+```{r tune}
+grid <- create_gazepoint_tuning_grid(
+  engine = "glm",
+  preprocessor_grid = list(center = c(TRUE, FALSE), scale = TRUE),
+  thresholds = c(0.45, 0.55),
+  complexity = "low",
+  interpretability = "high"
+)
+tuning <- tune_gazepoint_model(
+  folds, task, grid, predictors = predictors, seed = 2201L
+)
+compare_gazepoint_models(tuning, c("roc_auc", "balanced_accuracy", "brier"))
+```
+
+No candidate is selected automatically. A selection requires an explicit metric, direction, and human rationale.

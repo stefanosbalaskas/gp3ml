@@ -347,6 +347,25 @@ Repository-aware evaluation across materialized grouped folds, governed
 model comparison and tuning, and nested grouped resampling remain
 separate post-release milestones.
 
+## Analytical roadmap
+
+gp3ml now extends its materialized grouped-fold infrastructure with a complete,
+reviewable evaluation and reporting layer:
+
+- fold-local evaluation across `gazepoint_group_folds`;
+- explicit deterministic candidate grids and human-reviewed selection;
+- nested participant/stimulus-aware resampling;
+- observation, participant, stimulus, two-way, fold, and repeat uncertainty;
+- independent external-dataset declarations and transportability reports;
+- release-ready model cards recording selection, uncertainty, limitations,
+  and external-validation status.
+
+Nine deterministic synthetic articles demonstrate predefined recording-quality
+review, assigned-condition discrimination, observed non-sensitive endpoints,
+all supported generalization targets, contaminated provenance, nested
+resampling, and external validation. These workflows retain the package's
+prohibited-use boundaries and do not perform autonomous model selection.
+
 ## Project resources
 
 - [Package website](https://stefanosbalaskas.github.io/gp3ml/)

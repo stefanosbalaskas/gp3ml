@@ -56,7 +56,9 @@
   columns <- unique(unlist(lapply(x, names), use.names = FALSE))
   x <- lapply(x, function(item) {
     missing <- setdiff(columns, names(item))
-    for (column in missing) item[[column]] <- NA
+    for (column in missing) {
+      item[[column]] <- rep(NA, nrow(item))
+    }
     item[columns]
   })
   out <- do.call(rbind, x)

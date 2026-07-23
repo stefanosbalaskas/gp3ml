@@ -1,0 +1,41 @@
+---
+title: "Simultaneous participant and stimulus generalization"
+description: "Crossed grouped folds with explicit excluded rows."
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Simultaneous participant and stimulus generalization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Participant-and-stimulus generalization workflow
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(gp3ml)
+```
+
+
+```{r workflow}
+data <- simulate_gazepoint_governed_data(18L, 6L, 1L, seed = 2601L)
+predictors <- c("tracking_ratio", "blink_rate", "gaze_dispersion")
+task <- create_gazepoint_synthetic_task(
+  data, "recording_quality", "new_participants_and_new_stimuli"
+)
+manifest <- create_gazepoint_synthetic_manifest(task$outcome, predictors)
+folds <- create_gazepoint_group_folds(
+  data, task$outcome, predictors, manifest,
+  task$generalization_target,
+  "participant_id", "trial_id", "stimulus_id",
+  v = 3L, repeats = 1L, seed = 2601L
+)
+folds$fold_summary
+evaluation <- evaluate_gazepoint_group_folds(
+  folds, task, predictors, "glm", seed = 2601L
+)
+evaluation$fold_status
+head(evaluation$excluded)
+```
+
+Cross-block rows that belong to only one held-out grouping dimension remain explicitly excluded. They are not silently reassigned to analysis or assessment.

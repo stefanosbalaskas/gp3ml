@@ -1,3 +1,27 @@
+# gp3ml 0.2.0
+
+## Grouped evaluation and governed tuning
+
+* Added fold-local evaluation across materialized `gazepoint_group_folds`, with retained predictions, metrics, exclusions, leakage audits, warnings, and failures.
+* Added explicit deterministic tuning grids, candidate comparison, and human-reviewed selection requiring a predeclared metric and direction.
+* Added nested grouped resampling with inner tuning isolated inside every outer analysis partition.
+
+## Target-aligned uncertainty
+
+* Added observation, participant-cluster, stimulus-cluster, and participant-and-stimulus bootstrap uncertainty with the resampling unit recorded explicitly.
+* Added fold- and repeat-distribution summaries without relabelling row-level results as cluster-level estimates.
+
+## External validation and reporting
+
+* Added independent-dataset declarations, schema checks, predictor availability, prevalence shift, calibration drift, participant/stimulus coverage, and transportability limitations.
+* Added explicit `not_externally_validated` status when no independent dataset is available.
+* Added release-ready model cards recording selection procedures, uncertainty units, transportability status, limitations, and human oversight.
+
+## Vignettes and validation
+
+* Added nine deterministic synthetic vignettes covering recording quality, assigned conditions, observed outcomes, participant and stimulus generalization, simultaneous participant/stimulus generalization, contaminated manifests, nested resampling, and external validation.
+* Added focused tests, an end-to-end smoke test, a full validation driver, and a read-only 0.2.0 release audit.
+
 # gp3ml 0.1.0
 
 ## First formal release

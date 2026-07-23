@@ -7,3 +7,6 @@
 ^cran-comments\.md$
 ^CITATION\.cff$
 ^pkgdown$
+^tools/roadmap-smoke-test\.R$
+^tools/validate-roadmap\.R$
+^tools/release-0\.2\.0-audit\.R$
