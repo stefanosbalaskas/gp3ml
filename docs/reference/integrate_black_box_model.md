@@ -96,7 +96,7 @@ engine
 #>     training_data <- data.frame(.outcome = y, x, check.names = FALSE)
 #>     stats::glm(.outcome ~ ., data = training_data, family = stats::binomial())
 #> }
-#> <environment: 0x0000017760e1f540>
+#> <environment: 0x000001f388bb5380>
 #>
 #> $predict_fun
 #> function (fit, newdata, type, task, ...)
@@ -104,7 +104,7 @@ engine
 #>     as.numeric(stats::predict(fit, newdata = as.data.frame(newdata),
 #>         type = "response"))
 #> }
-#> <environment: 0x0000017760e1f540>
+#> <environment: 0x000001f388bb5380>
 #>
 #> $supports
 #> [1] "classification"

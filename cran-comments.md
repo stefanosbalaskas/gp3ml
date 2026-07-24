@@ -1,42 +1,24 @@
 ## Submission
 
-This is a new submission.
+This is a new package submission for gp3ml 0.2.0.
+
+gp3ml provides governance-first machine-learning workflows for repeated-measures Gazepoint research. Version 0.2.0 adds governed model tuning, nested grouped resampling, resample evaluation, target uncertainty, external transportability assessment, synthetic governed workflows, and release-evidence and model-card reporting.
+
+The package is restricted to non-sensitive observed recording-quality and behavioural endpoints. It does not support identity or authentication, health or protected-attribute inference, or emotion, stress, personality, deception, cognition, comprehension, intent, or other mental-state inference.
 
 ## Test environments
 
-- Windows 11 x64 (build 26200), R 4.6.1 (2026-06-24 ucrt)
-- GitHub Actions: four checks passed
+* Local Windows 11 x64 (build 26200), R 4.6.1 (2026-06-24 ucrt)
+* `R CMD check --as-cran --run-donttest`
 
 ## R CMD check results
 
-Remote-enabled `R CMD check --as-cran`:
+0 errors | 0 warnings | 0 notes
 
-- 0 errors
-- 0 warnings
-- 1 NOTE
+All suggested packages were available for the check. `keras3` 1.5.1 and its missing R dependencies were installed only in an isolated temporary library.
 
-The NOTE is the expected CRAN incoming-feasibility result for a new
-submission:
+The complete testthat suite passed before the check. All nine vignettes built, checked, and rebuilt successfully.
 
-```
-* checking CRAN incoming feasibility ... NOTE
-New submission
-```
+## Additional notes
 
-A second strict `R CMD check --as-cran`, with CRAN incoming checks
-disabled but all package, dependency, example, test, and manual checks
-enabled, completed with:
-
-- 0 errors
-- 0 warnings
-- 0 notes
-
-`_R_CHECK_FORCE_SUGGESTS_=true` was used, with `keras3` 1.5.1
-available from an isolated temporary library.
-
-## Additional comments
-
-The pkgdown site is live at
-https://stefanosbalaskas.github.io/gp3ml/.
-
-No DOI, CRAN URL, or CRAN acceptance status is claimed.
+* Tests, examples, and vignettes use deterministic synthetic non-sensitive data; no private participant data are included.

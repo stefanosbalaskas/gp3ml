@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gp3ml</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -16,6 +16,18 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/recording-quality-review.html">Predefined recording-quality review status</a></li>
+    <li><a class="dropdown-item" href="../articles/assigned-condition-discrimination.html">Experimentally assigned condition discrimination</a></li>
+    <li><a class="dropdown-item" href="../articles/observed-behavioral-endpoint.html">Explicitly observed behavioural endpoint</a></li>
+    <li><a class="dropdown-item" href="../articles/participant-generalization.html">Participant generalization</a></li>
+    <li><a class="dropdown-item" href="../articles/stimulus-generalization.html">Stimulus generalization</a></li>
+    <li><a class="dropdown-item" href="../articles/participant-stimulus-generalization.html">Participant and stimulus generalization</a></li>
+    <li><a class="dropdown-item" href="../articles/contaminated-manifest-leakage.html">Contaminated manifests and leakage</a></li>
+    <li><a class="dropdown-item" href="../articles/nested-grouped-resampling.html">Nested grouped resampling</a></li>
+    <li><a class="dropdown-item" href="../articles/external-validation-reporting.html">External validation and transportability</a></li>
+  </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://github.com/stefanosbalaskas/gp3ml" aria-label="GitHub"><span class="fa fa-github"></span></a></li>
       </ul></div>
@@ -257,6 +269,277 @@
 
         </dt>
         <dd>Write Gazepoint fold diagnostics to CSV files</dd>
+      </dl></div><div class="section level2">
+      <h2 id="repository-aware-fold-evaluation">Repository-aware fold evaluation<a class="anchor" aria-label="anchor" href="#repository-aware-fold-evaluation"></a></h2>
+
+      <div class="section-desc"><p>Fit fold-local preprocessing and models across materialized grouped folds.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="evaluate_gazepoint_group_folds.html">evaluate_gazepoint_group_folds()</a></code> <code><a href="evaluate_gazepoint_group_folds.html">print(<i>&lt;gp3ml_resample_evaluation&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Evaluate a governed model specification across materialized grouped folds</dd>
+
+        <dt>
+
+          <code><a href="collect_gazepoint_fold_predictions.html">collect_gazepoint_fold_predictions()</a></code>
+
+        </dt>
+        <dd>Collect predictions from a grouped-fold evaluation</dd>
+
+        <dt>
+
+          <code><a href="summarize_gazepoint_resample_performance.html">summarize_gazepoint_resample_performance()</a></code> <code><a href="summarize_gazepoint_resample_performance.html">print(<i>&lt;gp3ml_resample_performance_summary&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Summarize repeated grouped-resampling performance</dd>
+
+        <dt>
+
+          <code><a href="validate_gazepoint_resample_evaluation.html">validate_gazepoint_resample_evaluation()</a></code> <code><a href="validate_gazepoint_resample_evaluation.html">print(<i>&lt;gp3ml_resample_evaluation_validation&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Validate a grouped-fold evaluation result</dd>
+
+        <dt>
+
+          <code><a href="write_gazepoint_resample_evaluation.html">write_gazepoint_resample_evaluation()</a></code>
+
+        </dt>
+        <dd>Write grouped-fold evaluation tables</dd>
+      </dl></div><div class="section level2">
+      <h2 id="governed-comparison-and-tuning">Governed comparison and tuning<a class="anchor" aria-label="anchor" href="#governed-comparison-and-tuning"></a></h2>
+
+      <div class="section-desc"><p>Materialize, evaluate, compare, and review explicit model candidates.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="create_gazepoint_tuning_grid.html">create_gazepoint_tuning_grid()</a></code> <code><a href="create_gazepoint_tuning_grid.html">print(<i>&lt;gp3ml_tuning_grid&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Create an explicit governed tuning grid</dd>
+
+        <dt>
+
+          <code><a href="tune_gazepoint_model.html">tune_gazepoint_model()</a></code> <code><a href="tune_gazepoint_model.html">print(<i>&lt;gp3ml_model_tuning&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Evaluate every governed candidate on the same grouped folds</dd>
+
+        <dt>
+
+          <code><a href="compare_gazepoint_models.html">compare_gazepoint_models()</a></code>
+
+        </dt>
+        <dd>Compare governed model candidates without selecting a winner</dd>
+
+        <dt>
+
+          <code><a href="select_gazepoint_model.html">select_gazepoint_model()</a></code> <code><a href="select_gazepoint_model.html">print(<i>&lt;gp3ml_model_selection&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Select a governed candidate using an explicit metric and direction</dd>
+
+        <dt>
+
+          <code><a href="validate_gazepoint_model_tuning.html">validate_gazepoint_model_tuning()</a></code> <code><a href="validate_gazepoint_model_tuning.html">print(<i>&lt;gp3ml_model_tuning_validation&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Validate governed tuning results</dd>
+
+        <dt>
+
+          <code><a href="write_gazepoint_model_tuning.html">write_gazepoint_model_tuning()</a></code>
+
+        </dt>
+        <dd>Write governed tuning and selection tables</dd>
+      </dl></div><div class="section level2">
+      <h2 id="nested-grouped-resampling">Nested grouped resampling<a class="anchor" aria-label="anchor" href="#nested-grouped-resampling"></a></h2>
+
+      <div class="section-desc"><p>Isolate inner tuning inside every outer analysis partition.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="create_gazepoint_nested_folds.html">create_gazepoint_nested_folds()</a></code> <code><a href="create_gazepoint_nested_folds.html">print(<i>&lt;gp3ml_nested_folds&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Create nested grouped resampling from mature outer folds</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_nested_resampling.html">audit_gazepoint_nested_resampling()</a></code> <code><a href="audit_gazepoint_nested_resampling.html">print(<i>&lt;gp3ml_nested_resampling_audit&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Audit nested grouped resampling for outer-assessment leakage</dd>
+
+        <dt>
+
+          <code><a href="validate_gazepoint_nested_folds.html">validate_gazepoint_nested_folds()</a></code> <code><a href="validate_gazepoint_nested_folds.html">print(<i>&lt;gp3ml_nested_folds_validation&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Validate nested grouped folds</dd>
+
+        <dt>
+
+          <code><a href="evaluate_gazepoint_nested_resampling.html">evaluate_gazepoint_nested_resampling()</a></code> <code><a href="evaluate_gazepoint_nested_resampling.html">print(<i>&lt;gp3ml_nested_evaluation&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Evaluate nested grouped resampling with inner governed tuning</dd>
+
+        <dt>
+
+          <code><a href="validate_gazepoint_nested_evaluation.html">validate_gazepoint_nested_evaluation()</a></code> <code><a href="validate_gazepoint_nested_evaluation.html">print(<i>&lt;gp3ml_nested_evaluation_validation&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Validate a nested evaluation</dd>
+
+        <dt>
+
+          <code><a href="write_gazepoint_nested_evaluation.html">write_gazepoint_nested_evaluation()</a></code>
+
+        </dt>
+        <dd>Write nested-resampling evaluation tables</dd>
+      </dl></div><div class="section level2">
+      <h2 id="target-aligned-uncertainty">Target-aligned uncertainty<a class="anchor" aria-label="anchor" href="#target-aligned-uncertainty"></a></h2>
+
+      <div class="section-desc"><p>Record observation, cluster, fold, and repeat uncertainty without relabelling units.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="bootstrap_gazepoint_metrics_by_unit.html">bootstrap_gazepoint_metrics_by_unit()</a></code> <code><a href="bootstrap_gazepoint_metrics_by_unit.html">print(<i>&lt;gp3ml_target_uncertainty&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Generalization-target-aligned bootstrap uncertainty</dd>
+
+        <dt>
+
+          <code><a href="summarize_gazepoint_resample_uncertainty.html">summarize_gazepoint_resample_uncertainty()</a></code> <code><a href="summarize_gazepoint_resample_uncertainty.html">print(<i>&lt;gp3ml_resample_uncertainty&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Summarize uncertainty across folds or repeats</dd>
+
+        <dt>
+
+          <code><a href="validate_gazepoint_target_uncertainty.html">validate_gazepoint_target_uncertainty()</a></code> <code><a href="validate_gazepoint_target_uncertainty.html">print(<i>&lt;gp3ml_uncertainty_validation&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Validate target-aligned uncertainty metadata</dd>
+
+        <dt>
+
+          <code><a href="write_gazepoint_target_uncertainty.html">write_gazepoint_target_uncertainty()</a></code>
+
+        </dt>
+        <dd>Write target-aligned uncertainty tables</dd>
+      </dl></div><div class="section level2">
+      <h2 id="external-validation-and-transportability">External validation and transportability<a class="anchor" aria-label="anchor" href="#external-validation-and-transportability"></a></h2>
+
+      <div class="section-desc"><p>Declare independent data and report performance, drift, schema, and coverage.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="declare_gazepoint_external_dataset.html">declare_gazepoint_external_dataset()</a></code> <code><a href="declare_gazepoint_external_dataset.html">print(<i>&lt;gp3ml_external_dataset_declaration&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Declare an external dataset and its independence status</dd>
+
+        <dt>
+
+          <code><a href="evaluate_gazepoint_external_transportability.html">evaluate_gazepoint_external_transportability()</a></code> <code><a href="evaluate_gazepoint_external_transportability.html">print(<i>&lt;gp3ml_transportability_report&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Evaluate external transportability and validation status</dd>
+
+        <dt>
+
+          <code><a href="validate_gazepoint_transportability.html">validate_gazepoint_transportability()</a></code> <code><a href="validate_gazepoint_transportability.html">print(<i>&lt;gp3ml_transportability_validation&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Validate an external transportability report</dd>
+
+        <dt>
+
+          <code><a href="write_gazepoint_transportability_report.html">write_gazepoint_transportability_report()</a></code>
+
+        </dt>
+        <dd>Write an expanded transportability report</dd>
+      </dl></div><div class="section level2">
+      <h2 id="synthetic-workflows-and-release-reporting">Synthetic workflows and release reporting<a class="anchor" aria-label="anchor" href="#synthetic-workflows-and-release-reporting"></a></h2>
+
+      <div class="section-desc"><p>Deterministic demonstrations and release-ready governance records.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="simulate_gazepoint_governed_data.html">simulate_gazepoint_governed_data()</a></code>
+
+        </dt>
+        <dd>Simulate governed synthetic Gazepoint-derived data</dd>
+
+        <dt>
+
+          <code><a href="create_gazepoint_synthetic_manifest.html">create_gazepoint_synthetic_manifest()</a></code>
+
+        </dt>
+        <dd>Create a synthetic governed feature manifest</dd>
+
+        <dt>
+
+          <code><a href="create_gazepoint_synthetic_task.html">create_gazepoint_synthetic_task()</a></code>
+
+        </dt>
+        <dd>Create one of the governed synthetic demonstration tasks</dd>
+
+        <dt>
+
+          <code><a href="create_gazepoint_release_model_card.html">create_gazepoint_release_model_card()</a></code> <code><a href="create_gazepoint_release_model_card.html">print(<i>&lt;gp3ml_release_model_card&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Create a release-ready governed model card</dd>
+
+        <dt>
+
+          <code><a href="write_gazepoint_release_model_card.html">write_gazepoint_release_model_card()</a></code>
+
+        </dt>
+        <dd>Write a release-ready governed model card</dd>
+
+        <dt>
+
+          <code><a href="create_gazepoint_release_evidence.html">create_gazepoint_release_evidence()</a></code> <code><a href="create_gazepoint_release_evidence.html">print(<i>&lt;gp3ml_release_evidence&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Create a release evidence manifest</dd>
       </dl></div><div class="section level2">
       <h2 id="governed-modelling-core">Governed modelling core<a class="anchor" aria-label="anchor" href="#governed-modelling-core"></a></h2>
 

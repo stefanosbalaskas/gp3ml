@@ -328,9 +328,10 @@ The governed modelling core provides related interfaces for:
 - generating model cards and reproducibility reports.
 
 These interfaces do not convert row-level metrics into participant-level
-estimates merely because a split was participant-grouped. Automatic
-tuning, nested grouped resampling, and autonomous winner selection are
-outside the scope of version `0.1.0`.
+estimates merely because a split was participant-grouped. Version
+`0.2.0` adds governed tuning and nested grouped resampling while
+retaining explicit human-reviewed selection. Autonomous winner selection
+remains outside the package’s scope.
 
 ## Prohibited uses
 
@@ -341,21 +342,44 @@ intent.
 
 See:
 
-- [`GOVERNANCE.md`](https://stefanosbalaskas.github.io/gp3ml/inst/governance/GOVERNANCE.md)
-- [`PROHIBITED-USE.md`](https://stefanosbalaskas.github.io/gp3ml/inst/governance/PROHIBITED-USE.md)
+- [`GOVERNANCE.md`](https://github.com/stefanosbalaskas/gp3ml/blob/master/inst/governance/GOVERNANCE.md)
+- [`PROHIBITED-USE.md`](https://github.com/stefanosbalaskas/gp3ml/blob/master/inst/governance/PROHIBITED-USE.md)
 
 ## Release status
 
-Version `0.1.0` is the first formal source release of `gp3ml`.
+Version `0.2.0` is the second formal source release of `gp3ml`.
 
-It includes the governance, provenance, splitting, grouped-resampling,
-diagnostic, preprocessing, modelling, performance, calibration,
-uncertainty, external-validation, model-card, and reproducibility
-infrastructure described above.
+It extends the governance-first 0.1.0 foundation with repository-aware
+evaluation across materialized grouped folds, governed model comparison
+and tuning, nested grouped resampling, target-aligned uncertainty,
+external validation and transportability reporting, release model cards,
+and nine deterministic synthetic workflow articles.
 
-Repository-aware evaluation across materialized grouped folds, governed
-model comparison and tuning, and nested grouped resampling remain
-separate post-release milestones.
+Model selection remains explicitly reviewable and human-governed; the
+package does not perform autonomous winner selection or relax its
+prohibited-use boundaries.
+
+## Analytical roadmap
+
+gp3ml now extends its materialized grouped-fold infrastructure with a
+complete, reviewable evaluation and reporting layer:
+
+- fold-local evaluation across `gazepoint_group_folds`;
+- explicit deterministic candidate grids and human-reviewed selection;
+- nested participant/stimulus-aware resampling;
+- observation, participant, stimulus, two-way, fold, and repeat
+  uncertainty;
+- independent external-dataset declarations and transportability
+  reports;
+- release-ready model cards recording selection, uncertainty,
+  limitations, and external-validation status.
+
+Nine deterministic synthetic articles demonstrate predefined
+recording-quality review, assigned-condition discrimination, observed
+non-sensitive endpoints, all supported generalization targets,
+contaminated provenance, nested resampling, and external validation.
+These workflows retain the package’s prohibited-use boundaries and do
+not perform autonomous model selection.
 
 ## Project resources
 
