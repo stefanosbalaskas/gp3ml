@@ -126,8 +126,8 @@ paths <- write_gazepoint_group_folds_csv(
 )
 paths
 #>                                                                                                 fold_summary
-#> "C:/Users/Stefanos-PC/AppData/Local/Temp/RtmpQXg9Yd/file75b835b2439f/gazepoint_group_folds_fold_summary.csv"
+#> "C:/Users/Stefanos-PC/AppData/Local/Temp/RtmpacJaCe/file75482d7f564e/gazepoint_group_folds_fold_summary.csv"
 #>                                                                                                 group_counts
-#> "C:/Users/Stefanos-PC/AppData/Local/Temp/RtmpQXg9Yd/file75b835b2439f/gazepoint_group_folds_group_counts.csv"
+#> "C:/Users/Stefanos-PC/AppData/Local/Temp/RtmpacJaCe/file75482d7f564e/gazepoint_group_folds_group_counts.csv"
 unlink(output_directory, recursive = TRUE)
 ```

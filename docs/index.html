@@ -16,9 +16,9 @@
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="gp3ml">
-<meta name="description" content="Governance-first predictive modelling, leakage auditing, group-aware validation, calibration, and reproducibility reporting for Gazepoint research data.
+<meta name="description" content="Governance-first predictive modelling, leakage auditing, group-aware validation, calibration, target-aligned uncertainty, transportability, and reproducibility reporting for Gazepoint research data.
 ">
-<meta property="og:description" content="Governance-first predictive modelling, leakage auditing, group-aware validation, calibration, and reproducibility reporting for Gazepoint research data.
+<meta property="og:description" content="Governance-first predictive modelling, leakage auditing, group-aware validation, calibration, target-aligned uncertainty, transportability, and reproducibility reporting for Gazepoint research data.
 ">
 <meta property="og:image" content="https://stefanosbalaskas.github.io/gp3ml/logo.svg">
 </head>
@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="index.html">gp3ml</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,6 +40,20 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/recording-quality-review.html">Predefined recording-quality review status</a></li>
+    <li><a class="dropdown-item" href="articles/assigned-condition-discrimination.html">Experimentally assigned condition discrimination</a></li>
+    <li><a class="dropdown-item" href="articles/observed-behavioral-endpoint.html">Explicitly observed behavioural endpoint</a></li>
+    <li><a class="dropdown-item" href="articles/participant-generalization.html">Participant generalization</a></li>
+    <li><a class="dropdown-item" href="articles/stimulus-generalization.html">Stimulus generalization</a></li>
+    <li><a class="dropdown-item" href="articles/participant-stimulus-generalization.html">Participant and stimulus generalization</a></li>
+    <li><a class="dropdown-item" href="articles/contaminated-manifest-leakage.html">Contaminated manifests and leakage</a></li>
+    <li><a class="dropdown-item" href="articles/nested-grouped-resampling.html">Nested grouped resampling</a></li>
+    <li><a class="dropdown-item" href="articles/external-validation-reporting.html">External validation and transportability</a></li>
+  </ul>
+</li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
@@ -285,7 +299,7 @@
 <li>evaluating genuinely external datasets;</li>
 <li>generating model cards and reproducibility reports.</li>
 </ul>
-<p>These interfaces do not convert row-level metrics into participant-level estimates merely because a split was participant-grouped. Automatic tuning, nested grouped resampling, and autonomous winner selection are outside the scope of version <code>0.1.0</code>.</p>
+<p>These interfaces do not convert row-level metrics into participant-level estimates merely because a split was participant-grouped. Version <code>0.2.0</code> adds governed tuning and nested grouped resampling while retaining explicit human-reviewed selection. Autonomous winner selection remains outside the package’s scope.</p>
 </div>
 <div class="section level2">
 <h2 id="prohibited-uses">Prohibited uses<a class="anchor" aria-label="anchor" href="#prohibited-uses"></a>
@@ -293,16 +307,30 @@
 <p>The package does not support person identification, health inference, protected-attribute prediction, or direct inference of emotion, stress, mental state, cognition, comprehension, personality, deception, or intent.</p>
 <p>See:</p>
 <ul>
-<li><a href="inst/governance/GOVERNANCE.html"><code>GOVERNANCE.md</code></a></li>
-<li><a href="inst/governance/PROHIBITED-USE.html"><code>PROHIBITED-USE.md</code></a></li>
+<li><a href="https://github.com/stefanosbalaskas/gp3ml/blob/master/inst/governance/GOVERNANCE.md" class="external-link"><code>GOVERNANCE.md</code></a></li>
+<li><a href="https://github.com/stefanosbalaskas/gp3ml/blob/master/inst/governance/PROHIBITED-USE.md" class="external-link"><code>PROHIBITED-USE.md</code></a></li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="release-status">Release status<a class="anchor" aria-label="anchor" href="#release-status"></a>
 </h2>
-<p>Version <code>0.1.0</code> is the first formal source release of <code>gp3ml</code>.</p>
-<p>It includes the governance, provenance, splitting, grouped-resampling, diagnostic, preprocessing, modelling, performance, calibration, uncertainty, external-validation, model-card, and reproducibility infrastructure described above.</p>
-<p>Repository-aware evaluation across materialized grouped folds, governed model comparison and tuning, and nested grouped resampling remain separate post-release milestones.</p>
+<p>Version <code>0.2.0</code> is the second formal source release of <code>gp3ml</code>.</p>
+<p>It extends the governance-first 0.1.0 foundation with repository-aware evaluation across materialized grouped folds, governed model comparison and tuning, nested grouped resampling, target-aligned uncertainty, external validation and transportability reporting, release model cards, and nine deterministic synthetic workflow articles.</p>
+<p>Model selection remains explicitly reviewable and human-governed; the package does not perform autonomous winner selection or relax its prohibited-use boundaries.</p>
+</div>
+<div class="section level2">
+<h2 id="analytical-roadmap">Analytical roadmap<a class="anchor" aria-label="anchor" href="#analytical-roadmap"></a>
+</h2>
+<p>gp3ml now extends its materialized grouped-fold infrastructure with a complete, reviewable evaluation and reporting layer:</p>
+<ul>
+<li>fold-local evaluation across <code>gazepoint_group_folds</code>;</li>
+<li>explicit deterministic candidate grids and human-reviewed selection;</li>
+<li>nested participant/stimulus-aware resampling;</li>
+<li>observation, participant, stimulus, two-way, fold, and repeat uncertainty;</li>
+<li>independent external-dataset declarations and transportability reports;</li>
+<li>release-ready model cards recording selection, uncertainty, limitations, and external-validation status.</li>
+</ul>
+<p>Nine deterministic synthetic articles demonstrate predefined recording-quality review, assigned-condition discrimination, observed non-sensitive endpoints, all supported generalization targets, contaminated provenance, nested resampling, and external validation. These workflows retain the package’s prohibited-use boundaries and do not perform autonomous model selection.</p>
 </div>
 <div class="section level2">
 <h2 id="project-resources">Project resources<a class="anchor" aria-label="anchor" href="#project-resources"></a>

@@ -80,6 +80,122 @@ Diagnose fold balance, coverage, exclusions, and outcomes.
 - [`write_gazepoint_fold_diagnostics_csv()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_fold_diagnostics_csv.md)
   : Write Gazepoint fold diagnostics to CSV files
 
+## Repository-aware fold evaluation
+
+Fit fold-local preprocessing and models across materialized grouped
+folds.
+
+- [`evaluate_gazepoint_group_folds()`](https://stefanosbalaskas.github.io/gp3ml/reference/evaluate_gazepoint_group_folds.md)
+  [`print(`*`<gp3ml_resample_evaluation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/evaluate_gazepoint_group_folds.md)
+  : Evaluate a governed model specification across materialized grouped
+  folds
+- [`collect_gazepoint_fold_predictions()`](https://stefanosbalaskas.github.io/gp3ml/reference/collect_gazepoint_fold_predictions.md)
+  : Collect predictions from a grouped-fold evaluation
+- [`summarize_gazepoint_resample_performance()`](https://stefanosbalaskas.github.io/gp3ml/reference/summarize_gazepoint_resample_performance.md)
+  [`print(`*`<gp3ml_resample_performance_summary>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/summarize_gazepoint_resample_performance.md)
+  : Summarize repeated grouped-resampling performance
+- [`validate_gazepoint_resample_evaluation()`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_resample_evaluation.md)
+  [`print(`*`<gp3ml_resample_evaluation_validation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_resample_evaluation.md)
+  : Validate a grouped-fold evaluation result
+- [`write_gazepoint_resample_evaluation()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_resample_evaluation.md)
+  : Write grouped-fold evaluation tables
+
+## Governed comparison and tuning
+
+Materialize, evaluate, compare, and review explicit model candidates.
+
+- [`create_gazepoint_tuning_grid()`](https://stefanosbalaskas.github.io/gp3ml/reference/create_gazepoint_tuning_grid.md)
+  [`print(`*`<gp3ml_tuning_grid>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/create_gazepoint_tuning_grid.md)
+  : Create an explicit governed tuning grid
+- [`tune_gazepoint_model()`](https://stefanosbalaskas.github.io/gp3ml/reference/tune_gazepoint_model.md)
+  [`print(`*`<gp3ml_model_tuning>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/tune_gazepoint_model.md)
+  : Evaluate every governed candidate on the same grouped folds
+- [`compare_gazepoint_models()`](https://stefanosbalaskas.github.io/gp3ml/reference/compare_gazepoint_models.md)
+  : Compare governed model candidates without selecting a winner
+- [`select_gazepoint_model()`](https://stefanosbalaskas.github.io/gp3ml/reference/select_gazepoint_model.md)
+  [`print(`*`<gp3ml_model_selection>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/select_gazepoint_model.md)
+  : Select a governed candidate using an explicit metric and direction
+- [`validate_gazepoint_model_tuning()`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_model_tuning.md)
+  [`print(`*`<gp3ml_model_tuning_validation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_model_tuning.md)
+  : Validate governed tuning results
+- [`write_gazepoint_model_tuning()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_model_tuning.md)
+  : Write governed tuning and selection tables
+
+## Nested grouped resampling
+
+Isolate inner tuning inside every outer analysis partition.
+
+- [`create_gazepoint_nested_folds()`](https://stefanosbalaskas.github.io/gp3ml/reference/create_gazepoint_nested_folds.md)
+  [`print(`*`<gp3ml_nested_folds>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/create_gazepoint_nested_folds.md)
+  : Create nested grouped resampling from mature outer folds
+- [`audit_gazepoint_nested_resampling()`](https://stefanosbalaskas.github.io/gp3ml/reference/audit_gazepoint_nested_resampling.md)
+  [`print(`*`<gp3ml_nested_resampling_audit>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/audit_gazepoint_nested_resampling.md)
+  : Audit nested grouped resampling for outer-assessment leakage
+- [`validate_gazepoint_nested_folds()`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_nested_folds.md)
+  [`print(`*`<gp3ml_nested_folds_validation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_nested_folds.md)
+  : Validate nested grouped folds
+- [`evaluate_gazepoint_nested_resampling()`](https://stefanosbalaskas.github.io/gp3ml/reference/evaluate_gazepoint_nested_resampling.md)
+  [`print(`*`<gp3ml_nested_evaluation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/evaluate_gazepoint_nested_resampling.md)
+  : Evaluate nested grouped resampling with inner governed tuning
+- [`validate_gazepoint_nested_evaluation()`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_nested_evaluation.md)
+  [`print(`*`<gp3ml_nested_evaluation_validation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_nested_evaluation.md)
+  : Validate a nested evaluation
+- [`write_gazepoint_nested_evaluation()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_nested_evaluation.md)
+  : Write nested-resampling evaluation tables
+
+## Target-aligned uncertainty
+
+Record observation, cluster, fold, and repeat uncertainty without
+relabelling units.
+
+- [`bootstrap_gazepoint_metrics_by_unit()`](https://stefanosbalaskas.github.io/gp3ml/reference/bootstrap_gazepoint_metrics_by_unit.md)
+  [`print(`*`<gp3ml_target_uncertainty>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/bootstrap_gazepoint_metrics_by_unit.md)
+  : Generalization-target-aligned bootstrap uncertainty
+- [`summarize_gazepoint_resample_uncertainty()`](https://stefanosbalaskas.github.io/gp3ml/reference/summarize_gazepoint_resample_uncertainty.md)
+  [`print(`*`<gp3ml_resample_uncertainty>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/summarize_gazepoint_resample_uncertainty.md)
+  : Summarize uncertainty across folds or repeats
+- [`validate_gazepoint_target_uncertainty()`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_target_uncertainty.md)
+  [`print(`*`<gp3ml_uncertainty_validation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_target_uncertainty.md)
+  : Validate target-aligned uncertainty metadata
+- [`write_gazepoint_target_uncertainty()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_target_uncertainty.md)
+  : Write target-aligned uncertainty tables
+
+## External validation and transportability
+
+Declare independent data and report performance, drift, schema, and
+coverage.
+
+- [`declare_gazepoint_external_dataset()`](https://stefanosbalaskas.github.io/gp3ml/reference/declare_gazepoint_external_dataset.md)
+  [`print(`*`<gp3ml_external_dataset_declaration>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/declare_gazepoint_external_dataset.md)
+  : Declare an external dataset and its independence status
+- [`evaluate_gazepoint_external_transportability()`](https://stefanosbalaskas.github.io/gp3ml/reference/evaluate_gazepoint_external_transportability.md)
+  [`print(`*`<gp3ml_transportability_report>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/evaluate_gazepoint_external_transportability.md)
+  : Evaluate external transportability and validation status
+- [`validate_gazepoint_transportability()`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_transportability.md)
+  [`print(`*`<gp3ml_transportability_validation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/validate_gazepoint_transportability.md)
+  : Validate an external transportability report
+- [`write_gazepoint_transportability_report()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_transportability_report.md)
+  : Write an expanded transportability report
+
+## Synthetic workflows and release reporting
+
+Deterministic demonstrations and release-ready governance records.
+
+- [`simulate_gazepoint_governed_data()`](https://stefanosbalaskas.github.io/gp3ml/reference/simulate_gazepoint_governed_data.md)
+  : Simulate governed synthetic Gazepoint-derived data
+- [`create_gazepoint_synthetic_manifest()`](https://stefanosbalaskas.github.io/gp3ml/reference/create_gazepoint_synthetic_manifest.md)
+  : Create a synthetic governed feature manifest
+- [`create_gazepoint_synthetic_task()`](https://stefanosbalaskas.github.io/gp3ml/reference/create_gazepoint_synthetic_task.md)
+  : Create one of the governed synthetic demonstration tasks
+- [`create_gazepoint_release_model_card()`](https://stefanosbalaskas.github.io/gp3ml/reference/create_gazepoint_release_model_card.md)
+  [`print(`*`<gp3ml_release_model_card>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/create_gazepoint_release_model_card.md)
+  : Create a release-ready governed model card
+- [`write_gazepoint_release_model_card()`](https://stefanosbalaskas.github.io/gp3ml/reference/write_gazepoint_release_model_card.md)
+  : Write a release-ready governed model card
+- [`create_gazepoint_release_evidence()`](https://stefanosbalaskas.github.io/gp3ml/reference/create_gazepoint_release_evidence.md)
+  [`print(`*`<gp3ml_release_evidence>`*`)`](https://stefanosbalaskas.github.io/gp3ml/reference/create_gazepoint_release_evidence.md)
+  : Create a release evidence manifest
+
 ## Governed modelling core
 
 Task governance, preprocessing, model fitting, performance, calibration,

@@ -118,8 +118,8 @@ paths <- write_gazepoint_ml_split_csv(
 )
 paths
 #>                                                                                                   summary
-#>      "C:/Users/Stefanos-PC/AppData/Local/Temp/RtmpQXg9Yd/file75b819ff33fd/gazepoint_ml_split_summary.csv"
+#>      "C:/Users/Stefanos-PC/AppData/Local/Temp/RtmpacJaCe/file754848fd75e7/gazepoint_ml_split_summary.csv"
 #>                                                                                              group_counts
-#> "C:/Users/Stefanos-PC/AppData/Local/Temp/RtmpQXg9Yd/file75b819ff33fd/gazepoint_ml_split_group_counts.csv"
+#> "C:/Users/Stefanos-PC/AppData/Local/Temp/RtmpacJaCe/file754848fd75e7/gazepoint_ml_split_group_counts.csv"
 unlink(output_directory, recursive = TRUE)
 ```

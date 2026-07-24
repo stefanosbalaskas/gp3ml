@@ -120,8 +120,8 @@ paths <- write_gazepoint_fold_diagnostics_csv(
 )
 paths
 #>                                                                                                            fold_metrics
-#>   "C:\\Users\\STEFAN~1\\AppData\\Local\\Temp\\RtmpQXg9Yd\\file75b8441a7f6e/gazepoint_fold_diagnostics_fold_metrics.csv"
+#>   "C:\\Users\\STEFAN~1\\AppData\\Local\\Temp\\RtmpacJaCe\\file7548372d6c8c/gazepoint_fold_diagnostics_fold_metrics.csv"
 #>                                                                                                          repeat_metrics
-#> "C:\\Users\\STEFAN~1\\AppData\\Local\\Temp\\RtmpQXg9Yd\\file75b8441a7f6e/gazepoint_fold_diagnostics_repeat_metrics.csv"
+#> "C:\\Users\\STEFAN~1\\AppData\\Local\\Temp\\RtmpacJaCe\\file7548372d6c8c/gazepoint_fold_diagnostics_repeat_metrics.csv"
 unlink(output_directory, recursive = TRUE)
 ```
