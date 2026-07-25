@@ -9,6 +9,13 @@ authors:
     website: "https://sites.google.com/view/stefbalaskas/"
 version: "0.2.0"
 date-released: "2026-07-24"
+identifiers:
+  - description: "Zenodo concept DOI for all versions of gp3ml."
+    type: doi
+    value: "10.5281/zenodo.21487272"
+  - description: "Zenodo DOI for gp3ml version 0.2.0."
+    type: doi
+    value: "10.5281/zenodo.21532057"
 repository-code: "https://github.com/stefanosbalaskas/gp3ml"
 url: "https://github.com/stefanosbalaskas/gp3ml"
 license: MIT
