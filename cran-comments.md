@@ -22,3 +22,5 @@ The complete testthat suite passed before the check. All nine vignettes built, c
 ## Additional notes
 
 * Tests, examples, and vignettes use deterministic synthetic non-sensitive data; no private participant data are included.
+
+* Zenodo archival identifiers: concept DOI `10.5281/zenodo.21487272`; version-specific DOI for gp3ml 0.2.0 `10.5281/zenodo.21532057`.

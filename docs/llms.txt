@@ -345,6 +345,12 @@ See:
 - [`GOVERNANCE.md`](https://github.com/stefanosbalaskas/gp3ml/blob/master/inst/governance/GOVERNANCE.md)
 - [`PROHIBITED-USE.md`](https://github.com/stefanosbalaskas/gp3ml/blob/master/inst/governance/PROHIBITED-USE.md)
 
+## Citation
+
+Use the Zenodo [concept DOI](https://doi.org/10.5281/zenodo.21487272) to
+cite all versions of `gp3ml`. For the archived `0.2.0` release, use the
+[version-specific DOI](https://doi.org/10.5281/zenodo.21532057).
+
 ## Release status
 
 Version `0.2.0` is the second formal source release of `gp3ml`.
