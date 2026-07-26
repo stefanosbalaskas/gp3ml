@@ -50,7 +50,7 @@ synthetic <- simulate_gazepoint_governed_data(
   seed = 101L
 )
 table(synthetic$quality_status)
-#>
-#>   pass review
-#>     41      7
+#> 
+#>   pass review 
+#>     41      7 
 ```

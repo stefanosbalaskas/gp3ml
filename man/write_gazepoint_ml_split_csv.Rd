@@ -102,6 +102,6 @@ paths <- write_gazepoint_ml_split_csv(
   directory = output_directory,
   tables = c("summary", "group_counts")
 )
-paths
+basename(unname(paths))
 unlink(output_directory, recursive = TRUE)
 }

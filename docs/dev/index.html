@@ -300,7 +300,12 @@
 <li>evaluating genuinely external datasets;</li>
 <li>generating model cards and reproducibility reports.</li>
 </ul>
-<p>These interfaces do not convert row-level metrics into participant-level estimates merely because a split was participant-grouped. Automatic tuning, nested grouped resampling, and autonomous winner selection are outside the scope of version <code>0.1.0</code>.</p>
+<p>These interfaces do not convert row-level metrics into participant-level estimates merely because a split was participant-grouped. Version <code>0.2.0</code> adds governed tuning and nested grouped resampling while retaining explicit human-reviewed selection. Autonomous winner selection remains outside the package’s scope.</p>
+</div>
+<div class="section level2">
+<h2 id="package-maturity-and-interoperability">Package maturity and interoperability<a class="anchor" aria-label="anchor" href="#package-maturity-and-interoperability"></a>
+</h2>
+<p>The development line adds explicit API contracts, lightweight handoff contracts for <code>gp3tools</code>, <code>gpbiometrics</code>, and <code>gp3sequences</code>, deterministic documentation-output controls, optional-engine portability audits, and an integrated synthetic cross-package research workflow. These additions preserve the governance boundary: upstream packages remain responsible for preprocessing and feature derivation, while <code>gp3ml</code> remains responsible for declared roles, leakage-safe resampling, governed modelling, evaluation, uncertainty, and reporting.</p>
 </div>
 <div class="section level2">
 <h2 id="prohibited-uses">Prohibited uses<a class="anchor" aria-label="anchor" href="#prohibited-uses"></a>
@@ -313,11 +318,16 @@
 </ul>
 </div>
 <div class="section level2">
+<h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
+</h2>
+<p>Use the Zenodo <a href="https://doi.org/10.5281/zenodo.21487272" class="external-link">concept DOI</a> to cite all versions of <code>gp3ml</code>. For the archived <code>0.2.0</code> release, use the <a href="https://doi.org/10.5281/zenodo.21532057" class="external-link">version-specific DOI</a>.</p>
+</div>
+<div class="section level2">
 <h2 id="release-status">Release status<a class="anchor" aria-label="anchor" href="#release-status"></a>
 </h2>
-<p>Version <code>0.1.0</code> is the first formal source release of <code>gp3ml</code>.</p>
-<p>It includes the governance, provenance, splitting, grouped-resampling, diagnostic, preprocessing, modelling, performance, calibration, uncertainty, external-validation, model-card, and reproducibility infrastructure described above.</p>
-<p>Repository-aware evaluation across materialized grouped folds, governed model comparison and tuning, and nested grouped resampling remain separate post-release milestones.</p>
+<p>Version <code>0.2.0</code> is the second formal source release of <code>gp3ml</code>.</p>
+<p>It extends the governance-first 0.1.0 foundation with repository-aware evaluation across materialized grouped folds, governed model comparison and tuning, nested grouped resampling, target-aligned uncertainty, external validation and transportability reporting, release model cards, and nine deterministic synthetic workflow articles.</p>
+<p>Model selection remains explicitly reviewable and human-governed; the package does not perform autonomous winner selection or relax its prohibited-use boundaries.</p>
 </div>
 <div class="section level2">
 <h2 id="analytical-roadmap">Analytical roadmap<a class="anchor" aria-label="anchor" href="#analytical-roadmap"></a>
@@ -380,6 +390,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/stefanosbalaskas/gp3ml/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/stefanosbalaskas/gp3ml/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://doi.org/10.5281/zenodo.21487272" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.21487272.svg" alt="DOI"></a></li>
 </ul>
 </div>
 

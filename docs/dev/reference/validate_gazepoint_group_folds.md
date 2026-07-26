@@ -89,7 +89,7 @@ validation
 #> Overall status: PASS
 #> Non-passing checks: 0
 #>  status n_checks
-#>  pass   10
-#>  review  0
-#>  fail    0
+#>  pass   10      
+#>  review  0      
+#>  fail    0      
 ```

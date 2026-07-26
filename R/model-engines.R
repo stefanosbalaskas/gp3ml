@@ -71,7 +71,10 @@ gp3ml_available_engines <- function() {
 #'     group_aware_evaluation_required = TRUE
 #'   )
 #' )
-#' engine
+#' engine$name
+#' engine$supports
+#' engine$probability
+#' engine$safety_declaration
 #' @return A controlled `gp3ml_engine` object containing the custom fit and prediction functions, supported task types, metadata, and explicit safety declarations.
 #' @export
 integrate_black_box_model <- function(

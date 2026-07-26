@@ -56,25 +56,25 @@ calibrator <- fit_gazepoint_calibrator(
 calibrator
 #> $method
 #> [1] "platt"
-#>
+#> 
 #> $fit
-#>
+#> 
 #> Call:  stats::glm(formula = y ~ stats::qlogis(p), family = stats::binomial())
-#>
+#> 
 #> Coefficients:
-#>      (Intercept)  stats::qlogis(p)
-#>          -0.4921            2.2699
-#>
+#>      (Intercept)  stats::qlogis(p)  
+#>          -0.4921            2.2699  
+#> 
 #> Degrees of Freedom: 11 Total (i.e. Null);  10 Residual
-#> Null Deviance:       16.64
+#> Null Deviance:       16.64 
 #> Residual Deviance: 11.77     AIC: 15.77
-#>
+#> 
 #> $positive
 #> [1] "review"
-#>
+#> 
 #> $negative
 #> [1] "pass"
-#>
+#> 
 #> attr(,"class")
 #> [1] "gp3ml_calibrator"
 ```

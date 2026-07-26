@@ -65,6 +65,13 @@ articles:
       - nested-grouped-resampling
       - external-validation-reporting
 
+  - title: Package maturity and interoperability
+    contents:
+      - api-stability-contracts
+      - cross-package-interoperability
+      - reproducibility-hardening
+      - optional-engine-portability
+      - integrated-research-workflow
 reference:
   - title: Package
     contents:
@@ -221,3 +228,41 @@ reference:
       - write_gazepoint_model_card
       - create_gazepoint_reproducibility_report
       - write_gazepoint_reproducibility_report
+  - title: API stability and contracts
+    desc: Audit the established public API, S3 classes, and return schemas.
+    contents:
+      - gp3ml_api_contracts
+      - gp3ml_object_schema
+      - validate_gp3ml_object_contract
+      - audit_gp3ml_api_stability
+      - write_gp3ml_api_contracts
+      - plot.gp3ml_api_stability_audit
+  - title: Cross-package interoperability
+    desc: Validate and combine prepared handoffs without duplicating upstream preprocessing.
+    contents:
+      - gp3ml_interop_contracts
+      - create_gazepoint_handoff
+      - validate_gazepoint_handoff
+      - combine_gazepoint_handoffs
+      - as_gp3ml_data
+      - plot.gp3ml_handoff_validation
+  - title: Reproducibility hardening
+    desc: Normalize and audit runtime-specific generated output.
+    contents:
+      - normalize_gazepoint_artifact_text
+      - audit_gazepoint_reproducibility
+      - write_gazepoint_reproducibility_audit
+      - with_gazepoint_reproducible_output
+      - plot.gp3ml_reproducibility_audit
+  - title: Engine portability
+    desc: Review optional-engine availability and controlled degradation.
+    contents:
+      - gp3ml_engine_capabilities
+      - assert_gp3ml_engine_available
+      - plot.gp3ml_engine_capabilities
+  - title: Integrated research workflow
+    desc: Simulate and validate realistic cross-package Gazepoint research handoffs.
+    contents:
+      - simulate_gazepoint_research_handoffs
+      - validate_gazepoint_research_bundle
+      - plot.gp3ml_research_bundle_validation

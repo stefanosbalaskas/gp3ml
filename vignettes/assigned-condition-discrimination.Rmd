@@ -10,6 +10,7 @@ vignette: >
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+options(gp3ml.reproducible_examples = TRUE)
 library(gp3ml)
 ```
 

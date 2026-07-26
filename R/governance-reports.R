@@ -81,7 +81,7 @@ create_gazepoint_model_card <- function(
   structure(
     list(
       title = paste("Model card:", model$task$outcome),
-      created_at = format(Sys.time(), tz = "UTC", usetz = TRUE),
+      created_at = .gp3ml_timestamp(),
       intended_use = intended_use,
       prohibited_uses = gp3ml_prohibited_uses(),
       task = model$task,
@@ -333,7 +333,7 @@ evaluate_external_validation <- function(model, external_data, label = "external
     calibration <- NULL
     predictions <- data.frame(truth = external_data[[model$task$outcome]], prediction = prediction)
   }
-  structure(list(label = label, created_at = format(Sys.time(), tz = "UTC", usetz = TRUE), metrics = metrics, calibration = calibration, shift = .gp3ml_shift_diagnostics(model, external_data), predictions = predictions, external_hash = .gp3ml_hash_object(external_data[c(model$task$outcome, model$predictors)]), task = model$task, model_engine = model$engine), class = "gp3ml_external_validation")
+  structure(list(label = label, created_at = .gp3ml_timestamp(), metrics = metrics, calibration = calibration, shift = .gp3ml_shift_diagnostics(model, external_data), predictions = predictions, external_hash = .gp3ml_hash_object(external_data[c(model$task$outcome, model$predictors)]), task = model$task, model_engine = model$engine), class = "gp3ml_external_validation")
 }
 
 #' Create an external-validation report object
@@ -525,7 +525,7 @@ create_gazepoint_reproducibility_report <- function(objects = list(), data = NUL
     status <- tryCatch(system2("git", c("-C", shQuote(project_path), "status", "--porcelain"), stdout = TRUE, stderr = FALSE), error = function(e) NA_character_)
     git$clean <- length(status) == 0L
   }
-  structure(list(created_at = format(Sys.time(), tz = "UTC", usetz = TRUE), r_version = R.version.string, platform = R.version$platform, session = utils::capture.output(utils::sessionInfo()), object_hashes = object_hashes, data_hash = data_hash, seeds = seeds, git = git, notes = notes, prohibited_uses = gp3ml_prohibited_uses()), class = "gp3ml_reproducibility_report")
+  structure(list(created_at = .gp3ml_timestamp(), r_version = R.version.string, platform = R.version$platform, session = .gp3ml_session_info(), object_hashes = object_hashes, data_hash = data_hash, seeds = seeds, git = git, notes = notes, prohibited_uses = gp3ml_prohibited_uses()), class = "gp3ml_reproducibility_report")
 }
 
 #' Write a reproducibility report

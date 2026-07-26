@@ -1,0 +1,40 @@
+---
+title: "Optional Engines and Cross-Platform Portability"
+description: "Reviewable optional-engine availability without making optional engines mandatory."
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Optional Engines and Cross-Platform Portability}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+options(gp3ml.reproducible_examples = TRUE)
+library(gp3ml)
+```
+
+## Capability table
+
+Optional engines remain optional. Missing packages are reported explicitly
+rather than changing the scientific task or silently selecting another model.
+
+```{r capabilities}
+capabilities <- gp3ml_engine_capabilities(
+  check_keras_backend = FALSE
+)
+capabilities
+plot(capabilities)
+```
+
+`glm` and `lm` are always available. `ranger`, `xgboost`, `nnet`, and `keras3`
+are exercised by a dedicated GitHub Actions matrix. Keras backend readiness is
+queried only when explicitly requested.
+
+```{r base-assertions}
+assert_gp3ml_engine_available("glm")
+assert_gp3ml_engine_available("lm")
+```
+
+Engine availability is not a model-selection rule. Candidate selection remains
+explicit, metric-declared, direction-declared, and reviewable.

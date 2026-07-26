@@ -324,6 +324,10 @@ adds governed tuning and nested grouped resampling while retaining
 explicit human-reviewed selection. Autonomous winner selection remains
 outside the package's scope.
 
+## Package maturity and interoperability
+
+The development line adds explicit API contracts, lightweight handoff contracts for `gp3tools`, `gpbiometrics`, and `gp3sequences`, deterministic documentation-output controls, optional-engine portability audits, and an integrated synthetic cross-package research workflow. These additions preserve the governance boundary: upstream packages remain responsible for preprocessing and feature derivation, while `gp3ml` remains responsible for declared roles, leakage-safe resampling, governed modelling, evaluation, uncertainty, and reporting.
+
 ## Prohibited uses
 
 The package does not support person identification, health inference,

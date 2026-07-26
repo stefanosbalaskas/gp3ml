@@ -124,10 +124,8 @@ paths <- write_gazepoint_group_folds_csv(
   directory = output_directory,
   tables = c("fold_summary", "group_counts")
 )
-paths
-#>                                                                                                 fold_summary
-#> "C:/Users/Stefanos-PC/AppData/Local/Temp/RtmpWEf1xn/filec53025e335ed/gazepoint_group_folds_fold_summary.csv"
-#>                                                                                                 group_counts
-#> "C:/Users/Stefanos-PC/AppData/Local/Temp/RtmpWEf1xn/filec53025e335ed/gazepoint_group_folds_group_counts.csv"
+basename(unname(paths))
+#> [1] "gazepoint_group_folds_fold_summary.csv"
+#> [2] "gazepoint_group_folds_group_counts.csv"
 unlink(output_directory, recursive = TRUE)
 ```

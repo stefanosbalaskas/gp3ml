@@ -1,0 +1,79 @@
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+name: Optional-engine portability
+
+permissions:
+  contents: read
+
+jobs:
+  engine-matrix:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+        engine: [core, ranger, xgboost, nnet, keras3]
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
+      GP3ML_ENGINE: ${{ matrix.engine }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 'release'
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::pkgload
+            any::testthat
+            ${{ matrix.engine == 'ranger' && 'any::ranger' || '' }}
+            ${{ matrix.engine == 'xgboost' && 'any::xgboost' || '' }}
+            ${{ matrix.engine == 'nnet' && 'any::nnet' || '' }}
+            ${{ matrix.engine == 'keras3' && 'any::keras3' || '' }}
+          needs: check
+
+      - name: Capability and graceful-degradation smoke test
+        shell: Rscript {0}
+        run: |
+          pkgload::load_all(export_all = FALSE)
+          engine <- Sys.getenv("GP3ML_ENGINE")
+          caps <- gp3ml_engine_capabilities(check_keras_backend = FALSE)
+
+          stopifnot(
+            all(c(
+              "glm", "lm", "ranger", "xgboost",
+              "nnet", "keras3", "custom"
+            ) %in% caps$engine)
+          )
+
+          if (engine == "core") {
+            stopifnot(
+              isTRUE(caps$package_available[caps$engine == "glm"]),
+              isTRUE(caps$package_available[caps$engine == "lm"])
+            )
+          } else {
+            stopifnot(
+              isTRUE(caps$package_available[caps$engine == engine])
+            )
+          }
+
+      - name: Focused portability tests
+        shell: Rscript {0}
+        run: |
+          pkgload::load_all(export_all = FALSE)
+          testthat::test_file(
+            "tests/testthat/test-engine-capabilities.R",
+            reporter = "summary"
+          )

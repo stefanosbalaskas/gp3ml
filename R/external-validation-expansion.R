@@ -54,7 +54,7 @@ declare_gazepoint_external_dataset <- function(
       n_stimuli = if (!is.null(stimulus_id) && stimulus_id %in% names(data)) length(unique(data[[stimulus_id]])) else NA_integer_,
       data_hash = .gp3ml_hash_object(data),
       notes = as.character(notes),
-      declared_at = format(Sys.time(), tz = "UTC", usetz = TRUE)
+      declared_at = .gp3ml_timestamp()
     ),
     class = "gp3ml_external_dataset_declaration"
   )
