@@ -88,15 +88,15 @@ meaning within the 0.2.x line.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">registry</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/gp3ml_api_contracts.html">gp3ml_api_contracts</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">registry</span></span>
-<span><span class="co">#&gt;  gp3ml API contract registry: 71 stable exports, 18 experimental exports, 38 stable public classes</span></span>
+<span><span class="co">#&gt;  gp3ml API contract registry: 71 stable exports, 56 experimental exports, 38 stable public classes</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">registry</span><span class="op">$</span><span class="va">exports</span><span class="op">)</span></span>
 <span><span class="co">#&gt;                            name    stability present</span></span>
 <span><span class="co">#&gt; 1    apply_gazepoint_calibrator       stable    TRUE</span></span>
-<span><span class="co">#&gt; 2                 as_gp3ml_data experimental    TRUE</span></span>
-<span><span class="co">#&gt; 3 assert_gp3ml_engine_available experimental    TRUE</span></span>
-<span><span class="co">#&gt; 4         assert_gp3ml_use_case       stable    TRUE</span></span>
-<span><span class="co">#&gt; 5  assess_gazepoint_calibration       stable    TRUE</span></span>
-<span><span class="co">#&gt; 6   audit_gazepoint_group_folds       stable    TRUE</span></span>
+<span><span class="co">#&gt; 2 apply_gazepoint_decision_rule experimental    TRUE</span></span>
+<span><span class="co">#&gt; 3                 as_gp3ml_data experimental    TRUE</span></span>
+<span><span class="co">#&gt; 4 assert_gp3ml_engine_available experimental    TRUE</span></span>
+<span><span class="co">#&gt; 5         assert_gp3ml_use_case       stable    TRUE</span></span>
+<span><span class="co">#&gt; 6  assess_gazepoint_calibration       stable    TRUE</span></span>
 <span><span class="va">registry</span><span class="op">$</span><span class="va">policy</span></span>
 <span><span class="co">#&gt;                  contract</span></span>
 <span><span class="co">#&gt; 1  exported_function_name</span></span>

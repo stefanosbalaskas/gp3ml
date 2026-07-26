@@ -72,6 +72,15 @@ articles:
       - reproducibility-hardening
       - optional-engine-portability
       - integrated-research-workflow
+  - title: Next-generation governance
+    contents:
+      - decision-governance
+      - group-aware-conformal-prediction
+      - dataset-shift-and-robustness
+      - analysis-plan-governance
+      - portable-research-artifacts
+      - governance-standards-profile
+
 reference:
   - title: Package
     contents:
@@ -266,3 +275,71 @@ reference:
       - simulate_gazepoint_research_handoffs
       - validate_gazepoint_research_bundle
       - plot.gp3ml_research_bundle_validation
+
+  - title: Decision governance
+    desc: Predeclare, evaluate, select, apply, and audit classification decisions and abstention.
+    contents:
+      - create_gazepoint_decision_rule
+      - validate_gazepoint_decision_rule
+      - evaluate_gazepoint_thresholds
+      - select_gazepoint_threshold
+      - apply_gazepoint_decision_rule
+      - audit_gazepoint_abstention
+      - plot.gp3ml_threshold_evaluation
+      - plot.gp3ml_abstention_audit
+  - title: Target-aware conformal prediction
+    desc: Prediction-level uncertainty with explicit calibration-unit semantics.
+    contents:
+      - fit_gazepoint_conformal
+      - predict_gazepoint_interval
+      - predict_gazepoint_set
+      - assess_gazepoint_conformal_coverage
+      - validate_gazepoint_conformal
+      - plot.gp3ml_conformal_coverage
+  - title: Dataset shift and robustness
+    desc: Audit predictor distributions, missingness, and analytical stability without one synthetic drift score.
+    contents:
+      - audit_gazepoint_dataset_shift
+      - audit_gazepoint_missingness_shift
+      - summarize_gazepoint_shift
+      - evaluate_gazepoint_seed_stability
+      - evaluate_gazepoint_feature_stability
+      - evaluate_gazepoint_threshold_stability
+      - evaluate_gazepoint_missingness_sensitivity
+      - audit_gazepoint_model_robustness
+      - plot.gp3ml_dataset_shift_audit
+      - plot.gp3ml_model_robustness_audit
+  - title: Analysis-plan governance
+    desc: Freeze pre-model analytical commitments and audit later deviations.
+    contents:
+      - declare_gazepoint_analysis_plan
+      - validate_gazepoint_analysis_plan
+      - lock_gazepoint_analysis_plan
+      - audit_gazepoint_plan_deviations
+      - write_gazepoint_analysis_plan
+      - plot.gp3ml_plan_deviation_audit
+  - title: Portable models and research artifacts
+    desc: Serialize governed models, capture environments, package research evidence, and validate cryptographic provenance.
+    contents:
+      - create_gazepoint_model_artifact
+      - restore_gazepoint_model_artifact
+      - validate_gazepoint_model_artifact
+      - test_gazepoint_model_portability
+      - capture_gazepoint_environment
+      - compare_gazepoint_environments
+      - validate_gazepoint_environment
+      - write_gazepoint_ro_crate
+      - validate_gazepoint_ro_crate
+      - write_gazepoint_release_checksums
+      - validate_gazepoint_release_checksums
+      - plot.gp3ml_model_artifact_validation
+      - plot.gp3ml_environment_comparison
+      - plot.gp3ml_ro_crate_validation
+      - plot.gp3ml_release_checksum_validation
+  - title: Governance evidence profiles
+    desc: Organize gp3ml evidence and produce explicitly non-certifying standards-oriented crosswalks.
+    contents:
+      - create_gp3ml_governance_profile
+      - audit_gp3ml_governance_profile
+      - write_gp3ml_governance_profile
+      - plot.gp3ml_governance_profile_audit

@@ -327,3 +327,136 @@ handoffs.
   : Validate a synthetic cross-package research bundle
 - [`plot(`*`<gp3ml_research_bundle_validation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/plot.gp3ml_research_bundle_validation.md)
   : Plot research-bundle validation
+
+## Decision governance
+
+Predeclare, evaluate, select, apply, and audit classification decisions
+and abstention.
+
+- [`create_gazepoint_decision_rule()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/create_gazepoint_decision_rule.md)
+  : Create a governed classification decision rule
+- [`validate_gazepoint_decision_rule()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/validate_gazepoint_decision_rule.md)
+  : Validate a governed decision rule
+- [`evaluate_gazepoint_thresholds()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/evaluate_gazepoint_thresholds.md)
+  : Evaluate explicit classification thresholds
+- [`select_gazepoint_threshold()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/select_gazepoint_threshold.md)
+  : Select a threshold from a governed threshold evaluation
+- [`apply_gazepoint_decision_rule()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/apply_gazepoint_decision_rule.md)
+  : Apply a governed classification decision rule
+- [`audit_gazepoint_abstention()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/audit_gazepoint_abstention.md)
+  : Audit abstention decisions
+- [`plot(`*`<gp3ml_threshold_evaluation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/plot.gp3ml_threshold_evaluation.md)
+  : Plot threshold evaluation
+- [`plot(`*`<gp3ml_abstention_audit>`*`)`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/plot.gp3ml_abstention_audit.md)
+  : Plot abstention audit
+
+## Target-aware conformal prediction
+
+Prediction-level uncertainty with explicit calibration-unit semantics.
+
+- [`fit_gazepoint_conformal()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/fit_gazepoint_conformal.md)
+  : Fit target-aware split-conformal calibration
+- [`predict_gazepoint_interval()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/predict_gazepoint_interval.md)
+  : Predict conformal regression intervals
+- [`predict_gazepoint_set()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/predict_gazepoint_set.md)
+  : Predict binary conformal prediction sets
+- [`assess_gazepoint_conformal_coverage()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/assess_gazepoint_conformal_coverage.md)
+  : Assess conformal coverage
+- [`validate_gazepoint_conformal()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/validate_gazepoint_conformal.md)
+  : Validate a conformal fit
+- [`plot(`*`<gp3ml_conformal_coverage>`*`)`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/plot.gp3ml_conformal_coverage.md)
+  : Plot conformal coverage
+
+## Dataset shift and robustness
+
+Audit predictor distributions, missingness, and analytical stability
+without one synthetic drift score.
+
+- [`audit_gazepoint_dataset_shift()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/audit_gazepoint_dataset_shift.md)
+  : Audit predictor distribution shift
+- [`audit_gazepoint_missingness_shift()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/audit_gazepoint_missingness_shift.md)
+  : Audit missingness shift
+- [`summarize_gazepoint_shift()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/summarize_gazepoint_shift.md)
+  : Summarize dataset shift without collapsing it to one drift score
+- [`evaluate_gazepoint_seed_stability()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/evaluate_gazepoint_seed_stability.md)
+  : Evaluate seed stability
+- [`evaluate_gazepoint_feature_stability()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/evaluate_gazepoint_feature_stability.md)
+  : Evaluate leave-one-feature-out stability
+- [`evaluate_gazepoint_threshold_stability()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/evaluate_gazepoint_threshold_stability.md)
+  : Evaluate threshold stability around the optimum
+- [`evaluate_gazepoint_missingness_sensitivity()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/evaluate_gazepoint_missingness_sensitivity.md)
+  : Evaluate named missingness-sensitivity scenarios
+- [`audit_gazepoint_model_robustness()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/audit_gazepoint_model_robustness.md)
+  : Audit multiple robustness dimensions
+- [`plot(`*`<gp3ml_dataset_shift_audit>`*`)`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/plot.gp3ml_dataset_shift_audit.md)
+  : Plot a dataset shift audit
+- [`plot(`*`<gp3ml_model_robustness_audit>`*`)`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/plot.gp3ml_model_robustness_audit.md)
+  : Plot a robustness audit
+
+## Analysis-plan governance
+
+Freeze pre-model analytical commitments and audit later deviations.
+
+- [`declare_gazepoint_analysis_plan()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/declare_gazepoint_analysis_plan.md)
+  : Declare a frozen-analysis-plan contract
+- [`validate_gazepoint_analysis_plan()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/validate_gazepoint_analysis_plan.md)
+  : Validate an analysis plan
+- [`lock_gazepoint_analysis_plan()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/lock_gazepoint_analysis_plan.md)
+  : Lock an analysis plan using SHA-256
+- [`audit_gazepoint_plan_deviations()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/audit_gazepoint_plan_deviations.md)
+  : Audit deviations from a locked analysis plan
+- [`write_gazepoint_analysis_plan()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/write_gazepoint_analysis_plan.md)
+  : Write an analysis plan
+- [`plot(`*`<gp3ml_plan_deviation_audit>`*`)`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/plot.gp3ml_plan_deviation_audit.md)
+  : Plot analysis-plan deviations
+
+## Portable models and research artifacts
+
+Serialize governed models, capture environments, package research
+evidence, and validate cryptographic provenance.
+
+- [`create_gazepoint_model_artifact()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/create_gazepoint_model_artifact.md)
+  : Create a portable governed model artifact
+- [`restore_gazepoint_model_artifact()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/restore_gazepoint_model_artifact.md)
+  : Restore a model artifact
+- [`validate_gazepoint_model_artifact()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/validate_gazepoint_model_artifact.md)
+  : Validate a model artifact
+- [`test_gazepoint_model_portability()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/test_gazepoint_model_portability.md)
+  : Test model-artifact serialization and optional fresh-process
+  prediction
+- [`capture_gazepoint_environment()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/capture_gazepoint_environment.md)
+  : Capture a reproducibility environment record
+- [`compare_gazepoint_environments()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/compare_gazepoint_environments.md)
+  : Compare two environment records
+- [`validate_gazepoint_environment()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/validate_gazepoint_environment.md)
+  : Validate the current environment against a reference record
+- [`write_gazepoint_ro_crate()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/write_gazepoint_ro_crate.md)
+  : Write a minimal RO-Crate-oriented research object
+- [`validate_gazepoint_ro_crate()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/validate_gazepoint_ro_crate.md)
+  : Validate a gp3ml RO-Crate-oriented export
+- [`write_gazepoint_release_checksums()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/write_gazepoint_release_checksums.md)
+  : Write SHA-256 checksums for release artifacts
+- [`validate_gazepoint_release_checksums()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/validate_gazepoint_release_checksums.md)
+  : Validate SHA-256 release checksums
+- [`plot(`*`<gp3ml_model_artifact_validation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/plot.gp3ml_model_artifact_validation.md)
+  : Plot model-artifact validation
+- [`plot(`*`<gp3ml_environment_comparison>`*`)`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/plot.gp3ml_environment_comparison.md)
+  : Plot an environment comparison
+- [`plot(`*`<gp3ml_ro_crate_validation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/plot.gp3ml_ro_crate_validation.md)
+  : Plot RO-Crate validation
+- [`plot(`*`<gp3ml_release_checksum_validation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/plot.gp3ml_release_checksum_validation.md)
+  : Plot release checksum validation
+
+## Governance evidence profiles
+
+Organize gp3ml evidence and produce explicitly non-certifying
+standards-oriented crosswalks.
+
+- [`create_gp3ml_governance_profile()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/create_gp3ml_governance_profile.md)
+  : Create a governance-evidence profile
+- [`audit_gp3ml_governance_profile()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/audit_gp3ml_governance_profile.md)
+  : Audit a governance-evidence profile
+- [`write_gp3ml_governance_profile()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/write_gp3ml_governance_profile.md)
+  : Write a governance profile audit
+- [`plot(`*`<gp3ml_governance_profile_audit>`*`)`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/plot.gp3ml_governance_profile_audit.md)
+  : Plot a governance profile audit

@@ -27,6 +27,10 @@ Encoding: UTF-8
 Language: en-US
 Depends: R (>= 4.1.0)
 Suggests:
+    bundle,
+    callr,
+    openssl,
+    renv,
     jsonlite,
     keras3,
     knitr,

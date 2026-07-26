@@ -1,5 +1,18 @@
 # gp3ml 0.2.0.9000
 
+## Next-generation governed research-ML infrastructure
+
+* Added explicit decision-rule contracts, threshold evaluation, deterministic threshold selection, and abstention auditing without hidden threshold defaults.
+* Added target-aware split-conformal calibration for regression intervals and binary prediction sets, with explicit calibration-unit and generalization-target semantics.
+* Added predictor-distribution and missingness-shift audits that remain distinct from prevalence, calibration, and performance drift.
+* Added frozen analysis-plan contracts with SHA-256 locking and post hoc deviation auditing.
+* Added portable model artifacts with optional `bundle` support, serialization validation, and optional fresh-process checks through `callr`.
+* Added robustness and stability diagnostics across seeds, features, thresholds, and missingness scenarios.
+* Added environment capture/comparison, minimal RO-Crate-oriented research-object export, SHA-256 release manifests, and a manual GitHub release-attestation workflow.
+* Added gp3ml-native, NIST AI RMF 1.0, ISO/IEC 23894-oriented, and ISO/IEC 42001-oriented governance evidence profiles. Standards-oriented outputs explicitly do not claim certification or conformity.
+* Added six new development articles covering decision governance, conformal prediction, dataset shift and robustness, frozen analysis plans, portable research artifacts, and governance standards crosswalks.
+
+
 * Added an explicit API-stability registry, public-object schema audit, and contract validation for the established 0.2.0 surface.
 * Added lightweight cross-package handoff contracts for gp3tools, gpbiometrics, gp3sequences, study-design data, and custom prepared data without duplicating upstream preprocessing.
 * Added deterministic documentation-output controls plus audits for volatile timestamps, temporary paths, and runtime addresses.

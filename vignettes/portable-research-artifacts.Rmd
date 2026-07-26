@@ -1,0 +1,31 @@
+---
+title: "Portable Models and Research Artifacts"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Portable Models and Research Artifacts}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+library(gp3ml)
+```
+
+A reproducible model is more than an R object. This layer records the model,
+preprocessing, task, feature provenance, decision rule, schema, environment,
+and cryptographic file hashes. Optional `bundle` support is used when available
+for engines that need custom serialization.
+
+Environment records can be compared before reproducing a result:
+
+```{r}
+reference <- capture_gazepoint_environment(packages = "gp3ml")
+comparison <- compare_gazepoint_environments(reference, reference)
+comparison$status
+plot(comparison)
+```
+
+A minimal RO-Crate-oriented export can package research files with SHA-256
+hashes. gp3ml deliberately describes this as RO-Crate-oriented unless an
+independent conformance validator has also been run.

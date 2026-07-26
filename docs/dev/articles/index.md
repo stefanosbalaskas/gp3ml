@@ -84,3 +84,18 @@
 
   A realistic cross-package handoff followed by governed
   participant-generalization validation.
+
+### Next-generation governance
+
+- [Governed Decision Thresholds and
+  Abstention](https://stefanosbalaskas.github.io/gp3ml/dev/articles/decision-governance.md):
+- [Target-Aware Conformal
+  Prediction](https://stefanosbalaskas.github.io/gp3ml/dev/articles/group-aware-conformal-prediction.md):
+- [Dataset Shift and Robustness
+  Auditing](https://stefanosbalaskas.github.io/gp3ml/dev/articles/dataset-shift-and-robustness.md):
+- [Frozen Analysis-Plan
+  Governance](https://stefanosbalaskas.github.io/gp3ml/dev/articles/analysis-plan-governance.md):
+- [Portable Models and Research
+  Artifacts](https://stefanosbalaskas.github.io/gp3ml/dev/articles/portable-research-artifacts.md):
+- [Governance Evidence and Standards
+  Crosswalks](https://stefanosbalaskas.github.io/gp3ml/dev/articles/governance-standards-profile.md):
