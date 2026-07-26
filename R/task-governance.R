@@ -122,7 +122,7 @@ declare_gazepoint_task <- function(
       positive = positive,
       observed_outcome = isTRUE(observed_outcome),
       sensitive_outcome = isTRUE(sensitive_outcome),
-      created_at = format(Sys.time(), tz = "UTC", usetz = TRUE)
+      created_at = .gp3ml_timestamp()
     ),
     class = "gp3ml_task"
   )

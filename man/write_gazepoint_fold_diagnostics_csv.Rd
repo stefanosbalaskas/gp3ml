@@ -103,6 +103,6 @@ paths <- write_gazepoint_fold_diagnostics_csv(
   directory = output_directory,
   tables = c("fold_metrics", "repeat_metrics")
 )
-paths
+basename(unname(paths))
 unlink(output_directory, recursive = TRUE)
 }

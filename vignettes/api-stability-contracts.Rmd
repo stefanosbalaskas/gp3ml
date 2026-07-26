@@ -1,0 +1,72 @@
+---
+title: "API Stability and Public Object Contracts"
+description: "Auditing the stable gp3ml API surface and public object schemas."
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{API Stability and Public Object Contracts}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+options(gp3ml.reproducible_examples = TRUE)
+library(gp3ml)
+```
+
+## Why an explicit contract layer?
+
+`gp3ml` distinguishes the public API established by version 0.2.0 from new
+development APIs. Stable exported names and registered public S3 classes
+should not silently disappear or change meaning within the 0.2.x line.
+
+```{r registry}
+registry <- gp3ml_api_contracts()
+registry
+head(registry$exports)
+registry$policy
+```
+
+## Audit the currently loaded package
+
+```{r audit}
+audit <- audit_gp3ml_api_stability(registry)
+audit
+plot(audit)
+```
+
+A failure indicates removal of an established export or registered public
+class. An undeclared export is reviewable rather than silently accepted.
+
+## Inspect an object schema
+
+```{r schema}
+example_data <- data.frame(
+  participant_id = rep(sprintf("P%02d", 1:8), each = 2),
+  trial_id = sprintf("T%02d", 1:16),
+  stimulus_id = rep(c("S01", "S02"), 8),
+  assigned_condition = rep(c("A", "B"), 8),
+  stringsAsFactors = FALSE
+)
+
+task <- declare_gazepoint_task(
+  data = example_data,
+  outcome = "assigned_condition",
+  purpose = "Discriminate an experimentally assigned condition using predeclared observed variables",
+  task_type = "classification",
+  unit_id = "trial_id",
+  participant_id = "participant_id",
+  stimulus_id = "stimulus_id",
+  generalization_target = "new_participants",
+  positive = "B",
+  observed_outcome = TRUE,
+  sensitive_outcome = FALSE
+)
+
+validation <- validate_gp3ml_object_contract(task)
+validation
+validation$schema
+```
+
+The contract policy is additive: established named components retain their
+meaning, while compatible additions remain possible.

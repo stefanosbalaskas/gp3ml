@@ -107,6 +107,6 @@ paths <- write_gazepoint_group_folds_csv(
   directory = output_directory,
   tables = c("fold_summary", "group_counts")
 )
-paths
+basename(unname(paths))
 unlink(output_directory, recursive = TRUE)
 }

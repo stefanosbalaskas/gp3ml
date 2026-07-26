@@ -67,5 +67,8 @@ engine <- integrate_black_box_model(
     group_aware_evaluation_required = TRUE
   )
 )
-engine
+engine$name
+engine$supports
+engine$probability
+engine$safety_declaration
 }

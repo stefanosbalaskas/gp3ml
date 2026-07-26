@@ -1245,7 +1245,7 @@ print.gazepoint_fold_diagnostics_validation <- function(x, ...) {
 #'   directory = output_directory,
 #'   tables = c("fold_metrics", "repeat_metrics")
 #' )
-#' paths
+#' basename(unname(paths))
 #' unlink(output_directory, recursive = TRUE)
 #' @return A named character vector of written file paths, invisibly.
 #'

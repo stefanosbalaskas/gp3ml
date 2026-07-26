@@ -1645,7 +1645,7 @@ print.gazepoint_group_folds_audit <- function(x, ...) {
 #'   directory = output_directory,
 #'   tables = c("fold_summary", "group_counts")
 #' )
-#' paths
+#' basename(unname(paths))
 #' unlink(output_directory, recursive = TRUE)
 #' @return A named character vector of normalized output paths, invisibly.
 #'

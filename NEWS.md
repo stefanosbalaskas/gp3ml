@@ -1,3 +1,12 @@
+# gp3ml 0.2.0.9000
+
+* Added an explicit API-stability registry, public-object schema audit, and contract validation for the established 0.2.0 surface.
+* Added lightweight cross-package handoff contracts for gp3tools, gpbiometrics, gp3sequences, study-design data, and custom prepared data without duplicating upstream preprocessing.
+* Added deterministic documentation-output controls plus audits for volatile timestamps, temporary paths, and runtime addresses.
+* Added engine capability auditing and a Windows/macOS/Linux optional-engine CI matrix.
+* Added a realistic synthetic three-package research handoff and governed participant-generalization validation workflow.
+* Added five package-maturity vignettes covering API contracts, interoperability, reproducibility, portability, and integrated workflow validation.
+
 # gp3ml 0.2.0
 
 ## Grouped evaluation and governed tuning

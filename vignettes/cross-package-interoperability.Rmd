@@ -1,0 +1,54 @@
+---
+title: "Cross-Package Interoperability Contracts"
+description: "Lightweight handoffs from gp3tools, gpbiometrics, and gp3sequences into gp3ml."
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Cross-Package Interoperability Contracts}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+options(gp3ml.reproducible_examples = TRUE)
+library(gp3ml)
+```
+
+## Boundary, not duplication
+
+The interoperability layer does not import raw Gazepoint files, process
+biometric signals, or perform sequence analysis. Those remain upstream
+responsibilities.
+
+```{r contracts}
+gp3ml_interop_contracts()
+```
+
+## Prepared handoffs
+
+```{r handoffs}
+bundle <- simulate_gazepoint_research_handoffs(
+  n_participants = 12L,
+  n_stimuli = 3L,
+  seed = 3201L
+)
+bundle
+
+gaze_validation <- validate_gazepoint_handoff(bundle$handoffs$gp3tools)
+gaze_validation
+plot(gaze_validation)
+```
+
+## Combine only after validation
+
+```{r combine}
+combined <- combine_gazepoint_handoffs(
+  bundle$handoffs,
+  keys = bundle$keys
+)
+combined
+head(as_gp3ml_data(combined))
+```
+
+The resulting table is a modelling handoff. It does not imply that `gp3ml`
+performed the upstream preprocessing represented by those columns.

@@ -44,7 +44,7 @@ print(validation)
 #> Features: 1
 #> Non-passing checks: 0
 #>  status n_checks
-#>  pass   11
-#>  review  0
-#>  fail    0
+#>  pass   11      
+#>  review  0      
+#>  fail    0      
 ```

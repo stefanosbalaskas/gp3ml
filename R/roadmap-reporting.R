@@ -186,11 +186,11 @@ create_gazepoint_release_evidence <- function(
   structure(
     list(
       version = version,
-      created_at = format(Sys.time(), tz = "UTC", usetz = TRUE),
+      created_at = .gp3ml_timestamp(),
       object_hashes = if (length(objects)) vapply(objects, .gp3ml_hash_object, character(1)) else character(),
       file_md5 = if (length(files)) tools::md5sum(files) else character(),
       file_paths = files,
-      session = utils::capture.output(utils::sessionInfo()),
+      session = .gp3ml_session_info(),
       notes = as.character(notes),
       prohibited_uses = gp3ml_prohibited_uses()
     ),

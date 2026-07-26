@@ -254,3 +254,76 @@ reporting.
   : Create a reproducibility report
 - [`write_gazepoint_reproducibility_report()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/write_gazepoint_reproducibility_report.md)
   : Write a reproducibility report
+
+## API stability and contracts
+
+Audit the established public API, S3 classes, and return schemas.
+
+- [`gp3ml_api_contracts()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/gp3ml_api_contracts.md)
+  : gp3ml public API contracts
+- [`gp3ml_object_schema()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/gp3ml_object_schema.md)
+  : Describe the schema of a gp3ml object
+- [`validate_gp3ml_object_contract()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/validate_gp3ml_object_contract.md)
+  : Validate an object against the gp3ml public-object contract
+- [`audit_gp3ml_api_stability()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/audit_gp3ml_api_stability.md)
+  : Audit gp3ml API stability
+- [`write_gp3ml_api_contracts()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/write_gp3ml_api_contracts.md)
+  : Write gp3ml API contracts
+- [`plot(`*`<gp3ml_api_stability_audit>`*`)`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/plot.gp3ml_api_stability_audit.md)
+  : Plot a gp3ml API stability audit
+
+## Cross-package interoperability
+
+Validate and combine prepared handoffs without duplicating upstream
+preprocessing.
+
+- [`gp3ml_interop_contracts()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/gp3ml_interop_contracts.md)
+  : Cross-package interoperability contracts
+- [`create_gazepoint_handoff()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/create_gazepoint_handoff.md)
+  : Create a lightweight cross-package Gazepoint handoff
+- [`validate_gazepoint_handoff()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/validate_gazepoint_handoff.md)
+  : Validate a Gazepoint handoff
+- [`combine_gazepoint_handoffs()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/combine_gazepoint_handoffs.md)
+  : Combine validated cross-package handoffs
+- [`as_gp3ml_data()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/as_gp3ml_data.md)
+  : Extract model-ready data from a gp3ml handoff object
+- [`plot(`*`<gp3ml_handoff_validation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/plot.gp3ml_handoff_validation.md)
+  : Plot handoff validation checks
+
+## Reproducibility hardening
+
+Normalize and audit runtime-specific generated output.
+
+- [`normalize_gazepoint_artifact_text()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/normalize_gazepoint_artifact_text.md)
+  : Normalize volatile text in generated research artifacts
+- [`audit_gazepoint_reproducibility()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/audit_gazepoint_reproducibility.md)
+  : Audit generated artifacts for volatile output
+- [`write_gazepoint_reproducibility_audit()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/write_gazepoint_reproducibility_audit.md)
+  : Write a reproducibility-hardening audit
+- [`with_gazepoint_reproducible_output()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/with_gazepoint_reproducible_output.md)
+  : Evaluate code with deterministic documentation-output settings
+- [`plot(`*`<gp3ml_reproducibility_audit>`*`)`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/plot.gp3ml_reproducibility_audit.md)
+  : Plot a reproducibility-hardening audit
+
+## Engine portability
+
+Review optional-engine availability and controlled degradation.
+
+- [`gp3ml_engine_capabilities()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/gp3ml_engine_capabilities.md)
+  : Audit gp3ml model-engine capabilities
+- [`assert_gp3ml_engine_available()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/assert_gp3ml_engine_available.md)
+  : Assert that a gp3ml engine is available
+- [`plot(`*`<gp3ml_engine_capabilities>`*`)`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/plot.gp3ml_engine_capabilities.md)
+  : Plot gp3ml engine availability
+
+## Integrated research workflow
+
+Simulate and validate realistic cross-package Gazepoint research
+handoffs.
+
+- [`simulate_gazepoint_research_handoffs()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/simulate_gazepoint_research_handoffs.md)
+  : Simulate realistic cross-package Gazepoint research handoffs
+- [`validate_gazepoint_research_bundle()`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/validate_gazepoint_research_bundle.md)
+  : Validate a synthetic cross-package research bundle
+- [`plot(`*`<gp3ml_research_bundle_validation>`*`)`](https://stefanosbalaskas.github.io/gp3ml/dev/reference/plot.gp3ml_research_bundle_validation.md)
+  : Plot research-bundle validation

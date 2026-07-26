@@ -328,9 +328,21 @@ The governed modelling core provides related interfaces for:
 - generating model cards and reproducibility reports.
 
 These interfaces do not convert row-level metrics into participant-level
-estimates merely because a split was participant-grouped. Automatic
-tuning, nested grouped resampling, and autonomous winner selection are
-outside the scope of version `0.1.0`.
+estimates merely because a split was participant-grouped. Version
+`0.2.0` adds governed tuning and nested grouped resampling while
+retaining explicit human-reviewed selection. Autonomous winner selection
+remains outside the package’s scope.
+
+## Package maturity and interoperability
+
+The development line adds explicit API contracts, lightweight handoff
+contracts for `gp3tools`, `gpbiometrics`, and `gp3sequences`,
+deterministic documentation-output controls, optional-engine portability
+audits, and an integrated synthetic cross-package research workflow.
+These additions preserve the governance boundary: upstream packages
+remain responsible for preprocessing and feature derivation, while
+`gp3ml` remains responsible for declared roles, leakage-safe resampling,
+governed modelling, evaluation, uncertainty, and reporting.
 
 ## Prohibited uses
 
@@ -344,18 +356,25 @@ See:
 - [`GOVERNANCE.md`](https://github.com/stefanosbalaskas/gp3ml/blob/master/inst/governance/GOVERNANCE.md)
 - [`PROHIBITED-USE.md`](https://github.com/stefanosbalaskas/gp3ml/blob/master/inst/governance/PROHIBITED-USE.md)
 
+## Citation
+
+Use the Zenodo [concept DOI](https://doi.org/10.5281/zenodo.21487272) to
+cite all versions of `gp3ml`. For the archived `0.2.0` release, use the
+[version-specific DOI](https://doi.org/10.5281/zenodo.21532057).
+
 ## Release status
 
-Version `0.1.0` is the first formal source release of `gp3ml`.
+Version `0.2.0` is the second formal source release of `gp3ml`.
 
-It includes the governance, provenance, splitting, grouped-resampling,
-diagnostic, preprocessing, modelling, performance, calibration,
-uncertainty, external-validation, model-card, and reproducibility
-infrastructure described above.
+It extends the governance-first 0.1.0 foundation with repository-aware
+evaluation across materialized grouped folds, governed model comparison
+and tuning, nested grouped resampling, target-aligned uncertainty,
+external validation and transportability reporting, release model cards,
+and nine deterministic synthetic workflow articles.
 
-Repository-aware evaluation across materialized grouped folds, governed
-model comparison and tuning, and nested grouped resampling remain
-separate post-release milestones.
+Model selection remains explicitly reviewable and human-governed; the
+package does not perform autonomous winner selection or relax its
+prohibited-use boundaries.
 
 ## Analytical roadmap
 
