@@ -1,0 +1,10 @@
+test_that("release checksum manifests round-trip", {
+  skip_if_not_installed("openssl")
+  td <- tempfile("release-")
+  dir.create(td)
+  f <- file.path(td, "gp3ml-test.tar.gz")
+  writeBin(charToRaw("synthetic artifact"), f)
+  m <- write_gazepoint_release_checksums(f, file.path(td, "SHA256SUMS.csv"))
+  v <- validate_gazepoint_release_checksums(m, td)
+  expect_identical(v$status, "pass")
+})

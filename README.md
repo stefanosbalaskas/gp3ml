@@ -397,3 +397,18 @@ not perform autonomous model selection.
 - [Package website](https://stefanosbalaskas.github.io/gp3ml/)
 - [Source repository](https://github.com/stefanosbalaskas/gp3ml)
 - [Issue tracker](https://github.com/stefanosbalaskas/gp3ml/issues)
+
+## Next-generation governance and reproducibility
+
+The development roadmap extends gp3ml beyond model fitting into explicit
+prediction-to-decision governance, target-aware conformal prediction,
+dataset-shift auditing, frozen analysis plans, model-artifact portability,
+robustness diagnostics, environment provenance, research-object export, and
+standards-oriented evidence crosswalks.
+
+These features preserve gp3ml's existing governance boundary. They do not
+support identification, authentication, diagnosis, protected-attribute
+inference, or direct or indirect inference of emotion, stress, personality,
+deception, cognition, comprehension, intent, or other mental states.
+Standards-oriented crosswalks are documentation aids only and do not imply
+NIST endorsement, ISO conformity, certification, or legal compliance.

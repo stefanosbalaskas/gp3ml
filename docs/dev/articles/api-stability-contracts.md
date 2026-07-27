@@ -11,15 +11,15 @@ line.
 
 registry <- gp3ml_api_contracts()
 registry
-#>  gp3ml API contract registry: 71 stable exports, 18 experimental exports, 38 stable public classes
+#>  gp3ml API contract registry: 71 stable exports, 56 experimental exports, 38 stable public classes
 head(registry$exports)
 #>                            name    stability present
 #> 1    apply_gazepoint_calibrator       stable    TRUE
-#> 2                 as_gp3ml_data experimental    TRUE
-#> 3 assert_gp3ml_engine_available experimental    TRUE
-#> 4         assert_gp3ml_use_case       stable    TRUE
-#> 5  assess_gazepoint_calibration       stable    TRUE
-#> 6   audit_gazepoint_group_folds       stable    TRUE
+#> 2 apply_gazepoint_decision_rule experimental    TRUE
+#> 3                 as_gp3ml_data experimental    TRUE
+#> 4 assert_gp3ml_engine_available experimental    TRUE
+#> 5         assert_gp3ml_use_case       stable    TRUE
+#> 6  assess_gazepoint_calibration       stable    TRUE
 registry$policy
 #>                  contract
 #> 1  exported_function_name
