@@ -78,8 +78,11 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Until a public CRAN package page exists, install the current source from GitHub:</p>
+<p>Install the CRAN release:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"gp3ml"</span><span class="op">)</span></span></code></pre></div>
+<p>The CRAN release is currently version <code>0.1.0</code>. To install the development version from GitHub:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"stefanosbalaskas/gp3ml"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -122,7 +125,7 @@
 <li>identifier-like predictor names requiring manual review.</li>
 </ul>
 <p>The returned audit has an overall <code>pass</code>, <code>review</code>, or <code>fail</code> status, a complete check table, a non-passing issue table, and partition summaries. Audit tables can be exported using <code><a href="reference/write_gazepoint_ml_leakage_audit_csv.html">write_gazepoint_ml_leakage_audit_csv()</a></code>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">analysis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  participant_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P01"</span>, <span class="st">"P02"</span><span class="op">)</span>,</span>
 <span>  trial_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T01"</span>, <span class="st">"T02"</span><span class="op">)</span>,</span>
@@ -158,7 +161,7 @@
 </h2>
 <p><code><a href="reference/create_gazepoint_feature_manifest.html">create_gazepoint_feature_manifest()</a></code> records the declared origin, transformation, availability, role, and preprocessing scope of each intended predictor.</p>
 <p><code><a href="reference/validate_gazepoint_feature_manifest.html">validate_gazepoint_feature_manifest()</a></code> checks whether the manifest contains sufficient provenance metadata and identifies predictors declared as outcome-derived, post-outcome, unavailable at prediction time, identifiers, or incompatible with required fold-local preprocessing.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">manifest</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_gazepoint_feature_manifest.html">create_gazepoint_feature_manifest</a></span><span class="op">(</span></span>
 <span>  features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixation_duration"</span>, <span class="st">"pupil_change"</span><span class="op">)</span>,</span>
 <span>  scientific_source <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
@@ -185,7 +188,7 @@
 <h2 id="group-aware-holdout-splitting">Group-aware holdout splitting<a class="anchor" aria-label="anchor" href="#group-aware-holdout-splitting"></a>
 </h2>
 <p><code><a href="reference/split_gazepoint_ml_data.html">split_gazepoint_ml_data()</a></code> creates deterministic analysis and assessment partitions that preserve the grouping unit implied by an explicit predictive-generalization target. A passing feature-provenance manifest is required before splitting, and the resulting partitions are checked using the leakage audit.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">split_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span></span>
 <span>  participant_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"P%02d"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>,</span>
 <span>  trial_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"T%02d"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>,</span>
@@ -239,7 +242,7 @@
 <h2 id="group-aware-resampling">Group-aware resampling<a class="anchor" aria-label="anchor" href="#group-aware-resampling"></a>
 </h2>
 <p><code><a href="reference/create_gazepoint_group_folds.html">create_gazepoint_group_folds()</a></code> creates deterministic repeated grouped V-fold plans for the same explicit generalization targets supported by the holdout splitter. A passing feature-provenance manifest is required, and every analysis-assessment pair is checked using the leakage audit.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">folds</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_gazepoint_group_folds.html">create_gazepoint_group_folds</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">split_data</span>,</span>
 <span>  outcome <span class="op">=</span> <span class="st">"outcome"</span>,</span>
@@ -267,7 +270,7 @@
 <h2 id="resampling-diagnostics">Resampling diagnostics<a class="anchor" aria-label="anchor" href="#resampling-diagnostics"></a>
 </h2>
 <p><code><a href="reference/diagnose_gazepoint_group_folds.html">diagnose_gazepoint_group_folds()</a></code> evaluates the balance, coverage, outcome representation, and exclusions of an existing grouped resampling plan. Diagnostics remain downstream of fold construction and do not modify assignments or fit models.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fold_diagnostics</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/diagnose_gazepoint_group_folds.html">diagnose_gazepoint_group_folds</a></span><span class="op">(</span><span class="va">folds</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">fold_diagnostics</span></span>
@@ -277,7 +280,7 @@
 <p><code><a href="reference/validate_gazepoint_fold_diagnostics.html">validate_gazepoint_fold_diagnostics()</a></code> reports <code>pass</code>, <code>review</code>, or <code>fail</code> findings for fold counts, partition accounting, non-empty partitions, assessment coverage, fold-size imbalance, group presence, outcome-level presence, embedded leakage audits, and source-plan status.</p>
 <p>For crossed new-participant and new-stimulus designs, <code>exclusion_summary</code> reports the rows intentionally excluded because they belong to only one held dimension rather than the strict crossed assessment block.</p>
 <p>All diagnostic tables can be exported for review and reporting:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/write_gazepoint_fold_diagnostics_csv.html">write_gazepoint_fold_diagnostics_csv</a></span><span class="op">(</span></span>
 <span>  <span class="va">fold_diagnostics</span>,</span>
 <span>  directory <span class="op">=</span> <span class="st">"resampling-diagnostics"</span>,</span>
@@ -321,6 +324,7 @@
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
 <p>Use the Zenodo <a href="https://doi.org/10.5281/zenodo.21487272" class="external-link">concept DOI</a> to cite all versions of <code>gp3ml</code>. For the archived <code>0.2.0</code> release, use the <a href="https://doi.org/10.5281/zenodo.21532057" class="external-link">version-specific DOI</a>.</p>
+<p>The CRAN package record has the persistent <a href="https://doi.org/10.32614/CRAN.package.gp3ml" class="external-link">CRAN package DOI</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="release-status">Release status<a class="anchor" aria-label="anchor" href="#release-status"></a>
@@ -348,6 +352,7 @@
 </h2>
 <ul>
 <li><a href="https://stefanosbalaskas.github.io/gp3ml/">Package website</a></li>
+<li><a href="https://CRAN.R-project.org/package=gp3ml" class="external-link">CRAN package page</a></li>
 <li><a href="https://github.com/stefanosbalaskas/gp3ml" class="external-link">Source repository</a></li>
 <li><a href="https://github.com/stefanosbalaskas/gp3ml/issues" class="external-link">Issue tracker</a></li>
 </ul>
@@ -362,6 +367,7 @@
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=gp3ml" class="external-link">View on CRAN</a></li>
 <li><a href="https://github.com/stefanosbalaskas/gp3ml/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/stefanosbalaskas/gp3ml/issues" class="external-link">Report a bug</a></li>
 </ul>
@@ -396,6 +402,7 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/stefanosbalaskas/gp3ml/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/stefanosbalaskas/gp3ml/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://CRAN.R-project.org/package=gp3ml" class="external-link"><img src="https://www.r-pkg.org/badges/version/gp3ml" alt="CRAN status"></a></li>
 <li><a href="https://doi.org/10.5281/zenodo.21487272" class="external-link"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.21487272.svg" alt="DOI"></a></li>
 </ul>
 </div>

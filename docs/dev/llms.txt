@@ -10,8 +10,15 @@ learning wrapper and does not perform autonomous model selection.
 
 ## Installation
 
-Until a public CRAN package page exists, install the current source from
-GitHub:
+Install the CRAN release:
+
+``` r
+
+install.packages("gp3ml")
+```
+
+The CRAN release is currently version `0.1.0`. To install the
+development version from GitHub:
 
 ``` r
 
@@ -362,6 +369,9 @@ Use the Zenodo [concept DOI](https://doi.org/10.5281/zenodo.21487272) to
 cite all versions of `gp3ml`. For the archived `0.2.0` release, use the
 [version-specific DOI](https://doi.org/10.5281/zenodo.21532057).
 
+The CRAN package record has the persistent [CRAN package
+DOI](https://doi.org/10.32614/CRAN.package.gp3ml).
+
 ## Release status
 
 Version `0.2.0` is the second formal source release of `gp3ml`.
@@ -401,6 +411,7 @@ not perform autonomous model selection.
 ## Project resources
 
 - [Package website](https://stefanosbalaskas.github.io/gp3ml/)
+- [CRAN package page](https://CRAN.R-project.org/package=gp3ml)
 - [Source repository](https://github.com/stefanosbalaskas/gp3ml)
 - [Issue tracker](https://github.com/stefanosbalaskas/gp3ml/issues)
 

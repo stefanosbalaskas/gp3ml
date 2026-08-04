@@ -45,5 +45,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 8.0.0
 Config/testthat/edition: 3
 Config/roxygen2/version: 8.0.0
-URL: https://stefanosbalaskas.github.io/gp3ml/, https://github.com/stefanosbalaskas/gp3ml
+URL: https://stefanosbalaskas.github.io/gp3ml/, https://CRAN.R-project.org/package=gp3ml, https://github.com/stefanosbalaskas/gp3ml
 BugReports: https://github.com/stefanosbalaskas/gp3ml/issues
