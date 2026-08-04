@@ -2,6 +2,10 @@
 
 ## gp3ml 0.2.0.9000
 
+- Added the canonical CRAN package page, CRAN installation instructions,
+  package-status badge, and CRAN package DOI following publication of
+  gp3ml 0.1.0 on CRAN.
+
 ### Next-generation governed research-ML infrastructure
 
 - Added explicit decision-rule contracts, threshold evaluation,
@@ -101,6 +105,8 @@
   driver, and a read-only 0.2.0 release audit.
 
 ## gp3ml 0.1.0
+
+CRAN release: 2026-07-30
 
 ### First formal release
 

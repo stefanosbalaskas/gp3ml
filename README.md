@@ -6,6 +6,8 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/stefanosbalaskas/gp3ml/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/stefanosbalaskas/gp3ml/actions/workflows/R-CMD-check.yaml)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/gp3ml)](https://CRAN.R-project.org/package=gp3ml)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21487272.svg)](https://doi.org/10.5281/zenodo.21487272)
 <!-- badges: end -->
 
@@ -19,8 +21,14 @@ learning wrapper and does not perform autonomous model selection.
 
 ## Installation
 
-Until a public CRAN package page exists, install the current source from
-GitHub:
+Install the CRAN release:
+
+``` r
+install.packages("gp3ml")
+```
+
+The CRAN release is currently version `0.1.0`. To install the
+development version from GitHub:
 
 ``` r
 install.packages("remotes")
@@ -356,6 +364,9 @@ Use the Zenodo [concept DOI](https://doi.org/10.5281/zenodo.21487272) to
 cite all versions of `gp3ml`. For the archived `0.2.0` release, use the
 [version-specific DOI](https://doi.org/10.5281/zenodo.21532057).
 
+The CRAN package record has the persistent [CRAN package
+DOI](https://doi.org/10.32614/CRAN.package.gp3ml).
+
 ## Release status
 
 Version `0.2.0` is the second formal source release of `gp3ml`.
@@ -395,6 +406,7 @@ not perform autonomous model selection.
 ## Project resources
 
 - [Package website](https://stefanosbalaskas.github.io/gp3ml/)
+- [CRAN package page](https://CRAN.R-project.org/package=gp3ml)
 - [Source repository](https://github.com/stefanosbalaskas/gp3ml)
 - [Issue tracker](https://github.com/stefanosbalaskas/gp3ml/issues)
 
@@ -402,13 +414,14 @@ not perform autonomous model selection.
 
 The development roadmap extends gp3ml beyond model fitting into explicit
 prediction-to-decision governance, target-aware conformal prediction,
-dataset-shift auditing, frozen analysis plans, model-artifact portability,
-robustness diagnostics, environment provenance, research-object export, and
-standards-oriented evidence crosswalks.
+dataset-shift auditing, frozen analysis plans, model-artifact
+portability, robustness diagnostics, environment provenance,
+research-object export, and standards-oriented evidence crosswalks.
 
-These features preserve gp3ml's existing governance boundary. They do not
-support identification, authentication, diagnosis, protected-attribute
-inference, or direct or indirect inference of emotion, stress, personality,
-deception, cognition, comprehension, intent, or other mental states.
-Standards-oriented crosswalks are documentation aids only and do not imply
-NIST endorsement, ISO conformity, certification, or legal compliance.
+These features preserve gp3ml’s existing governance boundary. They do
+not support identification, authentication, diagnosis,
+protected-attribute inference, or direct or indirect inference of
+emotion, stress, personality, deception, cognition, comprehension,
+intent, or other mental states. Standards-oriented crosswalks are
+documentation aids only and do not imply NIST endorsement, ISO
+conformity, certification, or legal compliance.
