@@ -1,26 +1,55 @@
 ## Submission
 
-This is a new package submission for gp3ml 0.2.0.
+This is an update to the CRAN package gp3ml from version 0.1.0 to
+version 0.3.0.
 
-gp3ml provides governance-first machine-learning workflows for repeated-measures Gazepoint research. Version 0.2.0 adds governed model tuning, nested grouped resampling, resample evaluation, target uncertainty, external transportability assessment, synthetic governed workflows, and release-evidence and model-card reporting.
+Version 0.2.0 was published as a GitHub and Zenodo source release but
+was not submitted to CRAN; therefore the CRAN version moves directly
+from 0.1.0 to 0.3.0.
 
-The package is restricted to non-sensitive observed recording-quality and behavioural endpoints. It does not support identity or authentication, health or protected-attribute inference, or emotion, stress, personality, deception, cognition, comprehension, intent, or other mental-state inference.
+Version 0.3.0 adds repository-aware grouped-fold evaluation, explicit
+governed tuning, nested grouped resampling, target-aligned uncertainty,
+external-validation and transportability reporting, explicit API
+contracts, cross-package handoffs, prediction-to-decision governance,
+target-aware conformal prediction, dataset-shift auditing, locked
+analysis plans, portable model artifacts, robustness diagnostics,
+environment provenance, research-object export, and release-evidence
+profiles.
+
+The package remains restricted to explicitly observed, non-sensitive
+outcomes and declared scientific purposes. It does not support person
+identification or authentication, health or protected-attribute
+inference, or direct or indirect inference of emotion, stress,
+personality, deception, cognition, comprehension, intent, or other
+mental states.
 
 ## Test environments
 
 * Local Windows 11 x64 (build 26200), R 4.6.1 (2026-06-24 ucrt)
-* `R CMD check --as-cran --run-donttest`
+* Direct `R CMD check --as-cran --run-donttest` of the exact
+  `gp3ml_0.3.0.tar.gz` source archive
+* All declared Suggests packages installed and available during the
+  complete archive check
 
 ## R CMD check results
 
 0 errors | 0 warnings | 0 notes
 
-All suggested packages were available for the check. `keras3` 1.5.1 and its missing R dependencies were installed only in an isolated temporary library.
+The complete testthat suite passed. All examples and vignettes were
+checked and rebuilt successfully. The package contains 20 source vignettes.
 
-The complete testthat suite passed before the check. All nine vignettes built, checked, and rebuilt successfully.
+## Reverse dependencies
+
+There are currently no CRAN reverse dependencies, including packages
+that list gp3ml in Suggests.
 
 ## Additional notes
 
-* Tests, examples, and vignettes use deterministic synthetic non-sensitive data; no private participant data are included.
-
-* Zenodo archival identifiers: concept DOI `10.5281/zenodo.21487272`; version-specific DOI for gp3ml 0.2.0 `10.5281/zenodo.21532057`.
+* Tests, examples, and vignettes use deterministic synthetic,
+  non-sensitive data; no private participant data are included.
+* Optional engines are checked conditionally and report unavailable
+  dependencies or runtimes explicitly rather than failing package-core
+  workflows.
+* The Zenodo concept DOI is `10.5281/zenodo.21487272`.
+* The version-specific DOI for gp3ml 0.3.0 will be added after the
+  release is archived.

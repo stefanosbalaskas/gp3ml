@@ -22,18 +22,18 @@ learning wrapper and does not perform autonomous model selection.
 
 ## Installation
 
-Install the CRAN release:
+Install the current CRAN release with:
 
 ```r
 install.packages("gp3ml")
 ```
 
-The CRAN release is currently version `0.1.0`. To install the
-development version from GitHub:
+The GitHub repository may contain a later development or release-candidate
+version. Install it with:
 
 ```r
-install.packages("remotes")
-remotes::install_github("stefanosbalaskas/gp3ml")
+install.packages("pak")
+pak::pak("stefanosbalaskas/gp3ml")
 ```
 
 ## Scope
@@ -349,22 +349,42 @@ See:
 
 ## Citation
 
-Use the Zenodo [concept DOI](https://doi.org/10.5281/zenodo.21487272) to cite all versions of `gp3ml`.
-For the archived `0.2.0` release, use the [version-specific DOI](https://doi.org/10.5281/zenodo.21532057).
+Use the Zenodo concept DOI to cite `gp3ml` generally:
 
-The CRAN package record has the persistent [CRAN package DOI](https://doi.org/10.32614/CRAN.package.gp3ml).
+- Concept DOI: <https://doi.org/10.5281/zenodo.21487272>
+- CRAN package DOI: <https://doi.org/10.32614/CRAN.package.gp3ml>
+
+For the archived `0.2.0` release, use its version-specific DOI:
+
+- `gp3ml 0.2.0`: <https://doi.org/10.5281/zenodo.21532057>
+
+The version-specific DOI for `0.3.0` will be added after the release is
+archived.
+
+The citation metadata installed with the package can be displayed with:
+
+```r
+citation("gp3ml")
+```
 
 ## Release status
 
-Version `0.2.0` is the second formal source release of `gp3ml`.
+Version `0.3.0` is the third formal source release of `gp3ml`.
 
-It extends the governance-first 0.1.0 foundation with repository-aware
-evaluation across materialized grouped folds, governed model comparison
-and tuning, nested grouped resampling, target-aligned uncertainty,
-external validation and transportability reporting, release model cards,
-and nine deterministic synthetic workflow articles.
+It preserves the grouped evaluation, governed tuning, nested resampling,
+target-aligned uncertainty, external-validation reporting, and release
+model-card infrastructure established in version `0.2.0`. Version `0.3.0`
+adds explicit API contracts, cross-package handoffs,
+prediction-to-decision governance, target-aware conformal prediction,
+dataset-shift auditing, locked analysis plans, portable model artifacts,
+robustness diagnostics, environment provenance, research-object export,
+release manifests, and standards-oriented evidence profiles.
 
-Model selection remains explicitly reviewable and human-governed; the
+The stable compatibility contract protects 71 exports and 38 public
+classes. The 56 newer exports remain explicitly experimental and are not
+promoted merely because they are included in this release.
+
+Model selection remains explicitly reviewable and human-governed. The
 package does not perform autonomous winner selection or relax its
 prohibited-use boundaries.
 
@@ -394,9 +414,9 @@ prohibited-use boundaries and do not perform autonomous model selection.
 - [Source repository](https://github.com/stefanosbalaskas/gp3ml)
 - [Issue tracker](https://github.com/stefanosbalaskas/gp3ml/issues)
 
-## Next-generation governance and reproducibility
+## Governance and reproducibility in 0.3.0
 
-The development roadmap extends gp3ml beyond model fitting into explicit
+Version `0.3.0` extends `gp3ml` beyond model fitting into explicit
 prediction-to-decision governance, target-aware conformal prediction,
 dataset-shift auditing, frozen analysis plans, model-artifact portability,
 robustness diagnostics, environment provenance, research-object export, and

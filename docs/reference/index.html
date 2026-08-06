@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gp3ml</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -731,6 +731,609 @@
 
         </dt>
         <dd>Write a reproducibility report</dd>
+      </dl></div><div class="section level2">
+      <h2 id="api-stability-and-contracts">API stability and contracts<a class="anchor" aria-label="anchor" href="#api-stability-and-contracts"></a></h2>
+
+      <div class="section-desc"><p>Audit the established public API, S3 classes, and return schemas.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="gp3ml_api_contracts.html">gp3ml_api_contracts()</a></code>
+
+        </dt>
+        <dd>gp3ml public API contracts</dd>
+
+        <dt>
+
+          <code><a href="gp3ml_object_schema.html">gp3ml_object_schema()</a></code>
+
+        </dt>
+        <dd>Describe the schema of a gp3ml object</dd>
+
+        <dt>
+
+          <code><a href="validate_gp3ml_object_contract.html">validate_gp3ml_object_contract()</a></code>
+
+        </dt>
+        <dd>Validate an object against the gp3ml public-object contract</dd>
+
+        <dt>
+
+          <code><a href="audit_gp3ml_api_stability.html">audit_gp3ml_api_stability()</a></code>
+
+        </dt>
+        <dd>Audit gp3ml API stability</dd>
+
+        <dt>
+
+          <code><a href="write_gp3ml_api_contracts.html">write_gp3ml_api_contracts()</a></code>
+
+        </dt>
+        <dd>Write gp3ml API contracts</dd>
+
+        <dt>
+
+          <code><a href="plot.gp3ml_api_stability_audit.html">plot(<i>&lt;gp3ml_api_stability_audit&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Plot a gp3ml API stability audit</dd>
+      </dl></div><div class="section level2">
+      <h2 id="cross-package-interoperability">Cross-package interoperability<a class="anchor" aria-label="anchor" href="#cross-package-interoperability"></a></h2>
+
+      <div class="section-desc"><p>Validate and combine prepared handoffs without duplicating upstream preprocessing.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="gp3ml_interop_contracts.html">gp3ml_interop_contracts()</a></code>
+
+        </dt>
+        <dd>Cross-package interoperability contracts</dd>
+
+        <dt>
+
+          <code><a href="create_gazepoint_handoff.html">create_gazepoint_handoff()</a></code>
+
+        </dt>
+        <dd>Create a lightweight cross-package Gazepoint handoff</dd>
+
+        <dt>
+
+          <code><a href="validate_gazepoint_handoff.html">validate_gazepoint_handoff()</a></code>
+
+        </dt>
+        <dd>Validate a Gazepoint handoff</dd>
+
+        <dt>
+
+          <code><a href="combine_gazepoint_handoffs.html">combine_gazepoint_handoffs()</a></code>
+
+        </dt>
+        <dd>Combine validated cross-package handoffs</dd>
+
+        <dt>
+
+          <code><a href="as_gp3ml_data.html">as_gp3ml_data()</a></code>
+
+        </dt>
+        <dd>Extract model-ready data from a gp3ml handoff object</dd>
+
+        <dt>
+
+          <code><a href="plot.gp3ml_handoff_validation.html">plot(<i>&lt;gp3ml_handoff_validation&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Plot handoff validation checks</dd>
+      </dl></div><div class="section level2">
+      <h2 id="reproducibility-hardening">Reproducibility hardening<a class="anchor" aria-label="anchor" href="#reproducibility-hardening"></a></h2>
+
+      <div class="section-desc"><p>Normalize and audit runtime-specific generated output.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="normalize_gazepoint_artifact_text.html">normalize_gazepoint_artifact_text()</a></code>
+
+        </dt>
+        <dd>Normalize volatile text in generated research artifacts</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_reproducibility.html">audit_gazepoint_reproducibility()</a></code>
+
+        </dt>
+        <dd>Audit generated artifacts for volatile output</dd>
+
+        <dt>
+
+          <code><a href="write_gazepoint_reproducibility_audit.html">write_gazepoint_reproducibility_audit()</a></code>
+
+        </dt>
+        <dd>Write a reproducibility-hardening audit</dd>
+
+        <dt>
+
+          <code><a href="with_gazepoint_reproducible_output.html">with_gazepoint_reproducible_output()</a></code>
+
+        </dt>
+        <dd>Evaluate code with deterministic documentation-output settings</dd>
+
+        <dt>
+
+          <code><a href="plot.gp3ml_reproducibility_audit.html">plot(<i>&lt;gp3ml_reproducibility_audit&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Plot a reproducibility-hardening audit</dd>
+      </dl></div><div class="section level2">
+      <h2 id="engine-portability">Engine portability<a class="anchor" aria-label="anchor" href="#engine-portability"></a></h2>
+
+      <div class="section-desc"><p>Review optional-engine availability and controlled degradation.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="gp3ml_engine_capabilities.html">gp3ml_engine_capabilities()</a></code>
+
+        </dt>
+        <dd>Audit gp3ml model-engine capabilities</dd>
+
+        <dt>
+
+          <code><a href="assert_gp3ml_engine_available.html">assert_gp3ml_engine_available()</a></code>
+
+        </dt>
+        <dd>Assert that a gp3ml engine is available</dd>
+
+        <dt>
+
+          <code><a href="plot.gp3ml_engine_capabilities.html">plot(<i>&lt;gp3ml_engine_capabilities&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Plot gp3ml engine availability</dd>
+      </dl></div><div class="section level2">
+      <h2 id="integrated-research-workflow">Integrated research workflow<a class="anchor" aria-label="anchor" href="#integrated-research-workflow"></a></h2>
+
+      <div class="section-desc"><p>Simulate and validate realistic cross-package Gazepoint research handoffs.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="simulate_gazepoint_research_handoffs.html">simulate_gazepoint_research_handoffs()</a></code>
+
+        </dt>
+        <dd>Simulate realistic cross-package Gazepoint research handoffs</dd>
+
+        <dt>
+
+          <code><a href="validate_gazepoint_research_bundle.html">validate_gazepoint_research_bundle()</a></code>
+
+        </dt>
+        <dd>Validate a synthetic cross-package research bundle</dd>
+
+        <dt>
+
+          <code><a href="plot.gp3ml_research_bundle_validation.html">plot(<i>&lt;gp3ml_research_bundle_validation&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Plot research-bundle validation</dd>
+      </dl></div><div class="section level2">
+      <h2 id="decision-governance">Decision governance<a class="anchor" aria-label="anchor" href="#decision-governance"></a></h2>
+
+      <div class="section-desc"><p>Predeclare, evaluate, select, apply, and audit classification decisions and abstention.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="create_gazepoint_decision_rule.html">create_gazepoint_decision_rule()</a></code>
+
+        </dt>
+        <dd>Create a governed classification decision rule</dd>
+
+        <dt>
+
+          <code><a href="validate_gazepoint_decision_rule.html">validate_gazepoint_decision_rule()</a></code>
+
+        </dt>
+        <dd>Validate a governed decision rule</dd>
+
+        <dt>
+
+          <code><a href="evaluate_gazepoint_thresholds.html">evaluate_gazepoint_thresholds()</a></code>
+
+        </dt>
+        <dd>Evaluate explicit classification thresholds</dd>
+
+        <dt>
+
+          <code><a href="select_gazepoint_threshold.html">select_gazepoint_threshold()</a></code>
+
+        </dt>
+        <dd>Select a threshold from a governed threshold evaluation</dd>
+
+        <dt>
+
+          <code><a href="apply_gazepoint_decision_rule.html">apply_gazepoint_decision_rule()</a></code>
+
+        </dt>
+        <dd>Apply a governed classification decision rule</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_abstention.html">audit_gazepoint_abstention()</a></code>
+
+        </dt>
+        <dd>Audit abstention decisions</dd>
+
+        <dt>
+
+          <code><a href="plot.gp3ml_threshold_evaluation.html">plot(<i>&lt;gp3ml_threshold_evaluation&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Plot threshold evaluation</dd>
+
+        <dt>
+
+          <code><a href="plot.gp3ml_abstention_audit.html">plot(<i>&lt;gp3ml_abstention_audit&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Plot abstention audit</dd>
+      </dl></div><div class="section level2">
+      <h2 id="target-aware-conformal-prediction">Target-aware conformal prediction<a class="anchor" aria-label="anchor" href="#target-aware-conformal-prediction"></a></h2>
+
+      <div class="section-desc"><p>Prediction-level uncertainty with explicit calibration-unit semantics.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="fit_gazepoint_conformal.html">fit_gazepoint_conformal()</a></code>
+
+        </dt>
+        <dd>Fit target-aware split-conformal calibration</dd>
+
+        <dt>
+
+          <code><a href="predict_gazepoint_interval.html">predict_gazepoint_interval()</a></code>
+
+        </dt>
+        <dd>Predict conformal regression intervals</dd>
+
+        <dt>
+
+          <code><a href="predict_gazepoint_set.html">predict_gazepoint_set()</a></code>
+
+        </dt>
+        <dd>Predict binary conformal prediction sets</dd>
+
+        <dt>
+
+          <code><a href="assess_gazepoint_conformal_coverage.html">assess_gazepoint_conformal_coverage()</a></code>
+
+        </dt>
+        <dd>Assess conformal coverage</dd>
+
+        <dt>
+
+          <code><a href="validate_gazepoint_conformal.html">validate_gazepoint_conformal()</a></code>
+
+        </dt>
+        <dd>Validate a conformal fit</dd>
+
+        <dt>
+
+          <code><a href="plot.gp3ml_conformal_coverage.html">plot(<i>&lt;gp3ml_conformal_coverage&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Plot conformal coverage</dd>
+      </dl></div><div class="section level2">
+      <h2 id="dataset-shift-and-robustness">Dataset shift and robustness<a class="anchor" aria-label="anchor" href="#dataset-shift-and-robustness"></a></h2>
+
+      <div class="section-desc"><p>Audit predictor distributions, missingness, and analytical stability without one synthetic drift score.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="audit_gazepoint_dataset_shift.html">audit_gazepoint_dataset_shift()</a></code>
+
+        </dt>
+        <dd>Audit predictor distribution shift</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_missingness_shift.html">audit_gazepoint_missingness_shift()</a></code>
+
+        </dt>
+        <dd>Audit missingness shift</dd>
+
+        <dt>
+
+          <code><a href="summarize_gazepoint_shift.html">summarize_gazepoint_shift()</a></code>
+
+        </dt>
+        <dd>Summarize dataset shift without collapsing it to one drift score</dd>
+
+        <dt>
+
+          <code><a href="evaluate_gazepoint_seed_stability.html">evaluate_gazepoint_seed_stability()</a></code>
+
+        </dt>
+        <dd>Evaluate seed stability</dd>
+
+        <dt>
+
+          <code><a href="evaluate_gazepoint_feature_stability.html">evaluate_gazepoint_feature_stability()</a></code>
+
+        </dt>
+        <dd>Evaluate leave-one-feature-out stability</dd>
+
+        <dt>
+
+          <code><a href="evaluate_gazepoint_threshold_stability.html">evaluate_gazepoint_threshold_stability()</a></code>
+
+        </dt>
+        <dd>Evaluate threshold stability around the optimum</dd>
+
+        <dt>
+
+          <code><a href="evaluate_gazepoint_missingness_sensitivity.html">evaluate_gazepoint_missingness_sensitivity()</a></code>
+
+        </dt>
+        <dd>Evaluate named missingness-sensitivity scenarios</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_model_robustness.html">audit_gazepoint_model_robustness()</a></code>
+
+        </dt>
+        <dd>Audit multiple robustness dimensions</dd>
+
+        <dt>
+
+          <code><a href="plot.gp3ml_dataset_shift_audit.html">plot(<i>&lt;gp3ml_dataset_shift_audit&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Plot a dataset shift audit</dd>
+
+        <dt>
+
+          <code><a href="plot.gp3ml_model_robustness_audit.html">plot(<i>&lt;gp3ml_model_robustness_audit&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Plot a robustness audit</dd>
+      </dl></div><div class="section level2">
+      <h2 id="analysis-plan-governance">Analysis-plan governance<a class="anchor" aria-label="anchor" href="#analysis-plan-governance"></a></h2>
+
+      <div class="section-desc"><p>Freeze pre-model analytical commitments and audit later deviations.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="declare_gazepoint_analysis_plan.html">declare_gazepoint_analysis_plan()</a></code>
+
+        </dt>
+        <dd>Declare a frozen-analysis-plan contract</dd>
+
+        <dt>
+
+          <code><a href="validate_gazepoint_analysis_plan.html">validate_gazepoint_analysis_plan()</a></code>
+
+        </dt>
+        <dd>Validate an analysis plan</dd>
+
+        <dt>
+
+          <code><a href="lock_gazepoint_analysis_plan.html">lock_gazepoint_analysis_plan()</a></code>
+
+        </dt>
+        <dd>Lock an analysis plan using SHA-256</dd>
+
+        <dt>
+
+          <code><a href="audit_gazepoint_plan_deviations.html">audit_gazepoint_plan_deviations()</a></code>
+
+        </dt>
+        <dd>Audit deviations from a locked analysis plan</dd>
+
+        <dt>
+
+          <code><a href="write_gazepoint_analysis_plan.html">write_gazepoint_analysis_plan()</a></code>
+
+        </dt>
+        <dd>Write an analysis plan</dd>
+
+        <dt>
+
+          <code><a href="plot.gp3ml_plan_deviation_audit.html">plot(<i>&lt;gp3ml_plan_deviation_audit&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Plot analysis-plan deviations</dd>
+      </dl></div><div class="section level2">
+      <h2 id="portable-models-and-research-artifacts">Portable models and research artifacts<a class="anchor" aria-label="anchor" href="#portable-models-and-research-artifacts"></a></h2>
+
+      <div class="section-desc"><p>Serialize governed models, capture environments, package research evidence, and validate cryptographic provenance.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="create_gazepoint_model_artifact.html">create_gazepoint_model_artifact()</a></code>
+
+        </dt>
+        <dd>Create a portable governed model artifact</dd>
+
+        <dt>
+
+          <code><a href="restore_gazepoint_model_artifact.html">restore_gazepoint_model_artifact()</a></code>
+
+        </dt>
+        <dd>Restore a model artifact</dd>
+
+        <dt>
+
+          <code><a href="validate_gazepoint_model_artifact.html">validate_gazepoint_model_artifact()</a></code>
+
+        </dt>
+        <dd>Validate a model artifact</dd>
+
+        <dt>
+
+          <code><a href="test_gazepoint_model_portability.html">test_gazepoint_model_portability()</a></code>
+
+        </dt>
+        <dd>Test model-artifact serialization and optional fresh-process prediction</dd>
+
+        <dt>
+
+          <code><a href="capture_gazepoint_environment.html">capture_gazepoint_environment()</a></code>
+
+        </dt>
+        <dd>Capture a reproducibility environment record</dd>
+
+        <dt>
+
+          <code><a href="compare_gazepoint_environments.html">compare_gazepoint_environments()</a></code>
+
+        </dt>
+        <dd>Compare two environment records</dd>
+
+        <dt>
+
+          <code><a href="validate_gazepoint_environment.html">validate_gazepoint_environment()</a></code>
+
+        </dt>
+        <dd>Validate the current environment against a reference record</dd>
+
+        <dt>
+
+          <code><a href="write_gazepoint_ro_crate.html">write_gazepoint_ro_crate()</a></code>
+
+        </dt>
+        <dd>Write a minimal RO-Crate-oriented research object</dd>
+
+        <dt>
+
+          <code><a href="validate_gazepoint_ro_crate.html">validate_gazepoint_ro_crate()</a></code>
+
+        </dt>
+        <dd>Validate a gp3ml RO-Crate-oriented export</dd>
+
+        <dt>
+
+          <code><a href="write_gazepoint_release_checksums.html">write_gazepoint_release_checksums()</a></code>
+
+        </dt>
+        <dd>Write SHA-256 checksums for release artifacts</dd>
+
+        <dt>
+
+          <code><a href="validate_gazepoint_release_checksums.html">validate_gazepoint_release_checksums()</a></code>
+
+        </dt>
+        <dd>Validate SHA-256 release checksums</dd>
+
+        <dt>
+
+          <code><a href="plot.gp3ml_model_artifact_validation.html">plot(<i>&lt;gp3ml_model_artifact_validation&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Plot model-artifact validation</dd>
+
+        <dt>
+
+          <code><a href="plot.gp3ml_environment_comparison.html">plot(<i>&lt;gp3ml_environment_comparison&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Plot an environment comparison</dd>
+
+        <dt>
+
+          <code><a href="plot.gp3ml_ro_crate_validation.html">plot(<i>&lt;gp3ml_ro_crate_validation&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Plot RO-Crate validation</dd>
+
+        <dt>
+
+          <code><a href="plot.gp3ml_release_checksum_validation.html">plot(<i>&lt;gp3ml_release_checksum_validation&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Plot release checksum validation</dd>
+      </dl></div><div class="section level2">
+      <h2 id="governance-evidence-profiles">Governance evidence profiles<a class="anchor" aria-label="anchor" href="#governance-evidence-profiles"></a></h2>
+
+      <div class="section-desc"><p>Organize gp3ml evidence and produce explicitly non-certifying standards-oriented crosswalks.</p></div>
+
+      <dl></dl></div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="create_gp3ml_governance_profile.html">create_gp3ml_governance_profile()</a></code>
+
+        </dt>
+        <dd>Create a governance-evidence profile</dd>
+
+        <dt>
+
+          <code><a href="audit_gp3ml_governance_profile.html">audit_gp3ml_governance_profile()</a></code>
+
+        </dt>
+        <dd>Audit a governance-evidence profile</dd>
+
+        <dt>
+
+          <code><a href="write_gp3ml_governance_profile.html">write_gp3ml_governance_profile()</a></code>
+
+        </dt>
+        <dd>Write a governance profile audit</dd>
+
+        <dt>
+
+          <code><a href="plot.gp3ml_governance_profile_audit.html">plot(<i>&lt;gp3ml_governance_profile_audit&gt;</i>)</a></code>
+
+        </dt>
+        <dd>Plot a governance profile audit</dd>
       </dl></div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
@@ -751,3 +1354,4 @@
 
 
   </body></html>
+

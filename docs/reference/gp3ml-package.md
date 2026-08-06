@@ -9,8 +9,12 @@ data.
 Core capabilities include explicit task and variable-role declarations,
 feature-provenance manifests, leakage auditing, group-aware holdout
 splitting and repeated resampling, fold-local preprocessing, governed
-model engines, performance and calibration assessment, uncertainty,
-external- validation reports, model cards, and reproducibility reports.
+model engines, performance and calibration assessment, target-aligned
+uncertainty, external-validation reports, prediction-to-decision
+governance, target-aware conformal prediction, dataset-shift auditing,
+locked analysis plans, portable model artifacts, robustness diagnostics,
+environment provenance, research-object export, model cards, and
+reproducibility evidence.
 
 ## Repository-aware evaluation and tuning
 
@@ -50,6 +54,8 @@ mental states.
 Useful links:
 
 - <https://stefanosbalaskas.github.io/gp3ml/>
+
+- <https://CRAN.R-project.org/package=gp3ml>
 
 - <https://github.com/stefanosbalaskas/gp3ml>
 

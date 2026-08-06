@@ -13,8 +13,12 @@ predictive modelling and validation using Gazepoint-derived research data.
 Core capabilities include explicit task and variable-role declarations,
 feature-provenance manifests, leakage auditing, group-aware holdout
 splitting and repeated resampling, fold-local preprocessing, governed model
-engines, performance and calibration assessment, uncertainty, external-
-validation reports, model cards, and reproducibility reports.
+engines, performance and calibration assessment, target-aligned
+uncertainty, external-validation reports, prediction-to-decision
+governance, target-aware conformal prediction, dataset-shift auditing,
+locked analysis plans, portable model artifacts, robustness diagnostics,
+environment provenance, research-object export, model cards, and
+reproducibility evidence.
 }
 \section{Repository-aware evaluation and tuning}{
 
@@ -53,6 +57,7 @@ deception, cognition, comprehension, intent, or other mental states.
 Useful links:
 \itemize{
   \item \url{https://stefanosbalaskas.github.io/gp3ml/}
+  \item \url{https://CRAN.R-project.org/package=gp3ml}
   \item \url{https://github.com/stefanosbalaskas/gp3ml}
   \item Report bugs at \url{https://github.com/stefanosbalaskas/gp3ml/issues}
 }

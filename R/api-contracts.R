@@ -64,7 +64,7 @@
 #' gp3ml public API contracts
 #'
 #' Returns the package's explicit compatibility contract for the public API.
-#' APIs present in version 0.2.0 are treated as stable within the 0.2.x line.
+#' APIs classified as stable in version 0.2.0 remain stable throughout the 0.3.x line.
 #' New APIs introduced by the current development milestone are marked
 #' experimental until promoted by a later release decision.
 #'
@@ -103,8 +103,8 @@ gp3ml_api_contracts <- function() {
       "named_return_components"
     ),
     stable_rule = c(
-      "No removal or rename within the 0.2.x line.",
-      "No removal or rename within the 0.2.x line.",
+      "No removal or rename within the 0.3.x line.",
+      "No removal or rename within the 0.3.x line.",
       "Existing arguments retain meaning; new arguments require defaults.",
       "Existing named components retain meaning; additive components are allowed."
     ),
@@ -113,7 +113,7 @@ gp3ml_api_contracts <- function() {
 
   structure(
     list(
-      contract_version = "0.3-development",
+      contract_version = "0.3.0",
       package_version = tryCatch(
         as.character(utils::packageVersion("gp3ml")),
         error = function(e) "development"
@@ -203,7 +203,7 @@ validate_gp3ml_object_contract <- function(x, registry = gp3ml_api_contracts()) 
     ),
     detail = c(
       if (length(registered)) paste(registered, collapse = ", ") else
-        "Class is not in the stable 0.2.0 public-class registry.",
+        "Class is not in the stable public-class registry.",
       if (names_valid) "Named components are structurally valid." else
         "List-like public objects require unique non-empty component names.",
       "Schema can be represented by gp3ml_object_schema()."

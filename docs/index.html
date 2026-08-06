@@ -30,7 +30,7 @@
 
     <a class="navbar-brand me-2" href="index.html">gp3ml</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,10 +77,13 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>Until a public CRAN package page exists, install the current source from GitHub:</p>
+<p>Install the current CRAN release with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"stefanosbalaskas/gp3ml"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"gp3ml"</span><span class="op">)</span></span></code></pre></div>
+<p>The GitHub repository may contain a later development or release-candidate version. Install it with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"pak"</span><span class="op">)</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"stefanosbalaskas/gp3ml"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="scope">Scope<a class="anchor" aria-label="anchor" href="#scope"></a>
@@ -121,7 +124,7 @@
 <li>identifier-like predictor names requiring manual review.</li>
 </ul>
 <p>The returned audit has an overall <code>pass</code>, <code>review</code>, or <code>fail</code> status, a complete check table, a non-passing issue table, and partition summaries. Audit tables can be exported using <code><a href="reference/write_gazepoint_ml_leakage_audit_csv.html">write_gazepoint_ml_leakage_audit_csv()</a></code>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">analysis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  participant_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"P01"</span>, <span class="st">"P02"</span><span class="op">)</span>,</span>
 <span>  trial_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T01"</span>, <span class="st">"T02"</span><span class="op">)</span>,</span>
@@ -157,7 +160,7 @@
 </h2>
 <p><code><a href="reference/create_gazepoint_feature_manifest.html">create_gazepoint_feature_manifest()</a></code> records the declared origin, transformation, availability, role, and preprocessing scope of each intended predictor.</p>
 <p><code><a href="reference/validate_gazepoint_feature_manifest.html">validate_gazepoint_feature_manifest()</a></code> checks whether the manifest contains sufficient provenance metadata and identifies predictors declared as outcome-derived, post-outcome, unavailable at prediction time, identifiers, or incompatible with required fold-local preprocessing.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">manifest</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_gazepoint_feature_manifest.html">create_gazepoint_feature_manifest</a></span><span class="op">(</span></span>
 <span>  features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixation_duration"</span>, <span class="st">"pupil_change"</span><span class="op">)</span>,</span>
 <span>  scientific_source <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
@@ -184,7 +187,7 @@
 <h2 id="group-aware-holdout-splitting">Group-aware holdout splitting<a class="anchor" aria-label="anchor" href="#group-aware-holdout-splitting"></a>
 </h2>
 <p><code><a href="reference/split_gazepoint_ml_data.html">split_gazepoint_ml_data()</a></code> creates deterministic analysis and assessment partitions that preserve the grouping unit implied by an explicit predictive-generalization target. A passing feature-provenance manifest is required before splitting, and the resulting partitions are checked using the leakage audit.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">split_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html" class="external-link">expand.grid</a></span><span class="op">(</span></span>
 <span>  participant_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"P%02d"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>,</span>
 <span>  trial_id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"T%02d"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>,</span>
@@ -238,7 +241,7 @@
 <h2 id="group-aware-resampling">Group-aware resampling<a class="anchor" aria-label="anchor" href="#group-aware-resampling"></a>
 </h2>
 <p><code><a href="reference/create_gazepoint_group_folds.html">create_gazepoint_group_folds()</a></code> creates deterministic repeated grouped V-fold plans for the same explicit generalization targets supported by the holdout splitter. A passing feature-provenance manifest is required, and every analysis-assessment pair is checked using the leakage audit.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">folds</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_gazepoint_group_folds.html">create_gazepoint_group_folds</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">split_data</span>,</span>
 <span>  outcome <span class="op">=</span> <span class="st">"outcome"</span>,</span>
@@ -266,7 +269,7 @@
 <h2 id="resampling-diagnostics">Resampling diagnostics<a class="anchor" aria-label="anchor" href="#resampling-diagnostics"></a>
 </h2>
 <p><code><a href="reference/diagnose_gazepoint_group_folds.html">diagnose_gazepoint_group_folds()</a></code> evaluates the balance, coverage, outcome representation, and exclusions of an existing grouped resampling plan. Diagnostics remain downstream of fold construction and do not modify assignments or fit models.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fold_diagnostics</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/diagnose_gazepoint_group_folds.html">diagnose_gazepoint_group_folds</a></span><span class="op">(</span><span class="va">folds</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">fold_diagnostics</span></span>
@@ -276,7 +279,7 @@
 <p><code><a href="reference/validate_gazepoint_fold_diagnostics.html">validate_gazepoint_fold_diagnostics()</a></code> reports <code>pass</code>, <code>review</code>, or <code>fail</code> findings for fold counts, partition accounting, non-empty partitions, assessment coverage, fold-size imbalance, group presence, outcome-level presence, embedded leakage audits, and source-plan status.</p>
 <p>For crossed new-participant and new-stimulus designs, <code>exclusion_summary</code> reports the rows intentionally excluded because they belong to only one held dimension rather than the strict crossed assessment block.</p>
 <p>All diagnostic tables can be exported for review and reporting:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/write_gazepoint_fold_diagnostics_csv.html">write_gazepoint_fold_diagnostics_csv</a></span><span class="op">(</span></span>
 <span>  <span class="va">fold_diagnostics</span>,</span>
 <span>  directory <span class="op">=</span> <span class="st">"resampling-diagnostics"</span>,</span>
@@ -302,6 +305,11 @@
 <p>These interfaces do not convert row-level metrics into participant-level estimates merely because a split was participant-grouped. Version <code>0.2.0</code> adds governed tuning and nested grouped resampling while retaining explicit human-reviewed selection. Autonomous winner selection remains outside the package’s scope.</p>
 </div>
 <div class="section level2">
+<h2 id="package-maturity-and-interoperability">Package maturity and interoperability<a class="anchor" aria-label="anchor" href="#package-maturity-and-interoperability"></a>
+</h2>
+<p>The development line adds explicit API contracts, lightweight handoff contracts for <code>gp3tools</code>, <code>gpbiometrics</code>, and <code>gp3sequences</code>, deterministic documentation-output controls, optional-engine portability audits, and an integrated synthetic cross-package research workflow. These additions preserve the governance boundary: upstream packages remain responsible for preprocessing and feature derivation, while <code>gp3ml</code> remains responsible for declared roles, leakage-safe resampling, governed modelling, evaluation, uncertainty, and reporting.</p>
+</div>
+<div class="section level2">
 <h2 id="prohibited-uses">Prohibited uses<a class="anchor" aria-label="anchor" href="#prohibited-uses"></a>
 </h2>
 <p>The package does not support person identification, health inference, protected-attribute prediction, or direct inference of emotion, stress, mental state, cognition, comprehension, personality, deception, or intent.</p>
@@ -314,14 +322,31 @@
 <div class="section level2">
 <h2 id="citation">Citation<a class="anchor" aria-label="anchor" href="#citation"></a>
 </h2>
-<p>Use the Zenodo <a href="https://doi.org/10.5281/zenodo.21487272" class="external-link">concept DOI</a> to cite all versions of <code>gp3ml</code>. For the archived <code>0.2.0</code> release, use the <a href="https://doi.org/10.5281/zenodo.21532057" class="external-link">version-specific DOI</a>.</p>
+<p>Use the Zenodo concept DOI to cite <code>gp3ml</code> generally:</p>
+<ul>
+<li>Concept DOI: <a href="https://doi.org/10.5281/zenodo.21487272" class="external-link uri">https://doi.org/10.5281/zenodo.21487272</a>
+</li>
+<li>CRAN package DOI: <a href="https://doi.org/10.32614/CRAN.package.gp3ml" class="external-link uri">https://doi.org/10.32614/CRAN.package.gp3ml</a>
+</li>
+</ul>
+<p>For the archived <code>0.2.0</code> release, use its version-specific DOI:</p>
+<ul>
+<li>
+<code>gp3ml 0.2.0</code>: <a href="https://doi.org/10.5281/zenodo.21532057" class="external-link uri">https://doi.org/10.5281/zenodo.21532057</a>
+</li>
+</ul>
+<p>The version-specific DOI for <code>0.3.0</code> will be added after the release is archived.</p>
+<p>The citation metadata installed with the package can be displayed with:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span><span class="st">"gp3ml"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="release-status">Release status<a class="anchor" aria-label="anchor" href="#release-status"></a>
 </h2>
-<p>Version <code>0.2.0</code> is the second formal source release of <code>gp3ml</code>.</p>
-<p>It extends the governance-first 0.1.0 foundation with repository-aware evaluation across materialized grouped folds, governed model comparison and tuning, nested grouped resampling, target-aligned uncertainty, external validation and transportability reporting, release model cards, and nine deterministic synthetic workflow articles.</p>
-<p>Model selection remains explicitly reviewable and human-governed; the package does not perform autonomous winner selection or relax its prohibited-use boundaries.</p>
+<p>Version <code>0.3.0</code> is the third formal source release of <code>gp3ml</code>.</p>
+<p>It preserves the grouped evaluation, governed tuning, nested resampling, target-aligned uncertainty, external-validation reporting, and release model-card infrastructure established in version <code>0.2.0</code>. Version <code>0.3.0</code> adds explicit API contracts, cross-package handoffs, prediction-to-decision governance, target-aware conformal prediction, dataset-shift auditing, locked analysis plans, portable model artifacts, robustness diagnostics, environment provenance, research-object export, release manifests, and standards-oriented evidence profiles.</p>
+<p>The stable compatibility contract protects 71 exports and 38 public classes. The 56 newer exports remain explicitly experimental and are not promoted merely because they are included in this release.</p>
+<p>Model selection remains explicitly reviewable and human-governed. The package does not perform autonomous winner selection or relax its prohibited-use boundaries.</p>
 </div>
 <div class="section level2">
 <h2 id="analytical-roadmap">Analytical roadmap<a class="anchor" aria-label="anchor" href="#analytical-roadmap"></a>
@@ -342,14 +367,22 @@
 </h2>
 <ul>
 <li><a href="https://stefanosbalaskas.github.io/gp3ml/">Package website</a></li>
+<li><a href="https://CRAN.R-project.org/package=gp3ml" class="external-link">CRAN package page</a></li>
 <li><a href="https://github.com/stefanosbalaskas/gp3ml" class="external-link">Source repository</a></li>
 <li><a href="https://github.com/stefanosbalaskas/gp3ml/issues" class="external-link">Issue tracker</a></li>
 </ul>
+</div>
+<div class="section level2">
+<h2 id="governance-and-reproducibility-in-030">Governance and reproducibility in 0.3.0<a class="anchor" aria-label="anchor" href="#governance-and-reproducibility-in-030"></a>
+</h2>
+<p>Version <code>0.3.0</code> extends <code>gp3ml</code> beyond model fitting into explicit prediction-to-decision governance, target-aware conformal prediction, dataset-shift auditing, frozen analysis plans, model-artifact portability, robustness diagnostics, environment provenance, research-object export, and standards-oriented evidence crosswalks.</p>
+<p>These features preserve gp3ml’s existing governance boundary. They do not support identification, authentication, diagnosis, protected-attribute inference, or direct or indirect inference of emotion, stress, personality, deception, cognition, comprehension, intent, or other mental states. Standards-oriented crosswalks are documentation aids only and do not imply NIST endorsement, ISO conformity, certification, or legal compliance.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=gp3ml" class="external-link">View on CRAN</a></li>
 <li><a href="https://github.com/stefanosbalaskas/gp3ml/" class="external-link">Browse source code</a></li>
 <li><a href="https://github.com/stefanosbalaskas/gp3ml/issues" class="external-link">Report a bug</a></li>
 </ul>

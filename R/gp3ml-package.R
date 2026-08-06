@@ -6,8 +6,12 @@
 #' Core capabilities include explicit task and variable-role declarations,
 #' feature-provenance manifests, leakage auditing, group-aware holdout
 #' splitting and repeated resampling, fold-local preprocessing, governed model
-#' engines, performance and calibration assessment, uncertainty, external-
-#' validation reports, model cards, and reproducibility reports.
+#' engines, performance and calibration assessment, target-aligned
+#' uncertainty, external-validation reports, prediction-to-decision
+#' governance, target-aware conformal prediction, dataset-shift auditing,
+#' locked analysis plans, portable model artifacts, robustness diagnostics,
+#' environment provenance, research-object export, model cards, and
+#' reproducibility evidence.
 #'
 #' @section Repository-aware evaluation and tuning:
 #' Materialized `gazepoint_group_folds` can be evaluated without rebuilding or

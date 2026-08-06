@@ -118,10 +118,8 @@ paths <- write_gazepoint_fold_diagnostics_csv(
   directory = output_directory,
   tables = c("fold_metrics", "repeat_metrics")
 )
-paths
-#>                                                                                                            fold_metrics
-#>   "C:\\Users\\STEFAN~1\\AppData\\Local\\Temp\\RtmpacJaCe\\file7548372d6c8c/gazepoint_fold_diagnostics_fold_metrics.csv"
-#>                                                                                                          repeat_metrics
-#> "C:\\Users\\STEFAN~1\\AppData\\Local\\Temp\\RtmpacJaCe\\file7548372d6c8c/gazepoint_fold_diagnostics_repeat_metrics.csv"
+basename(unname(paths))
+#> [1] "gazepoint_fold_diagnostics_fold_metrics.csv"  
+#> [2] "gazepoint_fold_diagnostics_repeat_metrics.csv"
 unlink(output_directory, recursive = TRUE)
 ```

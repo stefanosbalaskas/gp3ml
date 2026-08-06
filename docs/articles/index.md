@@ -53,3 +53,49 @@
 
   Independent-dataset declarations, shift diagnostics, and explicit
   not-validated status.
+
+### Package maturity and interoperability
+
+- [API Stability and Public Object
+  Contracts](https://stefanosbalaskas.github.io/gp3ml/articles/api-stability-contracts.md):
+
+  Auditing the stable gp3ml API surface and public object schemas.
+
+- [Cross-Package Interoperability
+  Contracts](https://stefanosbalaskas.github.io/gp3ml/articles/cross-package-interoperability.md):
+
+  Lightweight handoffs from gp3tools, gpbiometrics, and gp3sequences
+  into gp3ml.
+
+- [Reproducibility
+  Hardening](https://stefanosbalaskas.github.io/gp3ml/articles/reproducibility-hardening.md):
+
+  Detecting and normalizing volatile timestamps, temporary paths, and
+  runtime addresses.
+
+- [Optional Engines and Cross-Platform
+  Portability](https://stefanosbalaskas.github.io/gp3ml/articles/optional-engine-portability.md):
+
+  Reviewable optional-engine availability without making optional
+  engines mandatory.
+
+- [Integrated Synthetic Gazepoint Research
+  Workflow](https://stefanosbalaskas.github.io/gp3ml/articles/integrated-research-workflow.md):
+
+  A realistic cross-package handoff followed by governed
+  participant-generalization validation.
+
+### Next-generation governance
+
+- [Governed Decision Thresholds and
+  Abstention](https://stefanosbalaskas.github.io/gp3ml/articles/decision-governance.md):
+- [Target-Aware Conformal
+  Prediction](https://stefanosbalaskas.github.io/gp3ml/articles/group-aware-conformal-prediction.md):
+- [Dataset Shift and Robustness
+  Auditing](https://stefanosbalaskas.github.io/gp3ml/articles/dataset-shift-and-robustness.md):
+- [Frozen Analysis-Plan
+  Governance](https://stefanosbalaskas.github.io/gp3ml/articles/analysis-plan-governance.md):
+- [Portable Models and Research
+  Artifacts](https://stefanosbalaskas.github.io/gp3ml/articles/portable-research-artifacts.md):
+- [Governance Evidence and Standards
+  Crosswalks](https://stefanosbalaskas.github.io/gp3ml/articles/governance-standards-profile.md):

@@ -1,4 +1,7 @@
-# gp3ml 0.2.0.9000
+# gp3ml 0.3.0
+
+## CRAN availability and metadata
+
 * Added the canonical CRAN package page, CRAN installation instructions, package-status badge, and CRAN package DOI following publication of gp3ml 0.1.0 on CRAN.
 
 ## Next-generation governed research-ML infrastructure
