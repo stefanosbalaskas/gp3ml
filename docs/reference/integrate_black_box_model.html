@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">gp3ml</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -129,48 +129,22 @@
 <span class="r-in"><span>    group_aware_evaluation_required <span class="op">=</span> <span class="cn">TRUE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">engine</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $name</span>
+<span class="r-in"><span><span class="va">engine</span><span class="op">$</span><span class="va">name</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "custom_glm"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $fit_fun</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> function (x, y, task, args) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     training_data &lt;- data.frame(.outcome = y, x, check.names = FALSE)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     stats::glm(.outcome ~ ., data = training_data, family = stats::binomial())</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x000001f388bb5380&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $predict_fun</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> function (fit, newdata, type, task, ...) </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> {</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     as.numeric(stats::predict(fit, newdata = as.data.frame(newdata), </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         type = "response"))</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x000001f388bb5380&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $supports</span>
+<span class="r-in"><span><span class="va">engine</span><span class="op">$</span><span class="va">supports</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "classification"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $probability</span>
+<span class="r-in"><span><span class="va">engine</span><span class="op">$</span><span class="va">probability</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-in"><span><span class="va">engine</span><span class="op">$</span><span class="va">safety_declaration</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $prohibited_uses_acknowledged</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $metadata</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> list()</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $safety_declaration</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $safety_declaration$prohibited_uses_acknowledged</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $prediction_time_inputs_only</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $safety_declaration$prediction_time_inputs_only</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $group_aware_evaluation_required</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $safety_declaration$group_aware_evaluation_required</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"class")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "gp3ml_engine"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -192,3 +166,4 @@
 
 
   </body></html>
+

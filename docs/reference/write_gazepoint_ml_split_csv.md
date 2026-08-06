@@ -116,10 +116,7 @@ paths <- write_gazepoint_ml_split_csv(
   directory = output_directory,
   tables = c("summary", "group_counts")
 )
-paths
-#>                                                                                                   summary
-#>      "C:/Users/Stefanos-PC/AppData/Local/Temp/RtmpacJaCe/file754848fd75e7/gazepoint_ml_split_summary.csv"
-#>                                                                                              group_counts
-#> "C:/Users/Stefanos-PC/AppData/Local/Temp/RtmpacJaCe/file754848fd75e7/gazepoint_ml_split_group_counts.csv"
+basename(unname(paths))
+#> [1] "gazepoint_ml_split_summary.csv"      "gazepoint_ml_split_group_counts.csv"
 unlink(output_directory, recursive = TRUE)
 ```

@@ -13,8 +13,8 @@ validate_gazepoint_feature_manifest(clean)
 #> Features: 2
 #> Non-passing checks: 0
 #>  status n_checks
-#>  pass   22
-#>  review  0
+#>  pass   22      
+#>  review  0      
 #>  fail    0
 ```
 
@@ -43,8 +43,8 @@ validation
 #> Features: 2
 #> Non-passing checks: 3
 #>  status n_checks
-#>  pass   19
-#>  review  0
+#>  pass   19      
+#>  review  0      
 #>  fail    3
 ```
 

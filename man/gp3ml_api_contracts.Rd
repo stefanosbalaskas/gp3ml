@@ -11,7 +11,7 @@ A \code{gp3ml_api_contract_registry} object.
 }
 \description{
 Returns the package's explicit compatibility contract for the public API.
-APIs present in version 0.2.0 are treated as stable within the 0.2.x line.
+APIs classified as stable in version 0.2.0 remain stable throughout the 0.3.x line.
 New APIs introduced by the current development milestone are marked
 experimental until promoted by a later release decision.
 }

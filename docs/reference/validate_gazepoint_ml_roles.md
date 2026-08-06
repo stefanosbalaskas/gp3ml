@@ -89,9 +89,9 @@ validate_gazepoint_ml_roles(
 )
 #> <gp3ml_role_validation> pass
 #>                         check status             detail
-#>              predictors_exist   pass
-#>         outcome_not_predictor   pass
-#>    identifiers_not_predictors   pass
+#>              predictors_exist   pass                   
+#>         outcome_not_predictor   pass                   
+#>    identifiers_not_predictors   pass                   
 #>              outcome_complete   pass                  0
 #>       sufficient_group_levels   pass                 12
 #>  classification_level_support   pass pass=12, review=12

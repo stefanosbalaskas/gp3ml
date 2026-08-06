@@ -1,5 +1,5 @@
 
-test_that("API contract registry protects the 0.2.0 surface", {
+test_that("API contract registry protects the stable 0.3.0 surface", {
   registry <- gp3ml_api_contracts()
   expect_s3_class(registry, "gp3ml_api_contract_registry")
   expect_true(all(registry$exports$present))

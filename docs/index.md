@@ -10,13 +10,20 @@ learning wrapper and does not perform autonomous model selection.
 
 ## Installation
 
-Until a public CRAN package page exists, install the current source from
-GitHub:
+Install the current CRAN release with:
 
 ``` r
 
-install.packages("remotes")
-remotes::install_github("stefanosbalaskas/gp3ml")
+install.packages("gp3ml")
+```
+
+The GitHub repository may contain a later development or
+release-candidate version. Install it with:
+
+``` r
+
+install.packages("pak")
+pak::pak("stefanosbalaskas/gp3ml")
 ```
 
 ## Scope
@@ -333,6 +340,17 @@ estimates merely because a split was participant-grouped. Version
 retaining explicit human-reviewed selection. Autonomous winner selection
 remains outside the package’s scope.
 
+## Package maturity and interoperability
+
+The development line adds explicit API contracts, lightweight handoff
+contracts for `gp3tools`, `gpbiometrics`, and `gp3sequences`,
+deterministic documentation-output controls, optional-engine portability
+audits, and an integrated synthetic cross-package research workflow.
+These additions preserve the governance boundary: upstream packages
+remain responsible for preprocessing and feature derivation, while
+`gp3ml` remains responsible for declared roles, leakage-safe resampling,
+governed modelling, evaluation, uncertainty, and reporting.
+
 ## Prohibited uses
 
 The package does not support person identification, health inference,
@@ -347,21 +365,43 @@ See:
 
 ## Citation
 
-Use the Zenodo [concept DOI](https://doi.org/10.5281/zenodo.21487272) to
-cite all versions of `gp3ml`. For the archived `0.2.0` release, use the
-[version-specific DOI](https://doi.org/10.5281/zenodo.21532057).
+Use the Zenodo concept DOI to cite `gp3ml` generally:
+
+- Concept DOI: <https://doi.org/10.5281/zenodo.21487272>
+- CRAN package DOI: <https://doi.org/10.32614/CRAN.package.gp3ml>
+
+For the archived `0.2.0` release, use its version-specific DOI:
+
+- `gp3ml 0.2.0`: <https://doi.org/10.5281/zenodo.21532057>
+
+The version-specific DOI for `0.3.0` will be added after the release is
+archived.
+
+The citation metadata installed with the package can be displayed with:
+
+``` r
+
+citation("gp3ml")
+```
 
 ## Release status
 
-Version `0.2.0` is the second formal source release of `gp3ml`.
+Version `0.3.0` is the third formal source release of `gp3ml`.
 
-It extends the governance-first 0.1.0 foundation with repository-aware
-evaluation across materialized grouped folds, governed model comparison
-and tuning, nested grouped resampling, target-aligned uncertainty,
-external validation and transportability reporting, release model cards,
-and nine deterministic synthetic workflow articles.
+It preserves the grouped evaluation, governed tuning, nested resampling,
+target-aligned uncertainty, external-validation reporting, and release
+model-card infrastructure established in version `0.2.0`. Version
+`0.3.0` adds explicit API contracts, cross-package handoffs,
+prediction-to-decision governance, target-aware conformal prediction,
+dataset-shift auditing, locked analysis plans, portable model artifacts,
+robustness diagnostics, environment provenance, research-object export,
+release manifests, and standards-oriented evidence profiles.
 
-Model selection remains explicitly reviewable and human-governed; the
+The stable compatibility contract protects 71 exports and 38 public
+classes. The 56 newer exports remain explicitly experimental and are not
+promoted merely because they are included in this release.
+
+Model selection remains explicitly reviewable and human-governed. The
 package does not perform autonomous winner selection or relax its
 prohibited-use boundaries.
 
@@ -390,5 +430,22 @@ not perform autonomous model selection.
 ## Project resources
 
 - [Package website](https://stefanosbalaskas.github.io/gp3ml/)
+- [CRAN package page](https://CRAN.R-project.org/package=gp3ml)
 - [Source repository](https://github.com/stefanosbalaskas/gp3ml)
 - [Issue tracker](https://github.com/stefanosbalaskas/gp3ml/issues)
+
+## Governance and reproducibility in 0.3.0
+
+Version `0.3.0` extends `gp3ml` beyond model fitting into explicit
+prediction-to-decision governance, target-aware conformal prediction,
+dataset-shift auditing, frozen analysis plans, model-artifact
+portability, robustness diagnostics, environment provenance,
+research-object export, and standards-oriented evidence crosswalks.
+
+These features preserve gp3ml’s existing governance boundary. They do
+not support identification, authentication, diagnosis,
+protected-attribute inference, or direct or indirect inference of
+emotion, stress, personality, deception, cognition, comprehension,
+intent, or other mental states. Standards-oriented crosswalks are
+documentation aids only and do not imply NIST endorsement, ISO
+conformity, certification, or legal compliance.

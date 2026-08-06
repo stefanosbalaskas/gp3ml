@@ -97,24 +97,24 @@ report
 #>  24       0.5 0.5416667         0.5416667         0.5   0.5833333 0.5454545
 #>  recall        f1       mcc roc_auc    pr_auc     brier  log_loss
 #>     0.5 0.5217391 0.0836242     0.5 0.5550724 0.2505173 0.6941939
-#>
+#> 
 #> $development_metrics
 #> NULL
-#>
+#> 
 #> $limitations
 #> [1] "Synthetic external-validation example."
-#>
+#> 
 #> $prohibited_uses
-#> [1] "person identification or re-identification"
-#> [2] "biometric authentication or verification"
-#> [3] "health, disease, disability, or diagnostic inference"
-#> [4] "protected-attribute prediction or proxy prediction"
+#> [1] "person identification or re-identification"                                                          
+#> [2] "biometric authentication or verification"                                                            
+#> [3] "health, disease, disability, or diagnostic inference"                                                
+#> [4] "protected-attribute prediction or proxy prediction"                                                  
 #> [5] "emotion, stress, personality, deception, cognition, comprehension, intent, or mental-state inference"
-#> [6] "random row-level evaluation represented as participant- or stimulus-level generalization"
-#> [7] "outcome-derived or post-outcome feature engineering"
-#> [8] "preprocessing estimated using assessment or external-validation data"
-#> [9] "accuracy-only reporting without discrimination, calibration, and uncertainty"
-#>
+#> [6] "random row-level evaluation represented as participant- or stimulus-level generalization"            
+#> [7] "outcome-derived or post-outcome feature engineering"                                                 
+#> [8] "preprocessing estimated using assessment or external-validation data"                                
+#> [9] "accuracy-only reporting without discrimination, calibration, and uncertainty"                        
+#> 
 #> attr(,"class")
 #> [1] "gp3ml_external_validation_report"
 ```

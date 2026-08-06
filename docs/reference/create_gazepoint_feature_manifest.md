@@ -128,6 +128,6 @@ manifest
 #> 1           FALSE        FALSE      FALSE                none
 #> 2           FALSE        FALSE      FALSE     resampling_fold
 #>   fold_local_required reviewer_notes
-#> 1               FALSE
-#> 2                TRUE
+#> 1               FALSE               
+#> 2                TRUE               
 ```

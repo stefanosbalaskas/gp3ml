@@ -86,46 +86,20 @@ engine <- integrate_black_box_model(
     group_aware_evaluation_required = TRUE
   )
 )
-engine
-#> $name
+engine$name
 #> [1] "custom_glm"
-#>
-#> $fit_fun
-#> function (x, y, task, args)
-#> {
-#>     training_data <- data.frame(.outcome = y, x, check.names = FALSE)
-#>     stats::glm(.outcome ~ ., data = training_data, family = stats::binomial())
-#> }
-#> <environment: 0x000001f388bb5380>
-#>
-#> $predict_fun
-#> function (fit, newdata, type, task, ...)
-#> {
-#>     as.numeric(stats::predict(fit, newdata = as.data.frame(newdata),
-#>         type = "response"))
-#> }
-#> <environment: 0x000001f388bb5380>
-#>
-#> $supports
+engine$supports
 #> [1] "classification"
-#>
-#> $probability
+engine$probability
 #> [1] TRUE
-#>
-#> $metadata
-#> list()
-#>
-#> $safety_declaration
-#> $safety_declaration$prohibited_uses_acknowledged
+engine$safety_declaration
+#> $prohibited_uses_acknowledged
 #> [1] TRUE
-#>
-#> $safety_declaration$prediction_time_inputs_only
+#> 
+#> $prediction_time_inputs_only
 #> [1] TRUE
-#>
-#> $safety_declaration$group_aware_evaluation_required
+#> 
+#> $group_aware_evaluation_required
 #> [1] TRUE
-#>
-#>
-#> attr(,"class")
-#> [1] "gp3ml_engine"
+#> 
 ```

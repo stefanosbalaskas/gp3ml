@@ -23,6 +23,6 @@ gp3ml_available_engines()
 #> 3  ranger      TRUE
 #> 4 xgboost      TRUE
 #> 5    nnet      TRUE
-#> 6  keras3     FALSE
+#> 6  keras3      TRUE
 #> 7  custom      TRUE
 ```

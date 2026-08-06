@@ -2,16 +2,27 @@ pandoc: '3.10'
 pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
+  analysis-plan-governance: analysis-plan-governance.html
+  api-stability-contracts: api-stability-contracts.html
   assigned-condition-discrimination: assigned-condition-discrimination.html
   contaminated-manifest-leakage: contaminated-manifest-leakage.html
+  cross-package-interoperability: cross-package-interoperability.html
+  dataset-shift-and-robustness: dataset-shift-and-robustness.html
+  decision-governance: decision-governance.html
   external-validation-reporting: external-validation-reporting.html
+  governance-standards-profile: governance-standards-profile.html
+  group-aware-conformal-prediction: group-aware-conformal-prediction.html
+  integrated-research-workflow: integrated-research-workflow.html
   nested-grouped-resampling: nested-grouped-resampling.html
   observed-behavioral-endpoint: observed-behavioral-endpoint.html
+  optional-engine-portability: optional-engine-portability.html
   participant-generalization: participant-generalization.html
   participant-stimulus-generalization: participant-stimulus-generalization.html
+  portable-research-artifacts: portable-research-artifacts.html
   recording-quality-review: recording-quality-review.html
+  reproducibility-hardening: reproducibility-hardening.html
   stimulus-generalization: stimulus-generalization.html
-last_built: 2026-07-24T22:48Z
+last_built: 2026-08-06T21:51Z
 urls:
   reference: https://stefanosbalaskas.github.io/gp3ml/reference
   article: https://stefanosbalaskas.github.io/gp3ml/articles
