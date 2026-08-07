@@ -1,0 +1,18 @@
+Journal of Statistical Software manuscript workspace
+
+Official template: https://www.jstatsoft.org/public/journals/1/jss-article-tex.zip
+Retrieved: 2026-08-08
+JSS class version: 3.6
+JSS class date: 2026/04/28
+Official bibliography filename: refs.bib
+
+Source manuscript checkpoint: cca7b97354623501f510f5743030cc31aabbab14
+Source manuscript branch: paper/r-journal-manuscript
+
+Verified local TeX dependencies:
+  orcidlink
+  thumbpdf
+
+Compilation baseline: tinytex::latexmk(engine = "pdflatex")
+
+Repository normalization: trailing spaces/tabs were removed from article-template.tex and article.tex to satisfy git diff --check; no substantive LaTeX content was changed.
