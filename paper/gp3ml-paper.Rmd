@@ -1,0 +1,510 @@
+---
+title: "gp3ml: Governance-First Predictive Modelling and Validation for Gazepoint Research in R"
+date: "2026-08-07"
+abstract: >
+  Predictive modelling with eye-tracking data is complicated by repeated participant–stimulus observations, heterogeneous recording quality, flexible preprocessing, and information leakage across resampling partitions. General machine-learning frameworks provide broad modelling functionality, but the scientific validity of a behavioural prediction workflow also depends on its declared outcome, grouping structure, generalization target, tuning boundaries, decision policy, and computational provenance. We introduce gp3ml, an R package for governance-first predictive modelling and validation with Gazepoint-derived and similarly structured research data. The package combines explicit task and feature-role declarations with participant-, stimulus-, trial-, and crossed-group resampling; fold-local preprocessing; nested tuning; retained assessment predictions; calibration and target-aware conformal summaries; threshold and abstention rules; shift and robustness audits; locked analysis plans; portable model artefacts; environment capture; research-object export; and explicit API contracts. An executable synthetic case study uses an observed recording-quality review status to compare row-level, participant-grouped, and participant–stimulus validation designs. The example generates every table and figure from deterministic code and reports design-specific performance rather than presuming that one split is universally correct. gp3ml is not an automatic model-selection system and does not infer hidden psychological, health, biometric, or sensitive attributes. Its contribution is an opinionated governance layer that links predictive modelling decisions to the units and claims a study is intended to support.
+author:
+  - name: Stefanos Balaskas
+    affiliation: eGovernment & eCommerce Lab (Innovation & Entrepreneurship), Department of Business Administration
+    address: University of Patras, 26504 Patras, Greece
+    url: https://sites.google.com/view/stefbalaskas/
+    orcid: 0000-0003-2444-9796
+    email: s.balaskas@ac.upatras.gr
+output:
+  rjtools::rjournal_pdf_article:
+    toc: false
+  rjtools::rjournal_web_article:
+    self_contained: true
+    toc: false
+bibliography: references.bib
+keywords:
+  - Machine learning
+  - Eye tracking
+  - Grouped resampling
+  - Data leakage
+  - Reproducible research
+  - Model governance
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  collapse = TRUE,
+  comment = "#>",
+  warning = TRUE,
+  message = FALSE,
+  fig.align = "center",
+  fig.width = 5.8,
+  fig.height = 4.0,
+  out.width = "92%",
+  dpi = 180,
+  cache = FALSE
+)
+paper_dir <- normalizePath(dirname(knitr::current_input(dir = TRUE)), winslash = "/", mustWork = TRUE)
+source(file.path(paper_dir, "R", "helpers.R"), local = knitr::knit_global())
+repo_root <- Sys.getenv("GP3ML_REPO_ROOT", unset = "")
+if (!nzchar(repo_root)) repo_root <- locate_gp3ml_root(paper_dir)
+lib <- Sys.getenv("GP3ML_PAPER_LIB", unset = "")
+if (nzchar(lib)) .libPaths(c(lib, .libPaths()))
+assert_namespace("gp3ml")
+assert_namespace("knitr")
+library(gp3ml)
+package_facts <- package_audit(repo_root)
+stopifnot(
+  identical(package_facts$version, "0.3.0"),
+  identical(package_facts$api_audit_status, "pass"),
+  package_facts$api_differences == 0L
+)
+source(file.path(paper_dir, "R", "case-study.R"), local = knitr::knit_global())
+```
+
+# Introduction
+
+Eye-tracking experiments commonly produce multiple observations from each participant, repeated presentations of stimuli, and measurements nested within trials or recordings. These observations are not exchangeable rows in the ordinary sense: a classifier can exploit stable participant characteristics, recurring stimulus properties, or duplicated processing decisions when the same clusters occur in both training and assessment data. The corresponding issue is not limited to eye tracking. Crossed participant–item structures are foundational in behavioural research, and claims are normally intended to extend beyond the particular people, stimuli, or recordings observed in one sample [@Baayen2008; @Barr2013; @Yarkoni2022].
+
+A random row split can therefore answer a narrower question than its label suggests. It may estimate performance for additional rows drawn from already represented participants and stimuli, even when the scientific claim concerns new participants, new stimuli, or both. The resulting estimate is not intrinsically invalid; it is misaligned when it is interpreted as evidence for a different target. This distinction motivates the central design rule in `gp3ml`: the intended generalization unit is declared before folds are created, and fold construction preserves that declaration.
+
+Leakage introduces a second problem. Information can cross the analysis–assessment boundary through outcome-derived features, post-outcome measurements, identifiers, globally estimated preprocessing, feature selection, tuning, or threshold optimization. Leakage has been defined as information about a prediction target that would not legitimately be available at prediction time [@Kaufman2012]. Its practical consequences extend beyond textbook mistakes: systematic reviews of machine-learning-based science have documented failures in which apparently strong performance depended on leakage or incomplete reporting [@Kapoor2023].
+
+Model selection requires a further boundary. Using the same resampling results both to choose a model and to report its expected performance can bias the estimate [@Varma2006; @Cawley2010]. Nested resampling separates the inner selection problem from the outer performance-estimation problem. Yet nesting alone does not define which participants or stimuli may cross a partition, how preprocessing is estimated, what uncertainty is reported, or how a probability is converted into an action.
+
+These concerns suggest that predictive validity is partly a governance problem. A defensible workflow must connect the outcome definition, feature provenance, resampling target, tuning rule, calibration method, threshold policy, robustness evidence, and computational environment. Performance metrics remain necessary, but they do not themselves establish that the analysis answered the intended question.
+
+`gp3ml` [@gp3ml2026] implements this connection for Gazepoint-derived and similarly structured behavioural data. It provides modelling engines and evaluation utilities, but its distinctive purpose is to make design and reporting decisions explicit and auditable. The package does not autonomously identify a “best” model, relax prohibited-use boundaries, or treat predictive associations as evidence of latent mental states. This paper describes its architecture, positions it relative to existing R software, and provides a fully executable case study built around an explicitly observed recording-quality review status.
+
+# Related software and methodological context
+
+R already has mature modelling ecosystems. `caret` unified model training and resampling behind a common interface [@Kuhn2008]. `mlr3` provides an extensible object-oriented ecosystem for tasks, learners, resampling, tuning, and benchmarking [@Lang2019]. The `tidymodels` ecosystem integrates modelling components with tidy data principles [@KuhnWickham2022], while `rsample` supplies general resampling infrastructure, including grouped and nested designs [@rsample2026]. These tools remain appropriate foundations for many analyses.
+
+`gp3ml` is not positioned as a replacement for those systems. Its narrower contribution is to bind several decisions that researchers otherwise have to compose and document themselves: feature provenance, permitted outcomes, generalization targets, leakage audits, fold-local evaluation, human-recorded selection rationales, threshold provenance, abstention, dataset shift, environment comparison, portable artefacts, and API contracts. The package can use optional engines, but it deliberately restricts hidden automation and records when an optional runtime is unavailable. Other complementary tools address adjacent concerns: `DALEX` provides model-agnostic explainers [@Biecek2018], while `targets` represents reproducible computational pipelines [@Landau2021]. `gp3ml` does not replace either function; it records governance evidence specific to the predictive research claim.
+
+Eye-tracking packages address different parts of the workflow. `eyetrackingR`, for example, supports cleaning, aggregation, visualization, growth-curve analysis, onset-contingent analysis, and time-window methods [@DinkFerguson2015]. Such packages focus on deriving and analysing eye-tracking measures. `gp3ml` begins after an outcome and candidate predictors can be declared and asks how a predictive claim should be validated and documented.
+
+Uncertainty and reporting also have established literatures. Conformal prediction constructs prediction sets or intervals under explicit exchangeability conditions [@Vovk2005; @Shafer2008; @Angelopoulos2023]. Calibration assesses whether predicted probabilities correspond to observed frequencies [@Guo2017]. Dataset-shift methods distinguish changes in covariates, prevalence, concepts, and performance rather than treating “drift” as one quantity [@QuioneroCandela2009; @MorenoTorres2012]. Internal and external validation answer different questions and require explicit attention to the target setting [@Steyerberg2016]. Model cards encourage structured statements about purpose, evaluation, and limitations [@Mitchell2019], while RO-Crate provides machine-readable packaging for research artefacts and their relationships [@SoilandReyes2022]. `gp3ml` integrates conservative forms of these ideas into one governed workflow without claiming that software alone resolves their assumptions.
+
+```{r software-comparison-table, echo=FALSE}
+software_comparison <- data.frame(
+  Software = c(
+    "gp3ml", "caret", "mlr3", "tidymodels/rsample",
+    "DALEX", "targets", "eyetrackingR", "RO-Crate tooling"
+  ),
+  Primary_scope = c(
+    "Governed predictive research with clustered behavioural data",
+    "General predictive modelling and resampling",
+    "Extensible machine-learning tasks and benchmarking",
+    "Composable modelling and resampling workflows",
+    "Model-agnostic explanation",
+    "Reproducible computational pipelines",
+    "Eye-tracking preparation and inferential analysis",
+    "Packaging research objects and metadata"
+  ),
+  Grouped_resampling = c(
+    "Native and target-labelled", "Available through indices/control",
+    "Native", "Native", "Outside primary scope",
+    "Requires external composition", "Outside primary scope",
+    "Outside primary scope"
+  ),
+  Leakage_governance = c(
+    "Feature manifests and fold audits", "Requires workflow composition",
+    "Requires workflow composition", "Requires workflow composition",
+    "Outside primary scope", "Can orchestrate checks supplied by other tools",
+    "Outside primary scope", "Outside primary scope"
+  ),
+  Decision_governance = c(
+    "Threshold provenance and abstention", "Requires external composition",
+    "Requires external composition", "Requires external composition",
+    "Outside primary scope", "Outside primary scope",
+    "Outside primary scope", "Outside primary scope"
+  ),
+  Provenance_portability = c(
+    "Environment, artefacts, checksums, RO-Crate-oriented export",
+    "Requires external composition", "Requires external composition",
+    "Requires external composition", "Explanation objects",
+    "Native pipeline provenance and invalidation",
+    "Requires external composition", "Native metadata packaging"
+  ),
+  stringsAsFactors = FALSE
+)
+safe_kable(software_comparison, caption = "Scope-qualified comparison of selected R software. Entries describe primary documented scope rather than exhaustive capability.")
+```
+
+# Design principles
+
+The package is organized around twelve principles (Table 2). The principles are constraints on interpretation as much as software features.
+
+```{r design-principles-table, echo=FALSE}
+design_principles <- data.frame(
+  Principle = c(
+    "Declared purpose", "Explicit roles", "Leakage-resistant validation",
+    "Group-aware resampling", "Target-aligned generalization", "Fold-local preprocessing",
+    "Governed tuning", "Uncertainty-aware evaluation", "Explicit decisions",
+    "Reproducible evidence", "Portable artefacts", "Bounded scope and API contracts"
+  ),
+  Operationalisation = c(
+    "Task and analysis-plan objects record the observed outcome and intended use.",
+    "Outcome, predictors, identifiers and grouping columns are validated separately.",
+    "Feature manifests and fold audits identify unavailable, outcome-derived or overlapping information.",
+    "Participants, stimuli, trials or crossed blocks are held out according to the declared target.",
+    "Every evaluation retains a machine-readable generalization target.",
+    "Imputation, encoding, centring and scaling are estimated on analysis partitions.",
+    "Candidate grids, selection metrics, directions and human rationales are explicit.",
+    "Fold distributions, calibration, bootstrap summaries and conformal caveats remain visible.",
+    "Threshold source, costs and abstention intervals are represented as validated objects.",
+    "Plans, environments, checksums, reports and release evidence can be audited.",
+    "Model and preprocessing components can be validated and restored as governed artefacts.",
+    "Prohibited interpretations and stable/experimental interfaces are explicit."
+  ),
+  Representative_functions = c(
+    "declare_gazepoint_task(); declare_gazepoint_analysis_plan()",
+    "validate_gazepoint_ml_roles()",
+    "create_gazepoint_feature_manifest(); audit_gazepoint_ml_leakage()",
+    "create_gazepoint_group_folds(); create_gazepoint_nested_folds()",
+    "create_gazepoint_synthetic_task(); validate_gazepoint_group_folds()",
+    "fit_gazepoint_preprocessor(); evaluate_gazepoint_group_folds()",
+    "create_gazepoint_tuning_grid(); select_gazepoint_model()",
+    "summarize_gazepoint_resample_performance(); fit_gazepoint_conformal()",
+    "evaluate_gazepoint_thresholds(); create_gazepoint_decision_rule()",
+    "lock_gazepoint_analysis_plan(); capture_gazepoint_environment()",
+    "create_gazepoint_model_artifact(); validate_gazepoint_model_artifact()",
+    "gp3ml_prohibited_uses(); gp3ml_api_contracts()"
+  ),
+  stringsAsFactors = FALSE
+)
+safe_kable(design_principles, caption = "Design principles and representative package mechanisms.")
+```
+
+# Package architecture
+
+The architecture is layered rather than tied to one learner (Figure 1). Task declarations and feature manifests precede resampling. Preprocessing and model fitting are evaluated inside materialized partitions. Uncertainty, shift and decision rules consume retained predictions. Artefacts and API contracts preserve the resulting evidence.
+
+```{r architecture-figure, fig.cap="Conceptual architecture of gp3ml. Governance begins before model fitting and continues through release evidence.", fig.alt="Six workflow boxes connected by arrows, from purpose and roles through grouped resampling and modelling to artefacts and API contracts.", layout="l-body", fig.width=5.2, fig.height=2.9, out.width="88%"}
+plot_architecture()
+```
+
+At render time, the manuscript audits the installed source rather than relying on manually copied counts. The current source identifies version `r package_facts$version`, `r package_facts$stable_exports` stable exports, `r package_facts$experimental_exports` experimental exports, and `r package_facts$stable_classes` stable public classes. The API audit status is `r package_facts$api_audit_status` with `r package_facts$api_differences` recorded differences. The repository contains `r package_facts$source_vignettes` source vignettes and `r package_facts$rd_topics` Rd topics.
+
+```{r package-facts-table, echo=FALSE}
+engine_table <- package_facts$engines
+release_evidence <- data.frame(
+  Item = c("Package version", "Namespace exports", "Stable exports", "Experimental exports", "Stable public classes", "API audit", "Source vignettes", "Rd topics", "GitHub tag", "Validated archive SHA-256", "CRAN status at drafting"),
+  Evidence = c(
+    package_facts$version,
+    package_facts$exports_from_namespace,
+    package_facts$stable_exports,
+    package_facts$experimental_exports,
+    package_facts$stable_classes,
+    paste(package_facts$api_audit_status, "with", package_facts$api_differences, "differences"),
+    package_facts$source_vignettes,
+    package_facts$rd_topics,
+    "v0.3.0 at 0e23684f32a44417827aa0e7fee9fefc9e6c35d3",
+    "04c5fdb017c63ecbf6f5e85c29fff6492880201a2f2aa5c3c1d3fe998e60bae6",
+    "0.3.0 is a GitHub source release; CRAN submission is pending"
+  ),
+  stringsAsFactors = FALSE
+)
+safe_kable(release_evidence, caption = "Dynamically audited package facts and fixed release evidence.")
+```
+
+The modelling engines are not assumed to be interchangeable. Their runtime status is queried when the paper is rendered, and optional dependencies are reported rather than treated as silently available.
+
+```{r engine-capability-table, echo=FALSE}
+engine_display <- engine_table
+if (nrow(engine_display)) {
+  keep <- intersect(
+    c("engine", "package", "package_installed", "runtime_available", "status", "notes"),
+    names(engine_display)
+  )
+  engine_display <- engine_display[, keep, drop = FALSE]
+}
+safe_kable(engine_display, caption = "Runtime-audited modelling-engine capabilities in the rendering environment.")
+```
+
+```{r optional-dependencies-table, echo=FALSE, results='asis'}
+optional_dependency_table <- data.frame(
+  Package = package_facts$optional_dependencies,
+  Available = vapply(package_facts$optional_dependencies, requireNamespace, logical(1), quietly = TRUE),
+  stringsAsFactors = FALSE
+)
+utils::write.csv(optional_dependency_table, file.path(paper_dir, "supplement", "optional-dependencies.csv"), row.names = FALSE)
+cat(sprintf("At render time, %d of %d declared optional dependencies were available. The complete runtime matrix is supplied in `paper/supplement/optional-dependencies.csv`.", sum(optional_dependency_table$Available), nrow(optional_dependency_table)))
+```
+
+# Synthetic research case study
+
+## Data-generating design
+
+The case study uses `simulate_gazepoint_governed_data()`, which generates deterministic, non-sensitive participant–stimulus trials with explicit outcomes. We use the predefined `quality_status` factor as the outcome. It records whether a synthetic trial has been assigned a *pass* or *review* recording-quality status; it is not a psychological construct. The predictors are `tracking_ratio`, `blink_rate`, and `gaze_dispersion`. Five per cent of `gaze_dispersion` values are then set to missing using a fixed seed. This perturbation tests whether imputation remains inside analysis folds.
+
+```{r synthetic-data-structure, echo=FALSE}
+structure_table <- data.frame(
+  Component = c("Rows", "Participants", "Stimuli", "Trials per participant–stimulus cell", "Outcome", "Positive class", "Predictors", "Controlled missingness"),
+  Value = c(
+    nrow(analysis_data),
+    length(unique(analysis_data$participant_id)),
+    length(unique(analysis_data$stimulus_id)),
+    2L,
+    quality_task$outcome,
+    quality_task$positive,
+    paste(predictors, collapse = ", "),
+    paste0(sum(is.na(analysis_data$gaze_dispersion)), " gaze_dispersion values (", round(mean(is.na(analysis_data$gaze_dispersion)) * 100, 1), "%)")
+  ),
+  stringsAsFactors = FALSE
+)
+safe_kable(structure_table, caption = "Synthetic case-study structure.")
+```
+
+The feature manifest records that the predictors are available during exposure, are not outcome-derived, and require fold-local preprocessing. The task declares prediction for new participants. A separate task is constructed for simultaneous participant and stimulus generalization; the outcome and predictors do not change, but the held-out units do.
+
+## Locked analysis plan
+
+The plan fixes the outcome, predictors, target, preprocessing, candidate model, primary metric, uncertainty method, and prohibited interpretations before the model results are inspected.
+
+```{r analysis-plan-code, echo=FALSE}
+analysis_plan_summary <- data.frame(
+  Element = c("Validation", "Outcome", "Generalization target", "Predictors", "Preprocessing", "Candidate model", "Primary metric", "Locked plan"),
+  Evidence = c(
+    analysis_plan_validation$status,
+    locked_plan$outcome,
+    locked_plan$generalization_target,
+    paste(locked_plan$predictors, collapse = ", "),
+    "Median imputation, centring and scaling within analysis folds",
+    paste(locked_plan$candidate_models, collapse = ", "),
+    locked_plan$primary_metric,
+    locked_plan$plan_id
+  ),
+  stringsAsFactors = FALSE
+)
+safe_kable(analysis_plan_summary, caption = "Locked analysis-plan summary.")
+```
+
+A valid plan does not prove that its scientific choices are correct. It creates an immutable reference against which changes can be reported. This operationalizes the distinction between decisions declared before results are inspected and changes made after observation, without claiming that a software lock is equivalent to a registered preregistration [@Nosek2018]. In this execution, the final configuration is compared with the locked plan rather than silently substituting a different metric or target.
+
+## Validation designs
+
+Three designs are compared. The row-level comparator deliberately allows cluster overlap and is implemented as manuscript-specific code because `gp3ml` does not offer an unlabeled unsafe split as a governed target. The second design assigns complete participants to assessment folds. The third creates crossed participant–stimulus assessment blocks and retains incompatible cross-block rows as excluded rather than silently moving them.
+
+```{r resampling-design-figure, fig.cap="Three validation designs applied to the same synthetic data. The first is an intentionally unsafe comparator; the latter two are materialized by gp3ml.", fig.alt="Three panels showing row-level colour blocks, participants assigned wholly to one partition, and participant-by-stimulus assessment blocks with excluded cross-block cells.", layout="l-body", fig.width=5.2, fig.height=2.6, out.width="86%"}
+plot_resampling_schemes(analysis_data, group_folds, cross_folds)
+```
+
+```{r validation-design-table, echo=FALSE}
+validation_designs <- data.frame(
+  Design = c("Naive row-level", "Participant grouped", "Participant–stimulus blocks"),
+  Intended_estimand = c("Additional rows from represented clusters", "New participants with represented stimulus set", "New participant–stimulus blocks"),
+  Same_participant_across_sides = c("Possible", "Prevented", "Prevented for assessment block"),
+  Same_stimulus_across_sides = c("Possible", "Possible", "Prevented for assessment block"),
+  Fold_local_preprocessing = c("Yes, in comparator code", "Yes, through gp3ml", "Yes, through gp3ml"),
+  Excluded_cross_block_rows = c("None", "None", nrow(cross_evaluation$excluded)),
+  Leakage_audit = c("Not governed", group_audit$status, cross_audit$status),
+  stringsAsFactors = FALSE
+)
+safe_kable(validation_designs, caption = "Validation designs and their interpretation.")
+```
+
+# End-to-end governed workflow
+
+The participant-grouped workflow materializes folds, audits cluster separation, estimates median imputation, centring and scaling inside each analysis partition, fits a logistic regression, and retains only assessment predictions. The model is deliberately simple: the paper evaluates workflow semantics rather than claiming algorithmic superiority.
+
+```{r grouped-workflow-code, echo=FALSE}
+grouped_workflow_summary <- data.frame(
+  Component = c("Target", "Materialized folds", "Fold audit", "Evaluation validation", "Assessment predictions", "Failed folds"),
+  Evidence = c(
+    group_folds$generalization_target %||% quality_task$generalization_target,
+    length(group_folds$folds),
+    group_audit$status,
+    group_evaluation$validation$status,
+    nrow(group_predictions),
+    if (identical(group_evaluation$validation$status, "pass")) 0L else NA_integer_
+  ),
+  stringsAsFactors = FALSE
+)
+safe_kable(grouped_workflow_summary, caption = "Participant-grouped workflow audit.")
+```
+
+Nested tuning is available through `create_gazepoint_nested_folds()` and `evaluate_gazepoint_nested_resampling()`. It is not repeated in the main case study because only one learner is needed to isolate the effect of the validation target. The package’s nested workflow records the inner metric, direction, success threshold, and human rationale for each outer fold; it should be used when candidate models or hyperparameters are selected.
+
+# Results
+
+## Validation-design dependence
+
+The metrics below are generated from the same data and predictor set. They should not be interpreted as a benchmark of logistic regression. Their purpose is to show that “model performance” is conditional on which units were permitted to recur across analysis and assessment data.
+
+```{r performance-summary-table, echo=FALSE}
+show_metrics <- c("balanced_accuracy", "roc_auc", "brier", "log_loss")
+performance_display <- performance_summary[performance_summary$metric %in% show_metrics, ]
+performance_display <- performance_display[order(match(performance_display$metric, show_metrics), performance_display$design), ]
+safe_kable(performance_display, caption = "Fold-distribution summaries by validation design.", digits = 3)
+```
+
+```{r performance-comparison-figure, fig.cap="Multi-metric validation profile for the three declared generalization designs. Open points are fold estimates; filled diamonds are means and vertical segments are empirical 95% fold-distribution intervals. Similar numerical values do not make the three estimands interchangeable.", fig.alt="Four panels compare ROC AUC, balanced accuracy, Brier score and log loss across row-level, participant-grouped and crossed participant-stimulus validation.", layout="l-body", fig.width=5.2, fig.height=4.1, out.width="88%"}
+plot_validation_profile(all_metrics, performance_summary)
+```
+
+The executable result should be read design by design. A higher row-level value would be evidence that repeated cluster information makes the row-level problem easier, not proof that the grouped estimate is pessimistic. Conversely, similar values would show that the selected predictors do not rely strongly on cluster recurrence in this synthetic realization. The code does not force either conclusion.
+
+## Calibration and conformal sets
+
+Calibration is assessed from retained participant-grouped assessment predictions from the first repeated-CV pass, so each source row appears once in this diagnostic. The reliability plot is descriptive; repeated trials from the same participant mean that ordinary row-bootstrap intervals are not treated as participant-level uncertainty.
+
+```{r calibration-summary-table, echo=FALSE}
+safe_kable(calibration$summary, caption = "Calibration summary for participant-grouped assessment predictions.", digits = 3)
+```
+
+```{r calibration-figure, fig.cap="Calibration and participant-disjoint conformal uncertainty. The left panel compares predicted and observed review rates; the right panel compares nominal, row-level and participant-level held-out coverage, with mean prediction-set size reported beneath the panel.", fig.alt="Two panels show a calibration reliability diagram and held-out conformal coverage for rows and participants.", layout="l-body", fig.width=5.2, fig.height=3.1, out.width="88%"}
+plot_calibration_conformal(calibration, conformal_coverage, conformal_set_size)
+```
+
+The conformal example first divides the retained assessment predictions into participant-disjoint policy-development and policy-audit partitions. Conformity scores are estimated only from the development participants and aggregated to participants before the quantile is estimated; prediction sets are then evaluated on the held-out participants. The implementation records this calibration unit and a caveat: coverage claims still require exchangeability assumptions appropriate to the declared target. The observed held-out row coverage is `r round(conformal_coverage$row_coverage, 3)`, the all-rows-covered participant proportion is `r round(conformal_coverage$unit_coverage, 3)`, and the mean prediction-set size is `r round(mean(conformal_set_size), 3)` classes at nominal coverage `r conformal_coverage$nominal_coverage`.
+
+```{r conformal-summary-compact, echo=FALSE}
+conformal_table <- data.frame(
+  development_participants = length(policy_development_participants),
+  audit_participants = length(policy_audit_participants),
+  nominal_coverage = conformal_coverage$nominal_coverage,
+  held_out_row_coverage = conformal_coverage$row_coverage,
+  held_out_participant_coverage = conformal_coverage$unit_coverage,
+  mean_set_size = mean(conformal_set_size),
+  status = conformal_coverage$status
+)
+safe_kable(conformal_table, caption = "Participant-disjoint conformal summary.", digits = 3)
+```
+
+```{r conformal-summary-table-removed, include=FALSE}
+# Combined with the participant-disjoint conformal summary above.
+```
+
+## Threshold and abstention governance
+
+A probability estimate is not a decision rule. Candidate thresholds are explicit, the optimization metric and direction are recorded, and the selected threshold carries a declared provenance. In the executable demonstration, the threshold and the abstention interval are developed on one participant subset and audited on disjoint held-out participants. The interval between 0.15 and 0.25 is centred on the deterministic selected threshold and is used only to demonstrate auditable selective prediction; it is not an operational recommendation.
+
+```{r decision-rule-code, echo=FALSE}
+decision_policy_summary <- data.frame(
+  Element = c("Rule validation", "Threshold", "Threshold origin", "Generalization target", "Held-out coverage", "Held-out abstention", "Covered error"),
+  Evidence = c(
+    decision_validation$status,
+    decision_rule$threshold,
+    decision_rule$threshold_origin,
+    decision_rule$generalization_target,
+    round(abstention_audit$coverage, 3),
+    round(abstention_audit$abstention_rate, 3),
+    round(abstention_audit$covered_error_rate, 3)
+  ),
+  stringsAsFactors = FALSE
+)
+safe_kable(decision_policy_summary, caption = "Governed decision-policy summary.")
+```
+
+```{r threshold-abstention-figure, fig.cap="Threshold development and abstention sensitivity on participant-disjoint data. The left panel marks the selected threshold; the right panel shows the retained-coverage versus covered-error frontier across symmetric abstention bands and highlights the declared policy.", fig.alt="Two panels show balanced accuracy across thresholds and the trade-off between retained coverage and error after abstention.", layout="l-body", fig.width=5.2, fig.height=3.1, out.width="88%"}
+plot_threshold_and_abstention(threshold_evaluation, decision_rule, policy_audit_predictions, quality_task$positive, abstention_audit)
+```
+
+## Dataset shift and robustness
+
+A second synthetic dataset is perturbed transparently: `tracking_ratio` is shifted downward, `gaze_dispersion` is scaled, and its missingness increases. `audit_gazepoint_dataset_shift()` reports numeric standardized differences or categorical total variation together with support overlap and outside-range rates. Missingness is audited separately so that one score does not conflate distinct phenomena.
+
+```{r shift-table, echo=FALSE}
+shift_display <- shift_audit$findings[, c("predictor", "mean_development", "mean_external", "standardized_difference", "support_overlap", "outside_training_range", "status"), drop = FALSE]
+safe_kable(shift_display, caption = "Concise predictor-distribution shift findings.", digits = 3)
+```
+
+```{r shift-figure, fig.cap="Predictor distribution shift between development and perturbed synthetic external data.", fig.alt="Horizontal bars showing shift magnitude for tracking ratio, blink rate, and gaze dispersion.", layout="l-body", fig.width=5.0, fig.height=2.9, out.width="86%"}
+plot_shift(shift_audit)
+```
+
+```{r robustness-code, echo=FALSE}
+safe_kable(robustness_audit$findings, caption = "Seed and threshold sensitivity audit.", digits = 3)
+```
+
+The seed and threshold diagnostics are not substitutes for external validation. They expose whether a reported result is highly contingent on fold allocation or threshold choice within the evaluated design.
+
+## Plan, artefact and environment validation
+
+The actual configuration matches the locked plan with status `r plan_deviation_audit$status`. The model artefact validation status is `r artifact_validation$status`, the environment self-comparison status is `r environment_comparison$status`, and the API stability audit status is `r api_stability$status`.
+
+```{r governance-validation-table, echo=FALSE}
+governance_table <- data.frame(
+  Evidence = c("Locked plan", "Plan-deviation audit", "Decision rule", "Model artefact", "Environment comparison", "API stability"),
+  Status = c("locked", plan_deviation_audit$status, decision_validation$status, artifact_validation$status, environment_comparison$status, api_stability$status),
+  Detail = c(
+    locked_plan$plan_id,
+    paste(sum(plan_deviation_audit$deviations$status == "deviation"), "declared deviations"),
+    paste("threshold", decision_rule$threshold, "from", decision_rule$threshold_origin),
+    paste(
+      if (isTRUE(model_artifact$metadata$bundled)) "Bundled" else "Unbundled",
+      "representative fold model with governed metadata"
+    ),
+    "Captured environment compared with itself as a deterministic validation check",
+    paste(nrow(api_stability$differences), "differences")
+  ),
+  stringsAsFactors = FALSE
+)
+safe_kable(governance_table, caption = "Governance and reproducibility evidence generated by the case study.")
+```
+
+# Software quality and validation
+
+The 0.3.0 release was checked from its exact source archive with all declared `Suggests` packages available. The release workflow recorded zero errors, zero warnings, and zero notes; rebuilt all source vignettes; generated PDF and HTML manuals; and found no CRAN reverse dependencies at the time of the audit. The archive SHA-256 is reported in the package-facts table. These are release facts, not claims that every scientific use of the package is valid.
+
+The manuscript adds a second validation layer. `paper/R/render-paper.R` installs the repository into a temporary library before rendering, so the user’s installed package is not overwritten. `paper/R/validate-paper.R` distinguishes passed checks, failed checks, unavailable optional diagnostics, and checks not evaluated. It runs the manuscript render, package tests, `pkgdown::check_pkgdown()`, API audit, scope-language audit, and a Git working-tree boundary check. This emphasis follows broader calls for executable artefacts, transparent checklists, and reproducibility reporting in machine-learning research [@Pineau2021]. The R Journal recommends the `rjtools` template, reproducible code and data, alt text for figures, and pre-submission checks; this workspace follows that structure.
+
+# Discussion
+
+`gp3ml` treats governance as part of predictive validity. This position does not imply that every analysis requires the same split, model, metric, or decision rule. It implies that these choices define the claim being made and should therefore be explicit, machine-readable, and reviewable.
+
+The generalization target is the organizing decision. Holding out participants estimates a different problem from holding out stimuli or crossed participant–stimulus blocks. A row-level split can be appropriate for additional rows from known clusters, but it should not be described as evidence for new participants without further justification. Materialized folds make this distinction inspectable: researchers can see analysis, assessment, and excluded rows rather than relying on an opaque resampling label.
+
+The same principle applies to preprocessing and tuning. Median imputation may appear innocuous, yet a median estimated globally includes information from assessment rows. `gp3ml` passes preprocessing arguments into each fold’s analysis partition. Candidate tuning grids and nested folds extend the separation to model selection. Human review remains necessary because a numerically optimal candidate may be inappropriate for the scientific purpose, effective sample size, interpretability requirement, or deployment context.
+
+Decision governance prevents another common collapse. Calibration, discrimination, threshold selection, and abstention answer different questions. A well-ranked model can have poorly calibrated probabilities; a calibrated probability still requires costs or scientific priorities before it becomes a decision. The package therefore records the threshold’s origin, training partition, metric, direction, costs, target, and justification. Abstention is represented as a measurable loss of coverage rather than hidden as missing output.
+
+The package complements broader R frameworks. Researchers needing extensive learner catalogues, sophisticated search spaces, or distributed benchmarking may use `mlr3`, `tidymodels`, or other infrastructure and then adapt their outputs to a governed reporting layer. Conversely, the package’s functions can support transparent studies using simple generalized linear models. The contribution is the integrity of the workflow, not model complexity.
+
+Although the package was developed around Gazepoint-derived research data, its grouping and governance abstractions are not tied to a file format or device. Any tabular behavioural dataset with declared outcomes, predictors, participants, stimuli, trials, or other clusters can use the same logic. Device-specific preprocessing should occur upstream and be documented in the feature manifest and handoff objects.
+
+# Limitations
+
+Software governance cannot repair a weak research design, an invalid outcome, inadequate measurement, or a sample that does not represent the intended population. A passing leakage audit means that the encoded checks passed; it does not prove that every causal or temporal dependency has been identified.
+
+Grouped validation can reveal that the effective sample size is much smaller than the row count. With few participants or stimuli, fold estimates can be unstable or some assessment folds can lack a class. `gp3ml` retains warnings and failed folds rather than silently discarding them, but the researcher must respond through redesign, simpler claims, or additional data.
+
+The case study is synthetic. It demonstrates execution and interpretation but does not establish performance across real eye-tracking studies, devices, tasks, populations, or recording conditions. Broader empirical benchmarking with independent datasets is future work.
+
+Conformal summaries depend on exchangeability assumptions and on how calibration units are defined. Group aggregation is conservative but does not provide distribution-free guarantees under arbitrary dependence. Dataset-shift audits describe measured differences; they do not identify a causal source of drift or guarantee performance degradation.
+
+Optional modelling engines differ in installation requirements and supported tasks. The package reports capability status rather than treating an unavailable runtime as a core failure. The framework does not automate scientific judgment, does not perform unrestricted automated model selection, and does not infer emotion, stress, cognition, diagnosis, identity, protected attributes, or other hidden sensitive states.
+
+# Availability and reproducibility
+
+`gp3ml` is released under the licence reported dynamically from `DESCRIPTION` (`r package_facts$license`). Version 0.3.0 is archived as GitHub tag `v0.3.0` and is documented at <https://stefanosbalaskas.github.io/gp3ml/>. The repository is <https://github.com/stefanosbalaskas/gp3ml>. The Zenodo concept DOI is <https://doi.org/10.5281/zenodo.21487272>; a version-specific DOI should replace the placeholder in the final accepted manuscript once assigned. At the date of this draft, 0.3.0 is a GitHub source release and is not described as a CRAN release.
+
+All examples use deterministic synthetic data generated during rendering with R [@R2026]. The source manuscript, helper scripts, evidence table, generated tables, validation script, and motivation letter are contained under `paper/`. The R Journal render script installs the current repository in a temporary library and writes the journal output to `paper/output/`; `paper/R/render-preview.R` creates an HTML preview from the same executable source. No private participant data are included.
+
+\appendix
+
+
+The full executed function inventory, locked-plan printout, workflow-object printouts, and rendering session information are regenerated into `paper/supplement/` by the hidden chunk below; they are omitted from the main article to preserve the 20-page limit.
+
+```{r write-supplementary-evidence, include=FALSE}
+dir.create(file.path(paper_dir, "supplement"), recursive = TRUE, showWarnings = FALSE)
+demonstrated <- c(
+  "simulate_gazepoint_governed_data", "create_gazepoint_synthetic_task", "create_gazepoint_synthetic_manifest",
+  "declare_gazepoint_analysis_plan", "validate_gazepoint_analysis_plan", "lock_gazepoint_analysis_plan",
+  "create_gazepoint_group_folds", "audit_gazepoint_group_folds", "diagnose_gazepoint_group_folds",
+  "evaluate_gazepoint_group_folds", "collect_gazepoint_fold_predictions", "summarize_gazepoint_resample_performance",
+  "assess_gazepoint_calibration", "fit_gazepoint_conformal", "predict_gazepoint_set",
+  "assess_gazepoint_conformal_coverage", "evaluate_gazepoint_thresholds", "select_gazepoint_threshold",
+  "validate_gazepoint_decision_rule", "apply_gazepoint_decision_rule", "audit_gazepoint_abstention",
+  "audit_gazepoint_dataset_shift", "audit_gazepoint_missingness_shift", "summarize_gazepoint_shift",
+  "evaluate_gazepoint_seed_stability", "evaluate_gazepoint_threshold_stability", "audit_gazepoint_model_robustness",
+  "audit_gazepoint_plan_deviations", "capture_gazepoint_environment", "compare_gazepoint_environments",
+  "create_gazepoint_model_artifact", "validate_gazepoint_model_artifact", "gp3ml_api_contracts", "audit_gp3ml_api_stability"
+)
+function_inventory <- data.frame(Function = demonstrated, Exported = demonstrated %in% getNamespaceExports("gp3ml"))
+stopifnot(all(function_inventory$Exported))
+utils::write.csv(function_inventory, file.path(paper_dir, "supplement", "demonstrated-functions.csv"), row.names = FALSE)
+capture.output(locked_plan, file = file.path(paper_dir, "supplement", "locked-analysis-plan.txt"))
+capture.output(group_evaluation, group_evaluation$validation, file = file.path(paper_dir, "supplement", "grouped-workflow-objects.txt"))
+capture.output(decision_rule, decision_validation, abstention_audit, file = file.path(paper_dir, "supplement", "decision-policy-objects.txt"))
+capture.output(utils::sessionInfo(), file = file.path(paper_dir, "supplement", "session-info.txt"))
+utils::write.csv(abstention_frontier, file.path(paper_dir, "supplement", "abstention-frontier.csv"), row.names = FALSE)
+```

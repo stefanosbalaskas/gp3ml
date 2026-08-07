@@ -1,0 +1,87 @@
+$research_question
+[1] "How accurately can predeclared gaze-quality features identify an observed recording-quality review status for new participants?"
+
+$scientific_purpose
+[1] "Evaluate a transparent review classifier for an explicitly observed, non-sensitive recording-quality outcome."
+
+$outcome
+[1] "quality_status"
+
+$outcome_definition
+[1] "Predefined synthetic pass/review recording-quality status."
+
+$predictors
+[1] "tracking_ratio"  "blink_rate"      "gaze_dispersion"
+
+$generalization_target
+[1] "new_participants"
+
+$grouping_variables
+[1] "participant_id" "stimulus_id"    "trial_id"
+
+$eligible_population
+[1] "Deterministic synthetic participant-stimulus trials generated for package validation."
+
+$exclusion_rules
+[1] "No outcome-based exclusions; missing predictors are imputed within analysis folds."
+
+$preprocessing_plan
+$preprocessing_plan$numeric_imputation
+[1] "median"
+
+$preprocessing_plan$center
+[1] TRUE
+
+$preprocessing_plan$scale
+[1] TRUE
+
+
+$candidate_models
+[1] "glm"
+
+$primary_metric
+[1] "balanced_accuracy"
+
+$secondary_metrics
+[1] "roc_auc"  "brier"    "log_loss"
+
+$calibration_metric
+[1] "ece"
+
+$uncertainty_method
+[1] "Repeated grouped-fold distribution and participant-level split conformal calibration"
+
+$threshold_policy
+[1] "Explicit development-partition threshold candidates with optional abstention and held-out policy audit"
+
+$external_validation_required
+[1] FALSE
+
+$seed_strategy
+[1] "Deterministic seed 20260807"
+
+$prohibited_interpretations
+[1] "person identification or re-identification"
+[2] "biometric authentication or verification"
+[3] "health, disease, disability, or diagnostic inference"
+[4] "protected-attribute prediction or proxy prediction"
+[5] "emotion, stress, personality, deception, cognition, comprehension, intent, or mental-state inference"
+[6] "random row-level evaluation represented as participant- or stimulus-level generalization"
+[7] "outcome-derived or post-outcome feature engineering"
+[8] "preprocessing estimated using assessment or external-validation data"
+[9] "accuracy-only reporting without discrimination, calibration, and uncertainty"
+
+$locked
+[1] TRUE
+
+$plan_id
+[1] "gp3ml-plan-cca872151af2"
+
+$plan_hash
+[1] "cca872151af25551991ae02bc39e31d3a6e5279a55db89415acfc62731d42812"
+
+$locked_at
+[1] "2026-08-07 10:29:44 UTC"
+
+attr(,"class")
+[1] "gp3ml_analysis_plan"

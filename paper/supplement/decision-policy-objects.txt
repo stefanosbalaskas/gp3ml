@@ -1,0 +1,45 @@
+gp3ml decision rule
+ metric: balanced_accuracy (maximize)
+ threshold: 0.2
+ origin: training
+ target: new_participants
+ abstention: enabled
+$status
+[1] "pass"
+
+$checks
+                     check status detail
+1                    class   pass
+2                   metric   pass
+3                direction   pass
+4                threshold   pass
+5         threshold_origin   pass
+6       training_partition   pass
+7    generalization_target   pass
+8 scientific_justification   pass
+9               abstention   pass
+
+attr(,"class")
+[1] "gp3ml_decision_rule_validation"
+$status
+[1] "pass"
+
+$n
+[1] 240
+
+$coverage
+[1] 0.6208333
+
+$abstention_rate
+[1] 0.3791667
+
+$covered_error_rate
+[1] 0.2214765
+
+$by_truth
+   truth   n abstained abstention_rate
+1   pass 203        78       0.3842365
+2 review  37        13       0.3513514
+
+attr(,"class")
+[1] "gp3ml_abstention_audit"

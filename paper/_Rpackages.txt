@@ -1,0 +1,13 @@
+callr
+devtools
+gp3ml
+hunspell
+jsonlite
+kableExtra
+knitr
+openssl
+pdftools
+pkgdown
+rjtools
+rmarkdown
+testthat

@@ -1,0 +1,14 @@
+"Package","Available"
+"bundle",FALSE
+"callr",TRUE
+"jsonlite",TRUE
+"keras3",FALSE
+"knitr",TRUE
+"nnet",TRUE
+"openssl",TRUE
+"pkgdown",TRUE
+"ranger",TRUE
+"renv",TRUE
+"rmarkdown",TRUE
+"testthat",TRUE
+"xgboost",TRUE

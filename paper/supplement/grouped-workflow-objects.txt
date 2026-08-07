@@ -1,0 +1,19 @@
+<gp3ml_resample_evaluation>
+  Target: new_participants
+  Engine: glm
+  Folds: 10
+  Passed/review/failed: 0/10/0
+  Predictions: 960
+<gp3ml_resample_evaluation_validation> status=pass
+                        check_id status
+            fold_status_complete   pass
+     assessment_only_predictions   pass
+             prediction_coverage   pass
+                   fold_failures   pass
+ generalization_target_preserved   pass
+                                              message
+            Recorded 10 of 10 expected fold statuses.
+ Predictions are restricted to assessment partitions.
+   0 assessment predictions are missing across folds.
+       0 folds failed and remain explicitly retained.
+             Generalization target: new_participants.
