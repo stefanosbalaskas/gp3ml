@@ -50,7 +50,7 @@ system2(
 )
 ```
 
-The script installs the current repository into a temporary library and renders the formats defined by `rjtools::rjournal_article` under `paper/output/`. It does not overwrite the user’s installed `gp3ml` package.
+The script installs the current repository into a temporary library, renders the R Journal PDF and TeX in `paper/`, and writes the self-contained web article to `paper/output/`. It does not overwrite the user’s installed `gp3ml` package.
 
 ## Render an HTML preview
 

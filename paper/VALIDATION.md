@@ -1,6 +1,6 @@
 # gp3ml paper validation
 
-Generated: 2026-08-07 10:30:30 UTC
+Generated: 2026-08-07 20:38:26 UTC
 
 | Check | Status | Detail |
 |---|---|---|
@@ -14,6 +14,7 @@ Generated: 2026-08-07 10:30:30 UTC
 | R source syntax | passed | Completed without error. |
 | R Journal manuscript render | passed | Completed without error. |
 | Self-contained HTML output | passed | Completed without error. |
+| Final citation resolution | passed | Completed without error. |
 | R Journal PDF page limit | passed | Completed without error. |
 | R Journal initial checks | passed | Completed without error. |
 | Complete package tests | passed | Completed without error. |

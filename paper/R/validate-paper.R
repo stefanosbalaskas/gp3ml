@@ -139,22 +139,81 @@ main <- function(args = commandArgs(trailingOnly = TRUE)) {
       GP3ML_REPO_ROOT = repo_root,
       GP3ML_PAPER_LIB = lib
     )
+
     out_dir <- file.path(paper_dir, "output")
+    duplicate_output_tex <- file.path(out_dir, "gp3ml-paper.tex")
     dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
-    render_outputs <- rmarkdown::render(
+
+    root_tex <- file.path(paper_dir, "gp3ml-paper.tex")
+    figure_dir <- file.path(paper_dir, "gp3ml-paper_files", "figure-latex")
+    expected_figures <- file.path(
+      figure_dir,
+      c(
+        "architecture-figure-1.pdf",
+        "resampling-design-figure-1.pdf",
+        "performance-comparison-figure-1.pdf",
+        "calibration-figure-1.pdf",
+        "threshold-abstention-figure-1.pdf",
+        "shift-figure-1.pdf"
+      )
+    )
+    root_pdf <- file.path(paper_dir, "gp3ml-paper.pdf")
+    root_bbl <- file.path(paper_dir, "RJwrapper.bbl")
+
+    # rjtools constructs RJwrapper.tex and compiles it in the article
+    # working directory. The PDF therefore must be rendered there rather
+    # than redirected through output_dir.
+    stale_pdf_products <- c(root_tex, root_pdf, root_bbl, duplicate_output_tex)
+    stale_pdf_products <- stale_pdf_products[file.exists(stale_pdf_products)]
+    if (length(stale_pdf_products)) {
+      unlink(stale_pdf_products, force = TRUE)
+    }
+
+    render_started <- Sys.time()
+
+    old_wd <- setwd(paper_dir)
+    pdf_render <- tryCatch(
+      rmarkdown::render(
+        input = "gp3ml-paper.Rmd",
+        output_format = "rjtools::rjournal_pdf_article",
+        envir = new.env(parent = globalenv()),
+        clean = FALSE,
+        quiet = FALSE
+      ),
+      finally = setwd(old_wd)
+    )
+
+    stopifnot(
+      file.exists(root_tex),
+      file.exists(root_pdf),
+      file.info(root_tex)$mtime >= render_started - 2,
+      file.info(root_pdf)$mtime >= render_started - 2,
+      all(file.exists(expected_figures))
+    )
+
+    html_render <- rmarkdown::render(
       input = file.path(paper_dir, "gp3ml-paper.Rmd"),
-      output_format = "all",
+      output_format = "rjtools::rjournal_web_article",
       output_dir = out_dir,
       envir = new.env(parent = globalenv()),
       clean = TRUE,
       quiet = FALSE
     )
+
+    html_path <- file.path(out_dir, "gp3ml-paper.html")
+
     stopifnot(
-      length(render_outputs) >= 1L,
-      all(file.exists(render_outputs))
+      file.exists(html_path),
+      file.info(html_path)$size > 0L,
+      !file.exists(duplicate_output_tex)
+    )
+
+    render_outputs <- c(
+      root_pdf,
+      root_tex,
+      html_path
     )
   })
-
 
   run("Self-contained HTML output", {
     html_path <- file.path(paper_dir, "output", "gp3ml-paper.html")
@@ -204,6 +263,109 @@ main <- function(args = commandArgs(trailingOnly = TRUE)) {
         fixed = TRUE
       ))
     )
+  })
+
+  run("Final citation resolution", {
+    source_text <- paste(
+      readLines(
+        file.path(paper_dir, "gp3ml-paper.Rmd"),
+        warn = FALSE,
+        encoding = "UTF-8"
+      ),
+      collapse = "\n"
+    )
+
+    source_hits <- gregexpr(
+      "(?<![A-Za-z0-9._%+-])@([A-Za-z][A-Za-z0-9:_-]*)",
+      source_text,
+      perl = TRUE
+    )[[1L]]
+
+    source_strings <- regmatches(
+      source_text,
+      list(source_hits)
+    )[[1L]]
+
+    source_keys <- sort(unique(sub("^@", "", source_strings)))
+
+    tex_path <- file.path(paper_dir, "gp3ml-paper.tex")
+    stopifnot(file.exists(tex_path))
+
+    tex_text <- paste(
+      readLines(tex_path, warn = FALSE, encoding = "UTF-8"),
+      collapse = "\n"
+    )
+
+    cite_hits <- gregexpr(
+      "\\\\cite[a-zA-Z*]*\\{[^}]+\\}",
+      tex_text,
+      perl = TRUE
+    )[[1L]]
+
+    cite_calls <- regmatches(
+      tex_text,
+      list(cite_hits)
+    )[[1L]]
+
+    tex_keys <- sort(unique(trimws(unlist(lapply(
+      cite_calls,
+      function(x) {
+        inside <- sub("^[^{]*\\{([^}]*)\\}$", "\\1", x)
+        strsplit(inside, ",", fixed = TRUE)[[1L]]
+      }
+    )))))
+
+    bib_path <- file.path(paper_dir, "references.bib")
+    stopifnot(file.exists(bib_path))
+
+    bib <- readLines(
+      bib_path,
+      warn = FALSE,
+      encoding = "UTF-8"
+    )
+
+    bib_entry_lines <- grep(
+      "^@[A-Za-z]+\\{[^,]+,",
+      bib,
+      value = TRUE
+    )
+
+    bib_keys <- sort(unique(sub(
+      "^@[A-Za-z]+\\{([^,]+),.*$",
+      "\\1",
+      bib_entry_lines
+    )))
+
+    missing_from_tex <- setdiff(source_keys, tex_keys)
+    stale_in_tex <- setdiff(tex_keys, source_keys)
+    missing_from_bib <- setdiff(tex_keys, bib_keys)
+
+    if (length(missing_from_tex) ||
+        length(stale_in_tex) ||
+        length(missing_from_bib)) {
+      stop(
+        paste(
+          c(
+            if (length(missing_from_tex))
+              paste0("Missing from generated TeX: ", paste(missing_from_tex, collapse = ", ")),
+            if (length(stale_in_tex))
+              paste0("Stale/generated-only TeX keys: ", paste(stale_in_tex, collapse = ", ")),
+            if (length(missing_from_bib))
+              paste0("Missing from bibliography: ", paste(missing_from_bib, collapse = ", "))
+          ),
+          collapse = " | "
+        )
+      )
+    }
+
+    pdf_text <- paste(
+      pdftools::pdf_text(file.path(paper_dir, "gp3ml-paper.pdf")),
+      collapse = "\n"
+    )
+
+    if (grepl("(?)", pdf_text, fixed = TRUE)) {
+      stop("Final PDF contains an unresolved citation marker: (?)")
+    }
   })
 
   run("R Journal PDF page limit", {
