@@ -1,0 +1,4 @@
+"predictor","type","development_n","external_n","development_missing","external_missing","mean_development","mean_external","standardized_difference","distribution_statistic","support_overlap","outside_training_range","novel_levels","status"
+"tracking_ratio","numeric",480,288,0,0,0.913860658628407,0.837648727262937,-1.9739618911129,0.6875,0.829861111111111,0.170138888888889,"","fail"
+"blink_rate","numeric",480,288,0,0,5.8687275786498,6.16454258660228,0.221011044907631,0.126388888888889,0.996527777777778,0.00347222222222222,"","review"
+"gaze_dispersion","numeric",456,237,0.05,0.177083333333333,0.785501698608786,0.981958491599958,1.50303179182813,0.564956695536309,0.784810126582278,0.215189873417722,"","fail"

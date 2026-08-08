@@ -1,0 +1,2 @@
+"nominal_coverage","held_out_row_coverage","held_out_participant_all_rows_coverage","mean_set_size","calibration_units","audit_units","status"
+0.9,1,1,1.9875,15,15,"pass"

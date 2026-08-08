@@ -1,485 +1,598 @@
 \documentclass[article]{jss}
 
-%% -- LaTeX packages and custom commands ---------------------------------------
-
-%% recommended packages
 \usepackage{orcidlink,thumbpdf,lmodern}
+\usepackage{booktabs,tabularx,array}
+\usepackage{microtype}
+\usepackage[section]{placeins}
 
-%% another package (only for this demo article)
-\usepackage{framed}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 
-%% new custom commands
-\newcommand{\class}[1]{`\code{#1}'}
-\newcommand{\fct}[1]{\code{#1()}}
+\author{Stefanos Balaskas~\orcidlink{0000-0003-2444-9796}\\University of Patras}
+\title{\pkg{gp3ml}: Governance-First Predictive Modelling and Validation for Gazepoint Research in \proglang{R}}
 
+\Plainauthor{Stefanos Balaskas}
+\Plaintitle{gp3ml: Governance-First Predictive Modelling and Validation for Gazepoint Research in R}
+\Shorttitle{\pkg{gp3ml}: Governance-First Predictive Modelling}
 
-%% -- Article metainformation (author, title, ...) -----------------------------
-
-%% - \author{} with primary affiliation (and optionally ORCID link)
-%% - \Plainauthor{} without affiliations
-%% - Separate authors by \And or \AND (in \author) or by comma (in \Plainauthor).
-%% - \AND starts a new line, \And does not.
-\author{Achim Zeileis~\orcidlink{0000-0003-0918-3766}\\Universit\"at Innsbruck
-   \And Second Author\\Plus Affiliation}
-\Plainauthor{Achim Zeileis, Second Author}
-
-%% - \title{} in title case
-%% - \Plaintitle{} without LaTeX markup (if any)
-%% - \Shorttitle{} with LaTeX markup (if any), used as running title
-\title{A Short Demo Article: Regression Models for Count Data in \proglang{R}}
-\Plaintitle{A Short Demo Article: Regression Models for Count Data in R}
-\Shorttitle{A Short Demo Article in \proglang{R}}
-
-%% - \Abstract{} almost as usual
 \Abstract{
-  This short article illustrates how to write a manuscript for the
-  \emph{Journal of Statistical Software} (JSS) using its {\LaTeX} style files.
-  Generally, we ask to follow JSS's style guide and FAQs precisely. Also,
-  it is recommended to keep the {\LaTeX} code as simple as possible,
-  i.e., avoid inclusion of packages/commands that are not necessary.
-  For outlining the typical structure of a JSS article some brief text snippets
-  are employed that have been inspired by \cite{Zeileis+Kleiber+Jackman:2008},
-  discussing count data regression in \proglang{R}. Editorial comments and
-  instructions are marked by vertical bars.
+Predictive modelling with eye-tracking data is complicated by repeated participant--stimulus observations, heterogeneous recording quality, flexible preprocessing, and information leakage across resampling partitions. General machine-learning frameworks provide broad modelling functionality, but the validity of a behavioural prediction workflow also depends on the declared outcome, grouping structure, generalization target, tuning boundaries, decision policy, and computational provenance. We introduce \pkg{gp3ml}, an \proglang{R} package for governance-first predictive modelling and validation with Gazepoint-derived and similarly structured behavioural data. The package binds explicit task and feature-role declarations to participant-, stimulus-, trial-, and crossed-group resampling; fold-local preprocessing; nested tuning; retained assessment predictions; calibration and target-aware conformal summaries; threshold and abstention rules; shift and robustness audits; locked analysis plans; portable model artefacts; environment capture; and explicit API contracts. A deterministic synthetic case study uses an observed recording-quality review status to compare row-level, participant-grouped, and participant--stimulus validation designs. The contribution is not a new learner catalogue or automatic model-selection system. It is an auditable governance layer that connects statistical operations to the units and claims a study is intended to support.
 }
 
-%% - \Keywords{} with LaTeX markup, at least one required
-%% - \Plainkeywords{} without LaTeX markup (if necessary)
-%% - Should be comma-separated and in sentence case.
-\Keywords{JSS, style guide, comma-separated, not capitalized, \proglang{R}}
-\Plainkeywords{JSS, style guide, comma-separated, not capitalized, R}
+\Keywords{machine learning, eye tracking, grouped resampling, data leakage, reproducible research, model governance, \proglang{R}}
+\Plainkeywords{machine learning, eye tracking, grouped resampling, data leakage, reproducible research, model governance, R}
 
-%% - \Address{} of at least one author
-%% - May contain multiple affiliations for each author
-%%   (in extra lines, separated by \emph{and}\\).
-%% - May contain multiple authors for the same affiliation
-%%   (in the same first line, separated by comma).
 \Address{
-  Achim Zeileis\\
-  Journal of Statistical Software\\
-  \emph{and}\\
-  Department of Statistics\\
-  Faculty of Economics and Statistics\\
-  Universit\"at Innsbruck\\
-  Universit\"atsstr.~15\\
-  6020 Innsbruck, Austria\\
-  E-mail: \email{Achim.Zeileis@R-project.org}\\
-  URL: \url{https://www.zeileis.org/}
+Stefanos Balaskas\\
+eGovernment \& eCommerce Lab (Innovation \& Entrepreneurship)\\
+Department of Business Administration\\
+University of Patras\\
+26504 Patras, Greece\\
+E-mail: \email{s.balaskas@ac.upatras.gr}\\
+ORCID: \url{https://orcid.org/0000-0003-2444-9796}
 }
+
+% Draft checkpoint date. Replace with the actual submission date immediately
+% before upload to JSS.
+\Submitdate{2026-08-08}
 
 \begin{document}
 
+\section{Introduction}
+\label{sec:introduction}
 
-%% -- Introduction -------------------------------------------------------------
+Eye-tracking experiments commonly produce multiple observations from each participant,
+repeated presentations of stimuli, and measurements nested within trials or recordings.
+Such rows are not exchangeable in the ordinary independent-observation sense. A
+classifier can exploit stable participant characteristics, recurring stimulus properties,
+or duplicated processing decisions when the same clusters occur in both training and
+assessment data. Crossed participant--item structures are common in behavioural
+research, while scientific claims are usually intended to extend beyond the particular
+people, stimuli, or recordings observed in one sample
+\citep{Baayen2008,Barr2013,Yarkoni2022}.
 
-%% - In principle "as usual".
-%% - But should typically have some discussion of both _software_ and _methods_.
-%% - Use \proglang{}, \pkg{}, and \code{} markup throughout the manuscript.
-%% - If such markup is in (sub)section titles, a plain text version has to be
-%%   added as well.
-%% - All software mentioned should be properly \cite-d.
-%% - All abbreviations should be introduced.
-%% - Unless the expansions of abbreviations are proper names (like "Journal
-%%   of Statistical Software" above) they should be in sentence case (like
-%%   "generalized linear models" below).
+A random row split can therefore answer a narrower question than its label suggests. It
+may estimate performance for additional rows from already represented participants and
+stimuli even when the scientific claim concerns new participants, new stimuli, or both.
+The estimate is not intrinsically invalid; it becomes misaligned when interpreted as
+evidence for a different target. This distinction motivates the central design rule in
+\pkg{gp3ml}: the intended generalization unit is declared before folds are created, and
+fold construction preserves that declaration.
 
-\section[Introduction: Count data regression in R]{Introduction: Count data regression in \proglang{R}} \label{sec:intro}
+Leakage is a second boundary problem. Information can cross the analysis--assessment
+boundary through outcome-derived features, post-outcome measurements, identifiers,
+globally estimated preprocessing, feature selection, tuning, or threshold optimization
+\citep{Kaufman2012,Kapoor2023}. Model selection creates a related boundary: using the
+same resampling results to select a model and report its expected performance can bias
+the estimate \citep{Varma2006,Cawley2010}. Nested resampling addresses selection bias,
+but nesting alone does not determine which participants or stimuli may cross a
+partition, how preprocessing is estimated, what uncertainty is reported, or how a
+probability becomes a decision.
 
-\begin{leftbar}
-The introduction is in principle ``as usual''. However, it should usually embed
-both the implemented \emph{methods} and the \emph{software} into the respective
-relevant literature. For the latter both competing and complementary software
-should be discussed (within the same software environment and beyond), bringing
-out relative (dis)advantages. All software mentioned should be properly
-\verb|\cite{}|d. (See also Appendix~\ref{app:bibtex} for more details on
-\textsc{Bib}{\TeX}.)
+These concerns motivate a governance view of predictive validity. A defensible workflow
+connects the outcome definition, feature provenance, resampling target, tuning rule,
+calibration method, threshold policy, robustness evidence, and computational
+environment. Performance metrics are necessary, but they do not establish by
+themselves that an analysis answered the intended scientific question.
 
-For writing about software JSS requires authors to use the markup
-\verb|\proglang{}| (programming languages and large programmable systems),
-\verb|\pkg{}| (software packages), \verb|\code{}| (functions, commands,
-arguments, etc.). If there is such markup in (sub)section titles (as above), a
-plain text version has to be provided in the {\LaTeX} command as well. Below we
-also illustrate how abbreviations should be introduced and citation commands can
-be employed. See the {\LaTeX} code for more details.
-\end{leftbar}
+\pkg{gp3ml} \citep{gp3ml2026} implements this connection for Gazepoint-derived and
+similarly structured tabular behavioural data. It provides modelling and evaluation
+utilities, but its distinctive purpose is to make design and reporting decisions
+explicit and auditable. The package does not autonomously identify a ``best'' model,
+relax prohibited-use boundaries, or treat predictive associations as evidence of
+latent psychological, health, biometric, or other sensitive states.
 
-Modeling count variables is a common task in economics and the social sciences.
-The classical Poisson regression model for count data is often of limited use in
-these disciplines because empirical count data sets typically exhibit
-overdispersion and/or an excess number of zeros. The former issue can be
-addressed by extending  the plain Poisson regression model in various
-directions: e.g., using sandwich covariances or estimating an additional
-dispersion parameter (in a so-called quasi-Poisson model). Another more formal
-way is to use a negative binomial (NB) regression. All of these models belong to
-the family of generalized linear models (GLMs). However, although these models
-typically can capture overdispersion rather well, they are in many applications
-not sufficient for  modeling excess zeros. Since \cite{Mullahy:1986} there is
-increased interest in zero-augmented models that address this issue by a second
-model component capturing zero counts. An overview of count data models in
-econometrics, including  hurdle and zero-inflated models, is provided in
-\cite{Cameron+Trivedi:2013}.
+\section{Predictive validation as a governance problem}
+\label{sec:governance-problem}
 
-In \proglang{R} \citep{R}, GLMs are provided by the model fitting functions
-\fct{glm} in the \pkg{stats} package and \fct{glm.nb} in the \pkg{MASS} package
-\citep[][Chapter~7.4]{Venables+Ripley:2002} along with associated methods for
-diagnostics and inference. The manuscript that this document is based on
-\citep{Zeileis+Kleiber+Jackman:2008} then introduced hurdle and zero-inflated
-count models in the functions \fct{hurdle} and \fct{zeroinfl} in the \pkg{pscl}
-package \citep{Jackman:2015}. Of course, much more software could be discussed
-here, including (but not limited to) generalized additive models for count data
-as available in the \proglang{R} packages \pkg{mgcv} \citep{Wood:2006},
-\pkg{gamlss} \citep{Stasinopoulos+Rigby:2007}, or \pkg{VGAM} \citep{Yee:2009}.
+\subsection{Generalization targets in clustered behavioural data}
 
+The organizing quantity in \pkg{gp3ml} is a machine-readable generalization target.
+Holding out participants estimates a different prediction problem from holding out
+stimuli or crossed participant--stimulus blocks. Row-level assessment can be suitable
+for additional observations from represented clusters, but it should not be reported
+as new-participant performance without further justification. Materialized partitions
+make these semantics inspectable rather than leaving them implicit in a resampling
+label.
 
-%% -- Manuscript ---------------------------------------------------------------
+\subsection{Leakage and preprocessing boundaries}
 
-%% - In principle "as usual" again.
-%% - When using equations (e.g., {equation}, {eqnarray}, {align}, etc.
-%%   avoid empty lines before and after the equation (which would signal a new
-%%   paragraph.
-%% - When describing longer chunks of code that are _not_ meant for execution
-%%   (e.g., a function synopsis or list of arguments), the environment {Code}
-%%   is recommended. Alternatively, a plain {verbatim} can also be used.
-%%   (For executed code see the next section.)
+Feature manifests distinguish outcomes, predictors, identifiers, grouping columns,
+availability stages, outcome-derived features, and preprocessing scope. Fold audits
+then test whether the encoded partition respects the declared target. Preprocessing
+operations such as imputation, centring, and scaling are fitted on analysis partitions
+and applied to assessment rows. Thus the package treats leakage prevention as a
+combination of feature provenance and partition-local computation rather than as one
+post hoc diagnostic.
 
-\section{Models and software} \label{sec:models}
+\subsection{Selection, uncertainty, and decision boundaries}
 
-The basic Poisson regression model for count data is a special case of the GLM
-framework \cite{McCullagh+Nelder:1989}. It describes the dependence of a count
-response variable $y_i$ ($i = 1, \dots, n$) by assuming a Poisson distribution
-$y_i \sim \mathrm{Pois}(\mu_i)$. The dependence of the conditional mean
-$\E[y_i \, | \, x_i] = \mu_i$ on the regressors $x_i$ is then specified via a
-log link and a linear predictor
-%
-\begin{equation} \label{eq:mean}
-\log(\mu_i) \quad = \quad x_i^\top \beta,
-\end{equation}
-%
-where the regression coefficients $\beta$ are estimated by maximum likelihood
-(ML) using the iterative weighted least squares (IWLS) algorithm.
+Nested resampling separates inner model or hyperparameter selection from outer
+performance estimation. Calibration, conformal prediction, threshold selection, and
+abstention are treated as distinct stages rather than as interchangeable notions of
+``confidence.'' Conformal summaries carry a declared calibration unit and
+generalization target, while decision rules record threshold origin, metric direction,
+training partition, costs, scientific justification, and optional abstention
+boundaries. These objects do not replace substantive judgement; they make the judgement
+reviewable.
 
-\begin{leftbar}
-Note that around the \verb|{equation}| above there should be no spaces (avoided
-in the {\LaTeX} code by \verb|%| lines) so that ``normal'' spacing is used and
-not a new paragraph started.
-\end{leftbar}
+\section{Related software}
+\label{sec:related}
 
-\proglang{R} provides a very flexible implementation of the general GLM
-framework in the function \fct{glm} \citep{Chambers+Hastie:1992} in the
-\pkg{stats} package. Its most important arguments are
-\begin{Code}
-glm(formula, data, subset, na.action, weights, offset,
-  family = gaussian, start = NULL, control = glm.control(...),
-  model = TRUE, y = TRUE, x = FALSE, ...)
-\end{Code}
-where \code{formula} plus \code{data} is the now standard way of specifying
-regression relationships in \proglang{R}/\proglang{S} introduced in
-\cite{Chambers+Hastie:1992}. The remaining arguments in the first line
-(\code{subset}, \code{na.action}, \code{weights}, and \code{offset}) are also
-standard  for setting up formula-based regression models in
-\proglang{R}/\proglang{S}. The arguments in the second line control aspects
-specific to GLMs while the arguments in the last line specify which components
-are returned in the fitted model object (of class \class{glm} which inherits
-from \class{lm}). For further arguments to \fct{glm} (including alternative
-specifications of starting values) see \code{?glm}. For estimating a Poisson
-model \code{family = poisson} has to be specified.
+The contribution of \pkg{gp3ml} is intentionally narrower than that of general
+machine-learning frameworks. \pkg{caret} unified model training and resampling behind
+a common interface \citep{Kuhn2008}. \pkg{mlr3} provides extensible tasks, learners,
+resampling, tuning, and benchmarking \citep{Lang2019}; its current task abstraction
+also supports a group column role whose observations are kept together during
+resampling. The \pkg{tidymodels} ecosystem integrates modelling components with tidy
+data principles \citep{KuhnSilge2022}, while \pkg{rsample} provides
+\code{group\_vfold\_cv()} for grouped repeated-measures settings and \code{nested\_cv()}
+for nested resampling \citep{rsample2026}.
 
-\begin{leftbar}
-As the synopsis above is a code listing that is not meant to be executed,
-one can use either the dedicated \verb|{Code}| environment or a simple
-\verb|{verbatim}| environment for this. Again, spaces before and after should be
-avoided.
+The same statistical mechanisms are not unique to \proglang{R}. In
+\proglang{Python}, \pkg{scikit-learn} \citep{Pedregosa2011,scikitLearnDocs2026}
+provides \code{GroupKFold} and \code{StratifiedGroupKFold} for non-overlapping groups,
+\code{Pipeline} for fitting preprocessing and prediction steps together, and standard
+compositions for nested cross-validation. These capabilities are mature and should not
+be represented as innovations of \pkg{gp3ml}. Rather, \pkg{gp3ml} adds a
+research-governance contract around comparable operations: target labels are retained
+with folds and evaluations; feature availability and outcome derivation are auditable;
+selection rationales and decision provenance are explicit; and reproducibility evidence
+can be validated as package objects.
 
-Finally, there might be a reference to a \verb|{table}| such as
-Table~\ref{tab:overview}. Usually, these are placed at the top of the page
-(\verb|[t!]|), centered (\verb|\centering|), with a caption below the table,
-column headers and captions in sentence style, and if possible avoiding vertical
-lines.
-\end{leftbar}
+Other tools address complementary parts of the workflow. \pkg{DALEX} provides
+model-agnostic explanation \citep{Biecek2018}; \pkg{targets} manages reproducible
+computational pipelines \citep{Landau2021}; \pkg{eyetrackingR} supports preparation and
+inferential analysis of eye-tracking measures \citep{DinkFerguson2015}; and RO-Crate
+tooling packages research artefacts and metadata \citep{SoilandReyes2022}. Conformal
+prediction, probability calibration, and dataset shift also have established
+methodological literatures \citep{Vovk2005,Shafer2008,Angelopoulos2023,Guo2017,
+QuioneroCandela2009,MorenoTorres2012}. \pkg{gp3ml} integrates conservative forms of
+these ideas into one governed predictive workflow without claiming that software alone
+resolves their assumptions.
 
-\begin{table}[t!]
+\begin{table}[t]
 \centering
-\begin{tabular}{lllp{7.4cm}}
-\hline
-Type           & Distribution & Method   & Description \\ \hline
-GLM            & Poisson      & ML       & Poisson regression: classical GLM,
-                                           estimated by maximum likelihood (ML) \\
-               &              & Quasi    & ``Quasi-Poisson regression'':
-                                           same mean function, estimated by
-                                           quasi-ML (QML) or equivalently
-                                           generalized estimating equations (GEE),
-                                           inference adjustment via estimated
-                                           dispersion parameter \\
-               &              & Adjusted & ``Adjusted Poisson regression'':
-                                           same mean function, estimated by
-                                           QML/GEE, inference adjustment via
-                                           sandwich covariances\\
-               & NB           & ML       & NB regression: extended GLM,
-                                           estimated by ML including additional
-                                           shape parameter \\ \hline
-Zero-augmented & Poisson      & ML       & Zero-inflated Poisson (ZIP),
-                                           hurdle Poisson \\
-               & NB           & ML       & Zero-inflated NB (ZINB),
-                                           hurdle NB \\ \hline
-\end{tabular}
-\caption{\label{tab:overview} Overview of various count regression models. The
-table is usually placed at the top of the page (\texttt{[t!]}), centered
-(\texttt{centering}), has a caption below the table, column headers and captions
-are in sentence style, and if possible vertical lines should be avoided.}
+\caption{\label{tab:software}Scope-qualified comparison of selected modelling
+frameworks. ``External composition'' means that the capability can be assembled by the
+user but is not represented as the primary governance contract described here.}
+\small
+\begin{tabularx}{\textwidth}{@{}lYYY@{}}
+\toprule
+Software & Grouped validation & Leakage-resistant preprocessing & Research-governance layer\\
+\midrule
+\pkg{gp3ml} & Target-labelled participant, stimulus, trial, and crossed partitions &
+Feature manifests plus fold-local preprocessing and audits &
+Purpose, target, decision, robustness, artefact, and API provenance\\
+\pkg{mlr3} & Native group role and general resampling infrastructure &
+Composable through learner/pipeline infrastructure &
+External composition\\
+\pkg{rsample}/\pkg{tidymodels} & Native grouped and nested resampling &
+Composable recipes/workflows &
+External composition\\
+\pkg{caret} & User-supplied indices and resampling controls &
+Composable through the modelling workflow &
+External composition\\
+\pkg{scikit-learn} & \code{GroupKFold}, \code{StratifiedGroupKFold}, related splitters &
+\code{Pipeline} fits preprocessing and estimators together &
+External composition\\
+\bottomrule
+\end{tabularx}
 \end{table}
 
+\subsection{What gp3ml adds}
 
-%% -- Illustrations ------------------------------------------------------------
+The package contribution is therefore not grouped cross-validation, pipelines, or
+nested tuning in isolation. It is the binding of these operations to explicit research
+semantics. In particular, \pkg{gp3ml} records (i) the scientific purpose and observed
+outcome, (ii) predictor and grouping roles, (iii) the intended generalization target,
+(iv) fold-local preprocessing and leakage evidence, (v) tuning and selection
+boundaries, (vi) calibration and uncertainty semantics, (vii) threshold and abstention
+provenance, and (viii) release, environment, and artefact evidence.
 
-%% - Virtually all JSS manuscripts list source code along with the generated
-%%   output. The style files provide dedicated environments for this.
-%% - In R, the environments {Sinput} and {Soutput} - as produced by Sweave() or
-%%   or knitr using the render_sweave() hook - are used (without the need to
-%%   load Sweave.sty).
-%% - Equivalently, {CodeInput} and {CodeOutput} can be used.
-%% - The code input should use "the usual" command prompt in the respective
-%%   software system.
-%% - For R code, the prompt "R> " should be used with "+  " as the
-%%   continuation prompt.
-%% - Comments within the code chunks should be avoided - these should be made
-%%   within the regular LaTeX text.
+This added structure has costs. It introduces more ceremony than a minimal modelling
+script, its learner catalogue is deliberately smaller than those of general-purpose
+frameworks, several function names remain Gazepoint-oriented, and strongly grouped or
+crossed designs can reduce the effective assessment sample. These disadvantages are
+intentional trade-offs for analyses in which the scientific claim, not algorithmic
+breadth, is the central object under review.
 
-\section{Illustrations} \label{sec:illustrations}
+\section{Software design and architecture}
+\label{sec:architecture}
 
-For a simple illustration of basic Poisson and NB count regression the
-\code{quine} data from the \pkg{MASS} package is used. This provides the number
-of \code{Days} that children were absent from school in Australia in a
-particular year, along with several covariates that can be employed as regressors.
-The data can be loaded by
-%
-\begin{CodeChunk}
-\begin{CodeInput}
-R> data("quine", package = "MASS")
-\end{CodeInput}
-\end{CodeChunk}
-%
-and a basic frequency distribution of the response variable is displayed in
-Figure~\ref{fig:quine}.
+\pkg{gp3ml} is layered rather than tied to one learner. Task declarations and feature
+manifests precede resampling. Preprocessing and model fitting occur inside materialized
+partitions. Uncertainty, shift, and decision rules consume retained assessment
+predictions. Artefacts, environment captures, and API contracts preserve resulting
+evidence. Figure~\ref{fig:architecture} summarizes this architecture.
 
-\begin{leftbar}
-For code input and output, the style files provide dedicated environments.
-Either the ``agnostic'' \verb|{CodeInput}| and \verb|{CodeOutput}| can be used
-or, equivalently, the environments \verb|{Sinput}| and \verb|{Soutput}| as
-produced by \fct{Sweave} or \pkg{knitr} when using the \code{render_sweave()}
-hook. Please make sure that all code is properly spaced, e.g., using
-\code{y = a + b * x} and \emph{not} \code{y=a+b*x}. Moreover, code input should
-use ``the usual'' command prompt in the respective software system. For
-\proglang{R} code, the prompt \code{"R> "} should be used with \code{"+  "} as
-the continuation prompt. Generally, comments within the code chunks should be
-avoided -- and made in the regular {\LaTeX} text instead. Finally, empty lines
-before and after code input/output should be avoided (see above).
-\end{leftbar}
-
-\begin{figure}[t!]
+\begin{figure}[t]
 \centering
-\includegraphics{article-visualization}
-\caption{\label{fig:quine} Frequency distribution for number of days absent
-from school.}
+\includegraphics[width=.90\textwidth]{figures/architecture-figure-1.pdf}
+\caption{\label{fig:architecture}Conceptual architecture of \pkg{gp3ml}.
+Governance begins before model fitting and continues through release evidence.}
 \end{figure}
 
-As a first model for the \code{quine} data, we fit the basic Poisson regression
-model. (Note that JSS prefers when the second line of code is indented by two
-spaces.)
-%
-\begin{CodeChunk}
+\begin{table}[t]
+\centering
+\caption{\label{tab:principles}Core design principles and representative functions.}
+\small
+\begin{tabularx}{\textwidth}{@{}p{.26\textwidth}Y@{}}
+\toprule
+Principle & Representative \pkg{gp3ml} mechanisms\\
+\midrule
+Declared purpose and roles &
+\code{declare\_gazepoint\_task()}, \code{declare\_gazepoint\_analysis\_plan()},
+\code{validate\_gazepoint\_ml\_roles()}\\
+Feature provenance and leakage resistance &
+\code{create\_gazepoint\_feature\_manifest()}, \code{audit\_gazepoint\_ml\_leakage()}\\
+Target-aligned grouped validation &
+\code{create\_gazepoint\_group\_folds()}, \code{create\_gazepoint\_nested\_folds()}\\
+Fold-local preprocessing and governed fitting &
+\code{fit\_gazepoint\_preprocessor()}, \code{evaluate\_gazepoint\_group\_folds()}\\
+Selection and uncertainty &
+\code{create\_gazepoint\_tuning\_grid()}, \code{select\_gazepoint\_model()},
+\code{fit\_gazepoint\_conformal()}\\
+Decision governance &
+\code{evaluate\_gazepoint\_thresholds()}, \code{create\_gazepoint\_decision\_rule()},
+\code{audit\_gazepoint\_abstention()}\\
+Robustness and provenance &
+\code{audit\_gazepoint\_dataset\_shift()}, \code{audit\_gazepoint\_model\_robustness()},
+\code{capture\_gazepoint\_environment()}\\
+Portable evidence and API contracts &
+\code{create\_gazepoint\_model\_artifact()}, \code{gp3ml\_api\_contracts()}\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+At the frozen 0.3.0 release used for this paper, the source contains 127 namespace
+exports: 71 stable exports and 56 experimental exports, together with 38 stable public
+classes. The release workspace reports 20 source vignettes, 154 Rd topics, and an API
+audit with no recorded differences. These counts are release evidence, not claims of
+scientific validity.
+
+\section{Using gp3ml}
+\label{sec:using}
+
+A minimal governed workflow starts by declaring the outcome and generalization target,
+constructing a feature manifest, materializing target-aligned folds, auditing those
+folds, and evaluating a learner inside them. The example below uses the same
+deterministic recording-quality task as the case study.
+
 \begin{CodeInput}
-R> m_pois <- glm(Days ~ (Eth + Sex + Age + Lrn)^2, data = quine,
-+    family = poisson)
+library("gp3ml")
+
+data <- simulate_gazepoint_governed_data(
+  n_participants = 30L, n_stimuli = 8L,
+  trials_per_cell = 2L, seed = 20260807L
+)
+predictors <- c("tracking_ratio", "blink_rate", "gaze_dispersion")
+
+task <- create_gazepoint_synthetic_task(
+  data, workflow = "recording_quality",
+  generalization_target = "new_participants"
+)
+manifest <- create_gazepoint_synthetic_manifest(
+  task$outcome, predictors
+)
+
+folds <- create_gazepoint_group_folds(
+  data = data, outcome = task$outcome,
+  predictors = predictors, feature_manifest = manifest,
+  generalization_target = task$generalization_target,
+  participant_id = "participant_id",
+  trial_id = "trial_id", stimulus_id = "stimulus_id",
+  v = 5L, repeats = 2L, seed = 20260807L
+)
+audit <- audit_gazepoint_group_folds(folds)
 \end{CodeInput}
-\end{CodeChunk}
-%
-To account for potential overdispersion we also consider a negative binomial
-GLM.
-%
-\begin{CodeChunk}
-\begin{CodeInput}
-R> library("MASS")
-R> m_nbin <- glm.nb(Days ~ (Eth + Sex + Age + Lrn)^2, data = quine)
-\end{CodeInput}
-\end{CodeChunk}
-%
-In a comparison with the BIC the latter model is clearly preferred.
-%
-\begin{CodeChunk}
-\begin{CodeInput}
-R> BIC(m_pois, m_nbin)
-\end{CodeInput}
+
+The audit does not infer whether the research question itself is appropriate. It checks
+the encoded contract. For the participant-grouped example, the ten materialized folds
+pass their separation checks.
+
 \begin{CodeOutput}
-       df      BIC
-m_pois 18 2046.851
-m_nbin 19 1157.235
+<gazepoint_group_folds_audit>
+Overall status: PASS
+Audited folds: 10
+Non-passing checks: 0
 \end{CodeOutput}
-\end{CodeChunk}
-%
-Hence, the full summary of that model is shown below.
-%
-\begin{CodeChunk}
+
+Fitting uses the same target and estimates preprocessing within each analysis
+partition.
+
 \begin{CodeInput}
-R> summary(m_nbin)
+evaluation <- evaluate_gazepoint_group_folds(
+  folds = folds, task = task, predictors = predictors,
+  engine = "glm",
+  preprocessor_args = list(
+    numeric_imputation = "median",
+    center = TRUE, scale = TRUE
+  ),
+  threshold = 0.5, seed = 20260807L,
+  assess_calibration = TRUE, keep_models = TRUE
+)
+
+summary <- summarize_gazepoint_resample_performance(evaluation)
 \end{CodeInput}
-\begin{CodeOutput}
-Call:
-glm.nb(formula = Days ~ (Eth + Sex + Age + Lrn)^2, data = quine,
-    init.theta = 1.60364105, link = log)
 
-Deviance Residuals:
-    Min       1Q   Median       3Q      Max
--3.0857  -0.8306  -0.2620   0.4282   2.0898
+The evaluation object retains the generalization target, fold status, assessment-only
+predictions, preprocessing metadata, and metrics. Nested tuning is available when
+candidate models or hyperparameters are selected, but it is not used in the main
+demonstration because a single logistic regression isolates the effect of the
+validation target.
 
-Coefficients: (1 not defined because of singularities)
-            Estimate Std. Error z value Pr(>|z|)
-(Intercept)  3.00155    0.33709   8.904  < 2e-16 ***
-EthN        -0.24591    0.39135  -0.628  0.52977
-SexM        -0.77181    0.38021  -2.030  0.04236 *
-AgeF1       -0.02546    0.41615  -0.061  0.95121
-AgeF2       -0.54884    0.54393  -1.009  0.31296
-AgeF3       -0.25735    0.40558  -0.635  0.52574
-LrnSL        0.38919    0.48421   0.804  0.42153
-EthN:SexM    0.36240    0.29430   1.231  0.21818
-EthN:AgeF1  -0.70000    0.43646  -1.604  0.10876
-EthN:AgeF2  -1.23283    0.42962  -2.870  0.00411 **
-EthN:AgeF3   0.04721    0.44883   0.105  0.91622
-EthN:LrnSL   0.06847    0.34040   0.201  0.84059
-SexM:AgeF1   0.02257    0.47360   0.048  0.96198
-SexM:AgeF2   1.55330    0.51325   3.026  0.00247 **
-SexM:AgeF3   1.25227    0.45539   2.750  0.00596 **
-SexM:LrnSL   0.07187    0.40805   0.176  0.86019
-AgeF1:LrnSL -0.43101    0.47948  -0.899  0.36870
-AgeF2:LrnSL  0.52074    0.48567   1.072  0.28363
-AgeF3:LrnSL       NA         NA      NA       NA
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\section{Synthetic case study}
+\label{sec:case-study}
 
-(Dispersion parameter for Negative Binomial(1.6036) family taken to be 1)
+\subsection{Data-generating design}
 
-    Null deviance: 235.23  on 145  degrees of freedom
-Residual deviance: 167.53  on 128  degrees of freedom
-AIC: 1100.5
+The deterministic synthetic dataset contains 480 rows from 30 participants and eight
+stimuli, with two trials per participant--stimulus cell. The observed outcome
+\code{quality\_status} records a synthetic \code{pass}/\code{review} recording-quality
+status. It is not a psychological construct. Predictors are \code{tracking\_ratio},
+\code{blink\_rate}, and \code{gaze\_dispersion}. Five percent of
+\code{gaze\_dispersion} values are set to missing with a fixed seed to test whether
+imputation remains fold-local.
 
-Number of Fisher Scoring iterations: 1
+The locked analysis plan fixes the outcome, predictors, new-participant target,
+preprocessing, logistic-regression candidate model, balanced accuracy as the primary
+metric, secondary ROC AUC/Brier/log-loss metrics, calibration diagnostics, conformal
+calibration semantics, threshold policy, seed strategy, and prohibited
+interpretations. The plan is an immutable comparison point for later deviations; it is
+not represented as equivalent to a registered preregistration
+\citep{Nosek2018}.
 
+\subsection{Validation designs}
 
-              Theta:  1.604
-          Std. Err.:  0.214
+Three designs use the same outcome and predictors. The row-level comparator deliberately
+allows cluster overlap and is manuscript-specific because \pkg{gp3ml} does not expose
+an unlabeled unsafe split as a governed target. Participant-grouped folds keep complete
+participants on one side of each split. Crossed participant--stimulus folds prevent
+assessment-block participant and stimulus overlap and explicitly retain incompatible
+cross-block rows as excluded observations. Figure~\ref{fig:resampling} shows the
+different estimands.
 
- 2 x log-likelihood:  -1062.546
-\end{CodeOutput}
-\end{CodeChunk}
+\begin{figure}[t]
+\centering
+\includegraphics[width=.95\textwidth]{figures/resampling-design-figure-1.pdf}
+\caption{\label{fig:resampling}Three validation designs applied to the same synthetic
+data. The row-level comparator permits represented clusters on both sides; the grouped
+designs target new participants or new participant--stimulus blocks.}
+\end{figure}
 
+\begin{table}[t]
+\centering
+\caption{\label{tab:validation-designs}Validation designs and their interpretation.}
+\small
+\begin{tabularx}{\textwidth}{@{}p{.25\textwidth}YY@{}}
+\toprule
+Design & Intended estimand & Cluster recurrence\\
+\midrule
+Naive row-level & Additional rows from represented clusters &
+Participant and stimulus recurrence possible\\
+Participant grouped & New participants with represented stimulus set &
+Participant recurrence prevented\\
+Participant--stimulus blocks & New participant--stimulus blocks &
+Assessment-block participant and stimulus recurrence prevented\\
+\bottomrule
+\end{tabularx}
+\end{table}
 
+\subsection{Validation-design dependence}
 
-%% -- Summary/conclusions/discussion -------------------------------------------
+The results are not a benchmark of logistic regression. Their purpose is to show that
+the phrase ``model performance'' is conditional on which units may recur across
+analysis and assessment data. In this synthetic realization, mean balanced accuracy is
+0.500 under all three designs. ROC AUC is 0.603 for the row-level comparator, 0.593 for
+participant-grouped validation, and 0.618 for participant--stimulus blocks. Brier scores
+are 0.126, 0.128, and 0.123, respectively, while log loss is 0.418, 0.423, and 0.415.
 
-\section{Summary and discussion} \label{sec:summary}
+\begin{table}[t]
+\centering
+\caption{\label{tab:performance}Mean fold-distribution metrics by validation design.
+Balanced accuracy is identical in this realization; the values are not intended as a
+model benchmark.}
+\small
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Design & Bal. acc. & ROC AUC & Brier & Log loss\\
+\midrule
+Naive row-level & 0.500 & 0.603 & 0.126 & 0.418\\
+Participant grouped & 0.500 & 0.593 & 0.128 & 0.423\\
+Participant--stimulus blocks & 0.500 & 0.618 & 0.123 & 0.415\\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\begin{leftbar}
-As usual \dots
-\end{leftbar}
+\begin{figure}[t]
+\centering
+\includegraphics[width=.78\textwidth]{figures/performance-comparison-figure-1.pdf}
+\caption{\label{fig:performance}Balanced accuracy by validation design. Error bars are
+empirical 95\% fold-distribution quantiles, not independent-observation confidence
+intervals.}
+\end{figure}
 
+A higher row-level value, had it occurred, would indicate that cluster recurrence made
+that prediction problem easier; it would not prove that a grouped estimate was
+pessimistic. Similar values instead indicate that these predictors do not benefit
+strongly from cluster recurrence in this particular synthetic realization.
 
-%% -- Optional special unnumbered sections -------------------------------------
+\subsection{Calibration and conformal prediction}
 
-\section*{Computational details}
+Calibration is assessed from retained participant-grouped assessment predictions from
+the first repeated-cross-validation pass. The resulting calibration intercept is
+-0.755, the slope is 0.547, Brier score is 0.128, log loss is 0.425, and expected
+calibration error is 0.021. Figure~\ref{fig:calibration} is descriptive because repeated
+trials from the same participant preclude interpreting row-level uncertainty as
+participant-level uncertainty.
 
-\begin{leftbar}
-If necessary or useful, information about certain computational details
-such as version numbers, operating systems, or compilers could be included
-in an unnumbered section. Also, auxiliary packages (say, for visualizations,
-maps, tables, \dots) that are not cited in the main text can be credited here.
-\end{leftbar}
+\begin{figure}[t]
+\centering
+\includegraphics[width=.72\textwidth]{figures/calibration-figure-1.pdf}
+\caption{\label{fig:calibration}Reliability diagram for participant-grouped assessment
+predictions. Point size reflects observations per probability bin.}
+\end{figure}
 
-The results in this paper were obtained using
-\proglang{R}~3.4.1 with the
-\pkg{MASS}~7.3.47 package. \proglang{R} itself
-and all packages used are available from the Comprehensive
-\proglang{R} Archive Network (CRAN) at
-\url{https://CRAN.R-project.org/}.
+For conformal prediction, retained predictions are divided into participant-disjoint
+policy-development and policy-audit partitions. Conformity scores are estimated from 15
+development participants, aggregated to the participant calibration unit, and evaluated
+on 15 held-out participants. At nominal coverage 0.90, held-out row coverage and the
+proportion of participants with all rows covered are both 1.000; mean prediction-set
+size is 1.988 classes. These results are an executable illustration, not a claim of
+distribution-free coverage under arbitrary dependence
+\citep{Vovk2005,Shafer2008,Angelopoulos2023}.
 
+\begin{table}[t]
+\centering
+\caption{\label{tab:calibration}Calibration and participant-disjoint conformal
+summaries.}
+\small
+\begin{tabular}{@{}lr@{}}
+\toprule
+Quantity & Value\\
+\midrule
+Calibration intercept & -0.755\\
+Calibration slope & 0.547\\
+Expected calibration error & 0.021\\
+Nominal conformal coverage & 0.900\\
+Held-out row coverage & 1.000\\
+Held-out participant all-rows coverage & 1.000\\
+Mean prediction-set size & 1.988\\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\section*{Acknowledgments}
+\subsection{Decision policy}
 
-\begin{leftbar}
-All acknowledgments (note the AE spelling) should be collected in this
-unnumbered section before the references. It may contain the usual information
-about funding and feedback from colleagues/reviewers/etc. Furthermore,
-information such as relative contributions of the authors may be added here
-(if any).
-\end{leftbar}
+A probability estimate is not itself a decision rule. Candidate thresholds are
+evaluated on one participant subset and the resulting rule is audited on disjoint
+participants. The selected threshold is 0.20 and is recorded as training-derived.
+An illustrative abstention interval of 0.45--0.55 is enabled as a reporting device
+rather than an operational recommendation. On the 240 held-out rows in this
+realization, coverage is 1.000, abstention is 0, and error among covered cases is
+0.2625.
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=.90\textwidth]{figures/threshold-abstention-figure-1.pdf}
+\caption{\label{fig:decision}Threshold development on one participant subset and
+abstention auditing on disjoint held-out participants.}
+\end{figure}
 
-%% -- Bibliography -------------------------------------------------------------
-%% - References need to be provided in a .bib BibTeX database.
-%% - All references should be made with \cite, \citet, \citep, \citealp etc.
-%%   (and never hard-coded). See the FAQ for details.
-%% - JSS-specific markup (\proglang, \pkg, \code) should be used in the .bib.
-%% - Titles in the .bib should be in title case.
-%% - DOIs should be included where available.
+\subsection{Dataset shift and robustness}
+
+A second synthetic dataset is perturbed transparently: \code{tracking\_ratio} is shifted
+downward, \code{gaze\_dispersion} is scaled, and its missingness increases. The shift
+audit reports standardized differences of -1.974 for \code{tracking\_ratio}, 0.221 for
+\code{blink\_rate}, and 1.503 for \code{gaze\_dispersion}. The first and third findings
+are flagged \code{fail}; \code{blink\_rate} is flagged \code{review}. Missingness is
+audited separately so that one scalar does not conflate distributional and missing-data
+changes.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=.78\textwidth]{figures/shift-figure-1.pdf}
+\caption{\label{fig:shift}Predictor-distribution shift between development and
+perturbed synthetic external data.}
+\end{figure}
+
+The aggregate robustness audit is \code{fail}: seed sensitivity passes, whereas the
+threshold-stability diagnostic fails under the encoded acceptance rule. A failure here
+is intentionally retained rather than normalized away. These diagnostics do not
+replace external validation and do not identify a causal source of drift.
+
+\section{Discussion}
+\label{sec:discussion}
+
+\pkg{gp3ml} treats governance as part of predictive validity. This does not imply that
+every analysis needs the same split, learner, metric, or decision rule. It means that
+these choices define the claim being made and should therefore be explicit,
+machine-readable, and reviewable.
+
+The package complements rather than replaces broader modelling ecosystems. Researchers
+requiring extensive learner catalogues, sophisticated search spaces, distributed
+benchmarking, or mature cross-language tooling may prefer \pkg{mlr3},
+\pkg{tidymodels}, \pkg{scikit-learn}, or related infrastructure and use
+\pkg{gp3ml}-style governance as an additional layer. Conversely, a transparent
+scientific analysis may require nothing more complex than the generalized linear model
+used here. The contribution is workflow integrity rather than algorithmic complexity.
+
+The device-specific scope is similarly bounded. Although the package was developed
+around Gazepoint-derived research data, its grouping and governance abstractions are
+not tied to a file format. Tabular behavioural data with declared outcomes, predictors,
+participants, stimuli, trials, or other clusters can use the same logic. Device-specific
+signal processing should occur upstream and its transformations should be represented
+in provenance or handoff metadata.
+
+\subsection{Limitations and disadvantages}
+
+Software governance cannot repair a weak research design, invalid outcome, inadequate
+measurement, or unrepresentative sample. A passing leakage audit means that encoded
+checks passed; it does not prove that every temporal, causal, or procedural dependency
+has been identified.
+
+Grouped validation can expose an effective sample size far smaller than the row count.
+With few participants or stimuli, folds may be unstable or lack an outcome class.
+Crossed designs may explicitly exclude many incompatible rows, trading nominal sample
+size for a more stringent generalization target. \pkg{gp3ml} retains warnings and
+failed folds, but the researcher must respond through redesign, simpler claims, or
+additional data.
+
+The workflow also adds object and reporting overhead relative to a concise
+general-purpose machine-learning script. Its governed engine catalogue is intentionally
+limited, and optional engines have heterogeneous installation requirements. The package
+does not provide unrestricted AutoML, distributed benchmarking, or an exhaustive model
+search interface.
+
+The case study is synthetic. It demonstrates execution and interpretation but does not
+establish performance across real eye-tracking devices, tasks, populations, or recording
+conditions. Broader independent benchmarking is future work. Conformal summaries depend
+on exchangeability assumptions and calibration-unit definitions; grouped aggregation is
+conservative but does not provide distribution-free guarantees under arbitrary
+dependence. Dataset-shift audits describe measured changes but do not guarantee
+performance degradation.
+
+\section{Reproducibility and software availability}
+\label{sec:reproducibility}
+
+The manuscript is paired with a single commented replication script,
+\code{code.R}, and its spun output, \code{code.html}. The script recreates all six
+figures used in the article, exports the principal result tables, and finishes with
+\code{sessionInfo()}. The synthetic generator uses a fixed seed. This follows the JSS
+requirement that all displayed figures, tables, and outputs be reproducible and the
+journal's recommendation that an \proglang{R} submission provide
+\code{code.html} generated from \code{code.R}.
+
+\begin{sloppypar}
+Version 0.3.0 is archived as GitHub tag \code{v0.3.0}. The repository is
+\url{https://github.com/stefanosbalaskas/gp3ml} and the documentation site is
+\url{https://stefanosbalaskas.github.io/gp3ml/}. The Zenodo concept DOI is
+\url{https://doi.org/10.5281/zenodo.21487272}. At this draft checkpoint, 0.3.0 is a
+GitHub source release; it is not represented here as a CRAN 0.3.0 release. The package
+uses an MIT licence, which is GPL-compatible for the JSS software-licensing
+requirement.
+\end{sloppypar}
+
+The frozen 0.3.0 source archive used for release validation has SHA-256
+\texttt{04c5fdb0\allowbreak{}17c63ecb\allowbreak{}f6f5e85c\allowbreak{}29fff649\allowbreak{}2880201a\allowbreak{}2f2aa5c3\allowbreak{}c1d3fe99\allowbreak{}8e60bae6}.
+The release checks completed with zero errors, zero warnings, and zero notes. These are
+software-release facts, not evidence that every scientific application of the package
+is valid. Reproducibility and reporting practices follow the broader emphasis on
+executable artefacts and transparent machine-learning workflows
+\citep{Pineau2021}.
+
+\section{Conclusions}
+
+\pkg{gp3ml} provides a governance-first layer for predictive modelling with clustered
+behavioural data in \proglang{R}. Its contribution is not a new cross-validation
+algorithm or learner catalogue. Instead, it binds familiar statistical operations to
+declared scientific purposes, feature provenance, generalization targets, selection
+boundaries, uncertainty semantics, decision provenance, robustness evidence, and
+computational artefacts. The case study shows how the same data and model can be
+evaluated under different target semantics while keeping those distinctions explicit
+in the resulting objects. This makes predictive claims easier to inspect, reproduce,
+and review without replacing the scientific judgement on which those claims depend.
 
 \bibliography{refs}
-
-
-%% -- Appendix (if any) --------------------------------------------------------
-%% - After the bibliography with page break.
-%% - With proper section titles and _not_ just "Appendix".
-
-\newpage
-
-\begin{appendix}
-
-\section{More technical details} \label{app:technical}
-
-\begin{leftbar}
-Appendices can be included after the bibliography (with a page break). Each
-section within the appendix should have a proper section title (rather than
-just \emph{Appendix}).
-
-For more technical style details, please check out JSS's style FAQ at
-\url{https://www.jstatsoft.org/pages/view/style#frequently-asked-questions}
-which includes the following topics:
-\begin{itemize}
-  \item Title vs.\ sentence case.
-  \item Graphics formatting.
-  \item Naming conventions.
-  \item Turning JSS manuscripts into \proglang{R} package vignettes.
-  \item Trouble shooting.
-  \item Many other potentially helpful details\dots
-\end{itemize}
-\end{leftbar}
-
-
-\section[Using BibTeX]{Using \textsc{Bib}{\TeX}} \label{app:bibtex}
-
-\begin{leftbar}
-References need to be provided in a \textsc{Bib}{\TeX} file (\code{.bib}). All
-references should be made with \verb|\cite|, \verb|\citet|, \verb|\citep|,
-\verb|\citealp| etc.\ (and never hard-coded). This commands yield different
-formats of author-year citations and allow to include additional details (e.g.,
-pages, chapters, \dots) in brackets. In case you are not familiar with these
-commands see the JSS style FAQ for details.
-
-Cleaning up \textsc{Bib}{\TeX} files is a somewhat tedious task -- especially
-when acquiring the entries automatically from mixed online sources. However,
-it is important that information is complete and presented in a consistent
-style to avoid confusions. JSS requires the following format.
-\begin{itemize}
-  \item JSS-specific markup (\verb|\proglang|, \verb|\pkg|, \verb|\code|) should
-    be used in the references.
-  \item Titles should be in title case.
-  \item Journal titles should not be abbreviated and in title case.
-  \item DOIs should be included where available.
-  \item Software should be properly cited as well. For \proglang{R} packages
-    \code{citation("pkgname")} typically provides a good starting point.
-\end{itemize}
-\end{leftbar}
-
-\end{appendix}
-
-%% -----------------------------------------------------------------------------
-
 
 \end{document}
