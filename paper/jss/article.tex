@@ -100,7 +100,7 @@ Feature manifests distinguish outcomes, predictors, identifiers, grouping column
 availability stages, outcome-derived features, and preprocessing scope. Fold audits
 then test whether the encoded partition respects the declared target. Preprocessing
 operations such as imputation, centring, and scaling are fitted on analysis partitions
-and applied to assessment rows. Thus the package treats leakage prevention as a
+and applied to assessment rows. Thus the package treats leakage-risk control as a
 combination of feature provenance and partition-local computation rather than as one
 post hoc diagnostic.
 
@@ -132,9 +132,9 @@ The same statistical mechanisms are not unique to \proglang{R}. In
 \proglang{Python}, \pkg{scikit-learn} \citep{Pedregosa2011,scikitLearnDocs2026}
 provides \code{GroupKFold} and \code{StratifiedGroupKFold} for non-overlapping groups,
 \code{Pipeline} for fitting preprocessing and prediction steps together, and standard
-compositions for nested cross-validation. These capabilities are mature and should not
-be represented as innovations of \pkg{gp3ml}. Rather, \pkg{gp3ml} adds a
-research-governance contract around comparable operations: target labels are retained
+compositions for nested cross-validation. These capabilities are established and are not
+contributions of \pkg{gp3ml}. Rather, \pkg{gp3ml} places comparable operations within a
+research-governance contract: target labels are retained
 with folds and evaluations; feature availability and outcome derivation are auditable;
 selection rationales and decision provenance are explicit; and reproducibility evidence
 can be validated as package objects.
@@ -153,12 +153,15 @@ resolves their assumptions.
 \begin{table}[t]
 \centering
 \caption{\label{tab:software}Scope-qualified comparison of selected modelling
-frameworks. ``External composition'' means that the capability can be assembled by the
-user but is not represented as the primary governance contract described here.}
+frameworks. ``External composition'' is an operational classification for this comparison:
+the capability is assembled from user-managed or ecosystem components rather than
+represented by the dedicated \pkg{gp3ml} governance objects considered here. This
+classification does not imply that the corresponding ecosystem cannot encode equivalent
+metadata or workflows.}
 \small
 \begin{tabularx}{\textwidth}{@{}lYYY@{}}
 \toprule
-Software & Grouped validation & Leakage-resistant preprocessing & Research-governance layer\\
+Software & Grouped validation & Resampling-aware preprocessing & Research-governance layer\\
 \midrule
 \pkg{gp3ml} & Target-labelled participant, stimulus, trial, and crossed partitions &
 Feature manifests plus fold-local preprocessing and audits &
@@ -590,8 +593,8 @@ declared scientific purposes, feature provenance, generalization targets, select
 boundaries, uncertainty semantics, decision provenance, robustness evidence, and
 computational artefacts. The case study shows how the same data and model can be
 evaluated under different target semantics while keeping those distinctions explicit
-in the resulting objects. This makes predictive claims easier to inspect, reproduce,
-and review without replacing the scientific judgement on which those claims depend.
+in the resulting objects. This keeps the assumptions and evidence underlying predictive
+claims explicit and inspectable without replacing the scientific judgement on which they depend.
 
 \bibliography{refs}
 
