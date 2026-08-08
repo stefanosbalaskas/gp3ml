@@ -120,10 +120,11 @@ reviewable.
 
 The contribution of \pkg{gp3ml} is intentionally narrower than that of general
 machine-learning frameworks. \pkg{caret} unified model training and resampling behind
-a common interface \citep{Kuhn2008}. \pkg{mlr3} provides extensible tasks, learners,
-resampling, tuning, and benchmarking \citep{Lang2019}; its current task abstraction
-also supports a group column role whose observations are kept together during
-resampling. The \pkg{tidymodels} ecosystem integrates modelling components with tidy
+a common interface \citep{Kuhn2008}. The \pkg{mlr3} ecosystem provides extensible
+tasks, learners, resampling, tuning, benchmarking, and composable pipelines
+\citep{Lang2019,Binder2021}; the current \pkg{mlr3} task abstraction also supports
+a group column role whose observations are kept together during resampling
+\citep{mlr3Docs2026}. The \pkg{tidymodels} ecosystem integrates modelling components with tidy
 data principles \citep{KuhnSilge2022}, while \pkg{rsample} provides
 \code{group\_vfold\_cv()} for grouped repeated-measures settings and \code{nested\_cv()}
 for nested resampling \citep{rsample2026}.
@@ -143,7 +144,7 @@ Other tools address complementary parts of the workflow. \pkg{DALEX} provides
 model-agnostic explanation \citep{Biecek2018}; \pkg{targets} manages reproducible
 computational pipelines \citep{Landau2021}; \pkg{eyetrackingR} supports preparation and
 inferential analysis of eye-tracking measures \citep{DinkFerguson2015}; and RO-Crate
-tooling packages research artefacts and metadata \citep{SoilandReyes2022}. Conformal
+packages research artefacts with structured metadata \citep{SoilandReyes2022}. Conformal
 prediction, probability calibration, and dataset shift also have established
 methodological literatures \citep{Vovk2005,Shafer2008,Angelopoulos2023,Guo2017,
 QuioneroCandela2009,MorenoTorres2012}. \pkg{gp3ml} integrates conservative forms of
@@ -166,14 +167,14 @@ Software & Grouped validation & Resampling-aware preprocessing & Research-govern
 \pkg{gp3ml} & Target-labelled participant, stimulus, trial, and crossed partitions &
 Feature manifests plus fold-local preprocessing and audits &
 Purpose, target, decision, robustness, artefact, and API provenance\\
-\pkg{mlr3} & Native group role and general resampling infrastructure &
-Composable through learner/pipeline infrastructure &
+\pkg{mlr3}/\pkg{mlr3pipelines} & Native group role and general resampling infrastructure &
+Composable preprocessing/model pipelines &
 External composition\\
 \pkg{rsample}/\pkg{tidymodels} & Native grouped and nested resampling &
 Composable recipes/workflows &
 External composition\\
-\pkg{caret} & User-supplied indices and resampling controls &
-Composable through the modelling workflow &
+\pkg{caret} & User-supplied indices and resampling controls \citep{caretDocs2026} &
+\code{train()} preprocessing or recipes within resampling &
 External composition\\
 \pkg{scikit-learn} & \code{GroupKFold}, \code{StratifiedGroupKFold}, related splitters &
 \code{Pipeline} fits preprocessing and estimators together &
@@ -513,10 +514,10 @@ these choices define the claim being made and should therefore be explicit,
 machine-readable, and reviewable.
 
 The package complements rather than replaces broader modelling ecosystems. Researchers
-requiring extensive learner catalogues, sophisticated search spaces, distributed
-benchmarking, or mature cross-language tooling may prefer \pkg{mlr3},
-\pkg{tidymodels}, \pkg{scikit-learn}, or related infrastructure and use
-\pkg{gp3ml}-style governance as an additional layer. Conversely, a transparent
+requiring modelling capabilities outside its governed engine catalogue may continue to
+use \pkg{mlr3}, \pkg{tidymodels}, \pkg{scikit-learn}, or related infrastructure,
+while applying the governance principles described here as an additional layer.
+Conversely, a transparent
 scientific analysis may require nothing more complex than the generalized linear model
 used here. The contribution is workflow integrity rather than algorithmic complexity.
 
