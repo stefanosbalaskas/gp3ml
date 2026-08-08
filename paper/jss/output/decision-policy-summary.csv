@@ -1,0 +1,2 @@
+"rule_validation","threshold","threshold_origin","generalization_target","abstention_lower","abstention_upper","held_out_rows","coverage","abstention_rate","covered_error_rate","audit_status"
+"pass",0.2,"training","new_participants",0.15,0.25,240,0.620833333333333,0.379166666666667,0.221476510067114,"pass"

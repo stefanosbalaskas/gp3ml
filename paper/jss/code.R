@@ -222,6 +222,28 @@ utils::write.csv(
   row.names = FALSE
 )
 
+decision_policy_export <- data.frame(
+  rule_validation = decision_validation$status,
+  threshold = decision_rule$threshold,
+  threshold_origin = decision_rule$threshold_origin,
+  generalization_target = decision_rule$generalization_target,
+  abstention_lower = decision_rule$abstention_interval[[1L]],
+  abstention_upper = decision_rule$abstention_interval[[2L]],
+  held_out_rows = abstention_audit$n,
+  coverage = abstention_audit$coverage,
+  abstention_rate = abstention_audit$abstention_rate,
+  covered_error_rate = abstention_audit$covered_error_rate,
+  audit_status = abstention_audit$status,
+  stringsAsFactors = FALSE
+)
+
+utils::write.csv(
+  decision_policy_export,
+  file.path("output", "decision-policy-summary.csv"),
+  row.names = FALSE
+)
+
+
 utils::write.csv(
   shift_audit$findings,
   file.path("output", "shift-findings.csv"),

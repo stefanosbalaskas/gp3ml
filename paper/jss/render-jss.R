@@ -127,6 +127,39 @@ main <- function() {
     !any(grepl("[ \\t]+$", html_lines, perl = TRUE))
   )
 
+
+  decision_policy_check <- utils::read.csv(
+    file.path("output", "decision-policy-summary.csv"),
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+
+  stopifnot(
+    nrow(decision_policy_check) == 1L,
+    identical(decision_policy_check$rule_validation[[1L]], "pass"),
+    abs(decision_policy_check$threshold[[1L]] - 0.20) < 1e-12,
+    abs(decision_policy_check$abstention_lower[[1L]] - 0.15) < 1e-12,
+    abs(decision_policy_check$abstention_upper[[1L]] - 0.25) < 1e-12,
+    decision_policy_check$held_out_rows[[1L]] == 240L,
+    abs(decision_policy_check$coverage[[1L]] - 0.6208333333333333) < 1e-12,
+    abs(decision_policy_check$abstention_rate[[1L]] - 0.3791666666666667) < 1e-12,
+    abs(decision_policy_check$covered_error_rate[[1L]] - 0.2214765100671141) < 1e-12,
+    identical(decision_policy_check$audit_status[[1L]], "pass")
+  )
+
+  article_source <- paste(
+    readLines("article.tex", warn = FALSE, encoding = "UTF-8"),
+    collapse = "\n"
+  )
+
+  stopifnot(
+    grepl("0.15--0.25", article_source, fixed = TRUE),
+    grepl("coverage is 0.621", article_source, fixed = TRUE),
+    grepl("abstention rate is 0.379", article_source, fixed = TRUE),
+    grepl("covered cases is 0.221", article_source, fixed = TRUE),
+    !grepl("coverage is 1.000, abstention is 0", article_source, fixed = TRUE),
+    !grepl("0.2625", article_source, fixed = TRUE)
+  )
   tinytex::latexmk(
     "article.tex",
     engine = "pdflatex",
