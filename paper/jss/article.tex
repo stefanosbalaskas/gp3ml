@@ -42,13 +42,13 @@ ORCID: \url{https://orcid.org/0000-0003-2444-9796}
 
 Eye-tracking experiments commonly produce multiple observations from each participant,
 repeated presentations of stimuli, and measurements nested within trials or recordings.
-Such rows are not exchangeable in the ordinary independent-observation sense. A
-classifier can exploit stable participant characteristics, recurring stimulus properties,
-or duplicated processing decisions when the same clusters occur in both training and
-assessment data. Crossed participant--item structures are common in behavioural
-research, while scientific claims are usually intended to extend beyond the particular
-people, stimuli, or recordings observed in one sample
-\citep{Baayen2008,Barr2013,Yarkoni2022}.
+Such rows are not exchangeable in the ordinary independent-observation sense. Crossed
+participant--item structures are common in behavioural research
+\citep{Baayen2008,Barr2013}, and scientific claims are often intended to extend beyond
+the particular people, stimuli, or recordings observed in one sample \citep{Yarkoni2022}.
+In predictive settings, allowing the same participant or other grouping unit to occur in
+both training and assessment data can let a classifier exploit group-specific features
+rather than demonstrate generalization to new groups \citep{scikitLearnDocs2026}.
 
 A random row split can therefore answer a narrower question than its label suggests. It
 may estimate performance for additional rows from already represented participants and
@@ -118,8 +118,9 @@ reviewable.
 \section{Related software}
 \label{sec:related}
 
-The contribution of \pkg{gp3ml} is intentionally narrower than that of general
-machine-learning frameworks. \pkg{caret} unified model training and resampling behind
+The contribution of \pkg{gp3ml}, implemented in \proglang{R} \citep{R2026}, is
+intentionally narrower than that of general machine-learning frameworks. \pkg{caret}
+unified model training and resampling behind
 a common interface \citep{Kuhn2008}. The \pkg{mlr3} ecosystem provides extensible
 tasks, learners, resampling, tuning, benchmarking, and composable pipelines
 \citep{Lang2019,Binder2021}; the current \pkg{mlr3} task abstraction also supports
@@ -145,11 +146,12 @@ model-agnostic explanation \citep{Biecek2018}; \pkg{targets} manages reproducibl
 computational pipelines \citep{Landau2021}; \pkg{eyetrackingR} supports preparation and
 inferential analysis of eye-tracking measures \citep{DinkFerguson2015}; and RO-Crate
 packages research artefacts with structured metadata \citep{SoilandReyes2022}. Conformal
-prediction, probability calibration, and dataset shift also have established
-methodological literatures \citep{Vovk2005,Shafer2008,Angelopoulos2023,Guo2017,
-QuioneroCandela2009,MorenoTorres2012}. \pkg{gp3ml} integrates conservative forms of
-these ideas into one governed predictive workflow without claiming that software alone
-resolves their assumptions.
+prediction, probability calibration, and dataset shift each have established
+methodological literatures: conformal prediction
+\citep{Vovk2005,Shafer2008,Angelopoulos2023}, probability calibration
+\citep{Guo2017}, and dataset shift \citep{QuioneroCandela2009,MorenoTorres2012}.
+\pkg{gp3ml} integrates conservative forms of these ideas into one governed predictive
+workflow without claiming that software alone resolves their assumptions.
 
 \begin{table}[t]
 \centering
@@ -503,7 +505,7 @@ perturbed synthetic external data.}
 The aggregate robustness audit is \code{fail}: seed sensitivity passes, whereas the
 threshold-stability diagnostic fails under the encoded acceptance rule. A failure here
 is intentionally retained rather than normalized away. These diagnostics do not
-replace external validation and do not identify a causal source of drift.
+replace external validation \citep{Steyerberg2016} and do not identify a causal source of drift.
 
 \section{Discussion}
 \label{sec:discussion}

@@ -1,6 +1,6 @@
 # gp3ml JSS draft validation
 
-Generated: 2026-08-08 21:00:42 UTC
+Generated: 2026-08-08 23:24:14 UTC
 
 | Check | Status |
 |---|---|
@@ -12,4 +12,4 @@ Generated: 2026-08-08 21:00:42 UTC
 | scikit-learn comparison present | passed |
 | Limitations/disadvantages section present | passed |
 
-PDF pages: 16
+PDF pages: 17
