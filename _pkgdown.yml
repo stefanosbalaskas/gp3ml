@@ -43,6 +43,28 @@ navbar:
           href: articles/nested-grouped-resampling.html
         - text: External validation and transportability
           href: articles/external-validation-reporting.html
+        - text: API stability contracts
+          href: articles/api-stability-contracts.html
+        - text: Cross-package interoperability
+          href: articles/cross-package-interoperability.html
+        - text: Reproducibility hardening
+          href: articles/reproducibility-hardening.html
+        - text: Optional-engine portability
+          href: articles/optional-engine-portability.html
+        - text: Integrated research workflow
+          href: articles/integrated-research-workflow.html
+        - text: Decision governance
+          href: articles/decision-governance.html
+        - text: Group-aware conformal prediction
+          href: articles/group-aware-conformal-prediction.html
+        - text: Dataset shift and robustness
+          href: articles/dataset-shift-and-robustness.html
+        - text: Analysis-plan governance
+          href: articles/analysis-plan-governance.html
+        - text: Portable research artifacts
+          href: articles/portable-research-artifacts.html
+        - text: Governance standards profile
+          href: articles/governance-standards-profile.html
     github:
       icon: fa-github
       href: https://github.com/stefanosbalaskas/gp3ml

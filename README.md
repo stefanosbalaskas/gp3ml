@@ -64,7 +64,9 @@ requires generalization to new participants. Stimulus overlap is treated
 as a failure when the declared target requires generalization to unseen
 stimuli. Preprocessing must be estimated inside the relevant analysis
 partition or resampling fold. Package examples and tests use
-deterministic synthetic data. \## Leakage-audit workflow
+deterministic synthetic data.
+
+## Leakage-audit workflow
 
 `audit_gazepoint_ml_leakage()` audits already-defined analysis and
 assessment partitions before predictive evaluation. It checks:
@@ -414,7 +416,7 @@ complete, reviewable evaluation and reporting layer:
 - release-ready model cards recording selection, uncertainty,
   limitations, and external-validation status.
 
-Nine deterministic synthetic articles demonstrate predefined
+The package’s synthetic-data articles demonstrate predefined
 recording-quality review, assigned-condition discrimination, observed
 non-sensitive endpoints, all supported generalization targets,
 contaminated provenance, nested resampling, and external validation.
