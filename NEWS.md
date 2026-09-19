@@ -1,3 +1,11 @@
+# gp3ml 0.3.1
+
+## Documentation and release maintenance
+
+* Added the September 2026 ecosystem methods update and registered it in the pkgdown article navigation and article index.
+* Refreshed the generated public documentation and website metadata since the 0.3.0 source release.
+* Preserved the established scientific implementation, public API contracts, governance semantics, and backward compatibility; this patch release does not add or alter R modelling logic.
+
 # gp3ml 0.3.0
 
 ## CRAN availability and metadata

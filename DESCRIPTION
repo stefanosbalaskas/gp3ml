@@ -1,7 +1,7 @@
 Package: gp3ml
 Type: Package
 Title: Governance-First Predictive Modelling for 'Gazepoint' Research
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: person(
     given = "Stefanos",
     family = "Balaskas",

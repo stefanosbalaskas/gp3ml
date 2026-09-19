@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/stefanosbalaskas/gp3ml/blob/HEAD/DESCRIPTION)
 
 Balaskas S (2026). *gp3ml: Governance-First Predictive Modelling for
-'Gazepoint' Research*. R package version 0.3.0,
+'Gazepoint' Research*. R package version 0.3.1,
 <https://stefanosbalaskas.github.io/gp3ml/>.
 
     @Manual{,
       title = {gp3ml: Governance-First Predictive Modelling for 'Gazepoint' Research},
       author = {Stefanos Balaskas},
       year = {2026},
-      note = {R package version 0.3.0},
+      note = {R package version 0.3.1},
       url = {https://stefanosbalaskas.github.io/gp3ml/},
     }
