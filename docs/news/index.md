@@ -2,6 +2,8 @@
 
 ## gp3ml 0.3.0
 
+CRAN release: 2026-08-23
+
 ### CRAN availability and metadata
 
 - Added the canonical CRAN package page, CRAN installation instructions,

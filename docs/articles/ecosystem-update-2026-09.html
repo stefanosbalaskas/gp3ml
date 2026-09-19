@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Frozen Analysis-Plan Governance • gp3ml</title>
+<title>Ecosystem update — September 2026 • gp3ml</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Frozen Analysis-Plan Governance">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Ecosystem update — September 2026">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -77,47 +77,46 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.svg" class="logo" alt=""><h1>Frozen Analysis-Plan Governance</h1>
-            
-      
-      <small class="dont-index">Source: <a href="https://github.com/stefanosbalaskas/gp3ml/blob/HEAD/vignettes/analysis-plan-governance.Rmd" class="external-link"><code>vignettes/analysis-plan-governance.Rmd</code></a></small>
-      <div class="d-none name"><code>analysis-plan-governance.Rmd</code></div>
+      <img src="../logo.svg" class="logo" alt=""><h1>Ecosystem update — September 2026</h1>
+
+
+      <small class="dont-index">Source: <a href="https://github.com/stefanosbalaskas/gp3ml/blob/HEAD/vignettes/ecosystem-update-2026-09.Rmd" class="external-link"><code>vignettes/ecosystem-update-2026-09.Rmd</code></a></small>
+      <div class="d-none name"><code>ecosystem-update-2026-09.Rmd</code></div>
     </div>
 
-    
-    
-<p>The analysis-plan contract records the scientific design before model
-selection. Locking requires the optional <code>openssl</code> package
-and creates a SHA-256 identifier.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">plan</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/declare_gazepoint_analysis_plan.html">declare_gazepoint_analysis_plan</a></span><span class="op">(</span></span>
-<span>  research_question <span class="op">=</span></span>
-<span>    <span class="st">"Can predefined recording-quality review status generalize to new participants?"</span>,</span>
-<span>  scientific_purpose <span class="op">=</span></span>
-<span>    <span class="st">"Evaluate a predefined, observed recording-quality endpoint."</span>,</span>
-<span>  outcome <span class="op">=</span> <span class="st">"quality_status"</span>,</span>
-<span>  outcome_definition <span class="op">=</span> <span class="st">"Predefined observed QC review label."</span>,</span>
-<span>  predictors <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fixation_duration"</span>, <span class="st">"pupil_change"</span><span class="op">)</span>,</span>
-<span>  generalization_target <span class="op">=</span> <span class="st">"new_participants"</span>,</span>
-<span>  grouping_variables <span class="op">=</span> <span class="st">"participant_id"</span>,</span>
-<span>  eligible_population <span class="op">=</span> <span class="st">"Participants meeting the study protocol."</span>,</span>
-<span>  preprocessing_plan <span class="op">=</span> <span class="st">"Fit preprocessing only inside each analysis partition."</span>,</span>
-<span>  candidate_models <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"glm"</span>, <span class="st">"ranger"</span><span class="op">)</span>,</span>
-<span>  primary_metric <span class="op">=</span> <span class="st">"balanced_accuracy"</span>,</span>
-<span>  secondary_metrics <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sensitivity"</span>, <span class="st">"specificity"</span><span class="op">)</span>,</span>
-<span>  calibration_metric <span class="op">=</span> <span class="st">"brier"</span>,</span>
-<span>  uncertainty_method <span class="op">=</span> <span class="st">"participant_cluster_bootstrap"</span>,</span>
-<span>  threshold_policy <span class="op">=</span> <span class="st">"Select only within inner resampling."</span>,</span>
-<span>  external_validation_required <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  seed_strategy <span class="op">=</span> <span class="st">"Predeclared deterministic seeds."</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">locked</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/lock_gazepoint_analysis_plan.html">lock_gazepoint_analysis_plan</a></span><span class="op">(</span><span class="va">plan</span><span class="op">)</span></span>
-<span><span class="va">locked</span><span class="op">$</span><span class="va">plan_id</span></span>
-<span><span class="co">#&gt; [1] "gp3ml-plan-df6ea6e48d02"</span></span></code></pre></div>
-<p>Any later change to the outcome, predictor set, generalization
-target, metric, preprocessing, or threshold policy should be represented
-as a deviation rather than silently rewriting the original plan.</p>
+
+
+<div class="section level2">
+<h2 id="related-hierarchical-modelling-addition">Related hierarchical modelling addition<a class="anchor" aria-label="anchor" href="#related-hierarchical-modelling-addition"></a>
+</h2>
+<p>The related Python package <strong>gpbiometricspy</strong> now
+includes a fully exact-main-certified crossed participant–item Gaussian
+hierarchical location–scale model with <strong>one location random slope
+for each crossed factor</strong>.</p>
+<p>This is a complementary modelling path rather than an addition to
+<code>gp3ml</code>. <code>gp3ml</code> remains focused on governed
+predictive modelling and its own frozen API/release evidence. The
+gpbiometricspy method instead targets repeated continuous outcomes with
+crossed participant/item heterogeneity in both location and residual
+scale, plus factor-specific location slopes.</p>
+<p>Certified gpbiometricspy PR #129 is pinned to merge SHA
+<code>d078e0366ace49c3ebeb2f6800bad6394d70631e</code>: 14/14 exact-main
+push workflow families, 12/12 OS/Python matrix lanes, 782/782 tests,
+14,015/14,015 statements, and 6,757/6,776 raw branches (99.7196%). The
+frozen <code>gpbiometrics 2.0.0</code> parity surface remains 406/406
+and is not altered by the new Python-native method.</p>
+<ul>
+<li><a href="https://stefanosbalaskas.github.io/gpbiometricspy/methods/crossed-random-slopes-location-scale/" class="external-link">Crossed
+participant–item random-slope guide</a></li>
+<li><a href="https://github.com/stefanosbalaskas/gpbiometricspy/pull/129" class="external-link">gpbiometricspy
+PR #129</a></li>
+</ul>
+<p>The two packages therefore remain methodologically distinct: use
+<code>gp3ml</code> when the scientific claim is predictive and its
+validation/generalization contract is primary; use the gpbiometricspy
+location–scale family when the target is explicitly modelled conditional
+distributional heterogeneity under the stated assumptions.</p>
+</div>
   </main>
 </div>
 

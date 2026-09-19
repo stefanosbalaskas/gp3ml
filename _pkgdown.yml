@@ -53,6 +53,8 @@ navbar:
           href: articles/optional-engine-portability.html
         - text: Integrated research workflow
           href: articles/integrated-research-workflow.html
+        - text: Ecosystem update - September 2026
+          href: articles/ecosystem-update-2026-09.html
         - text: Decision governance
           href: articles/decision-governance.html
         - text: Group-aware conformal prediction
@@ -94,6 +96,7 @@ articles:
       - reproducibility-hardening
       - optional-engine-portability
       - integrated-research-workflow
+      - ecosystem-update-2026-09
   - title: Next-generation governance
     contents:
       - decision-governance

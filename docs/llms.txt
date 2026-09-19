@@ -1002,6 +1002,9 @@ standards-oriented crosswalks.
   A realistic cross-package handoff followed by governed
   participant-generalization validation.
 
+- [Ecosystem update — September
+  2026](https://stefanosbalaskas.github.io/gp3ml/articles/ecosystem-update-2026-09.md):
+
 ### Next-generation governance
 
 - [Governed Decision Thresholds and
