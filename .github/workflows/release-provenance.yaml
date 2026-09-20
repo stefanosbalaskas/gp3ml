@@ -2,6 +2,11 @@ name: Release provenance
 
 on:
   workflow_dispatch:
+    inputs:
+      release_ref:
+        description: Exact release tag or commit to build and attest
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -11,12 +16,35 @@ permissions:
 jobs:
   build-and-attest:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.release_ref }}
+          fetch-depth: 0
+
+      - uses: r-lib/actions/setup-pandoc@v2
 
       - uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: |
+            any::knitr
+            any::rmarkdown
+          needs: check
+
+      - name: Verify exact requested release source
+        shell: bash
+        run: |
+          checked_out_sha="$(git rev-parse HEAD)"
+          requested_sha="$(git rev-parse '${{ inputs.release_ref }}^{}')"
+          echo "release_ref=${{ inputs.release_ref }}"
+          echo "checked_out_sha=${checked_out_sha}"
+          echo "requested_sha=${requested_sha}"
+          test "${checked_out_sha}" = "${requested_sha}"
 
       - name: Build source package
         shell: bash
@@ -25,6 +53,10 @@ jobs:
           mkdir -p release-artifacts
           mv gp3ml_*.tar.gz release-artifacts/
           sha256sum release-artifacts/gp3ml_*.tar.gz > release-artifacts/SHA256SUMS.txt
+          printf 'release_ref=%s\nchecked_out_sha=%s\n' \
+            '${{ inputs.release_ref }}' \
+            "$(git rev-parse HEAD)" \
+            > release-artifacts/PROVENANCE.txt
 
       - name: Upload release artifacts
         uses: actions/upload-artifact@v4
