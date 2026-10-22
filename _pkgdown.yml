@@ -41,6 +41,8 @@ navbar:
           href: articles/contaminated-manifest-leakage.html
         - text: Nested grouped resampling
           href: articles/nested-grouped-resampling.html
+        - text: Participant identity leakage (October 2026 synthetic audit)
+          href: articles/participant-identity-leakage-synthetic.html
         - text: External validation and transportability
           href: articles/external-validation-reporting.html
         - text: API stability contracts
@@ -85,6 +87,7 @@ articles:
       - participant-stimulus-generalization
   - title: Advanced validation and reporting
     contents:
+      - participant-identity-leakage-synthetic
       - contaminated-manifest-leakage
       - nested-grouped-resampling
       - external-validation-reporting
