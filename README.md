@@ -19,6 +19,12 @@ The package is designed for explicitly observed, non-sensitive outcomes
 and declared scientific purposes. It is not a generic automatic machine-
 learning wrapper and does not perform autonomous model selection.
 
+## October 2026 illustrated research
+
+The [participant/grouped-versus-row holdout leakage article](https://stefanosbalaskas.github.io/gp3ml/articles/participant-identity-leakage-synthetic.html) contains original synthetic R figures, reproducible methods and explicit inference limitations. These demonstrations do not establish empirical validation or statistical calibration.
+
+**Publication channels:** GitHub **0.3.2** (22 October 2026) and CRAN **0.3.0** (earlier published version). They are distinct sources.
+
 ## Installation
 
 Install the current CRAN release with:
@@ -27,12 +33,11 @@ Install the current CRAN release with:
 install.packages("gp3ml")
 ```
 
-The GitHub repository may contain a later development or
-release-candidate version. Install it with:
+The GitHub repository currently publishes stable version **0.3.2** (22 October 2026), ahead of CRAN **0.3.0** (23 August 2026). Install the exact GitHub version with:
 
 ``` r
 install.packages("pak")
-pak::pak("stefanosbalaskas/gp3ml")
+pak::pak("stefanosbalaskas/gp3ml@v0.3.2")
 ```
 
 ## Scope

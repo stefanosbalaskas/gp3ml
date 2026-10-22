@@ -1,19 +1,17 @@
-# CRAN submission comments — RELEASE CANDIDATE, NOT SUBMITTED
+# CRAN submission review — gp3ml 0.3.2
 
-Package: gp3ml
-Candidate source version: 0.3.2
-Currently verified CRAN version: 0.3.0
+**Status: NOT SUBMITTED TO CRAN (22 October 2026).**
 
-## Scope
+- Source candidate: GitHub `v0.3.2` — https://github.com/stefanosbalaskas/gp3ml/releases/tag/v0.3.2
+- Source archive: `gp3ml_0.3.2.tar.gz` attached to the GitHub Release.
+- CRAN version before proposed submission: `0.3.0`.
+- Exact-release GitHub workflow: https://github.com/stefanosbalaskas/gp3ml/actions/runs/39763136361 (completed successfully after building and checking the release source archive with `R CMD check --as-cran`).
+- October documentation: reproducible synthetic illustrated vignette with explicit interpretation limitations; no empirical instrument validation or automatic calibration claim.
 
-Source-only grouped-versus-row data leakage audit with deterministic tests and R-generated plots.
+## CRAN-maintainer verification still required
 
-## Release qualification (not complete)
+1. Independently examine the exact archive's `00check.log`, any NOTES, installed sources and examples, supported R platforms and CRAN incoming checks. Workflow success alone is not the same as CRAN acceptance.
+2. Confirm reverse-dependency effects, links/DOIs, URL validity, and policy compliance. No existing tags or historical CRAN packages should be overwritten.
+3. Submit the exact validated `gp3ml_0.3.2.tar.gz` archive through CRAN's maintainer-authenticated channel. Confirm the response email and wait for CRAN processing. This has **not** happened in this campaign.
 
-* Candidate exact-head GitHub Actions: inspect current PR run results before promotion.
-* `R CMD build` source archive: not independently generated/verified in this campaign.
-* `R CMD check --as-cran` against the exact intended submission tarball: not independently verified.
-* Reverse-dependency and cross-platform CRAN policy audit: pending release review.
-* CRAN maintainer confirmation: not requested; no CRAN submission or new GitHub Release made.
-
-**Replace this draft with observed test environments and exact results before any CRAN upload.**
+This file is a release evidence record, not a submission receipt.
