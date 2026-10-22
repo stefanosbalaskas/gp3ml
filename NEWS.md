@@ -1,3 +1,11 @@
+# gp3ml 0.3.2 — release candidate (not published)
+
+## October 2026 documentation and reproducibility
+
+* Adds a non-exported grouped-versus-row holdout leakage audit, synthetic paired-ledger visualizations, and deterministic tests. No exported ML API or transportability guarantee is changed.
+* Release gate: complete exact-source R CMD check --as-cran, review installed source tarball and cross-platform tests, audit publication metadata, then publish an immutable GitHub tag and submit to CRAN with maintainer confirmation.
+* Current CRAN baseline at candidate preparation: 0.3.0. The candidate has **not** been submitted to CRAN or published as a GitHub Release.
+
 # gp3ml 0.3.1
 
 ## Documentation and release maintenance
