@@ -1,0 +1,61 @@
+---
+title: "Participant identity leakage: an R synthetic validation audit"
+description: "Reproducible repeated-trial one-nearest-neighbour demonstration contrasting row and participant holdouts."
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Participant identity leakage: an R synthetic validation audit}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Question and independent unit
+
+Does a high score on held-out **rows** establish generalization to previously unseen participants? Not when repeated observations reveal a stable participant-specific fingerprint. This source-only demonstration examines one intentionally extreme counterexample. Its synthetic participant label is randomly assigned independently of the fingerprint distribution, so it **cannot** support population prediction.
+
+The experiment uses 48 participants, six records each, six continuous participant-fingerprint features, and 24 repeated paired splits of one fixed generating dataset. Both split strategies use exactly the same elementary one-nearest-neighbour classifier and distance metric. Each split uses a new train/test partition, but the 24 outcomes are *dependent repeats*, not 24 independent studies. The protocol is not an empirical evaluation of `gp3ml`'s production classifiers or model-comparison procedures.
+
+## Reproduce the source-only implementation
+
+The R source ships as a non-exported research asset; it does not alter the public package API or the immutable release tarball.
+
+```{r leakage-setup}
+source(system.file("research", "october_2026_participant_leakage.R",
+                   package = "gp3ml"), local = TRUE)
+audit <- gp3ml_october_leakage_audit(repeats = 24L, seed = 20261022L)
+stopifnot(nrow(audit) == 48L,
+          all(audit$shared_participants[audit$split == "participant"] == 0L))
+aggregate(cbind(heldout_accuracy, shared_participants) ~ split,
+          data = audit, FUN = mean)
+```
+
+## Figure 1. Accuracy and identity overlap
+
+```{r participant-identity-leakage-figure, fig.width=9, fig.height=4, fig.cap="Original synthetic demonstration. Observation-wise evaluation permits participant identity overlap, whereas the participant-disjoint evaluation has zero shared participants. Repeats are dependent."}
+gp3ml_october_plot_leakage(audit)
+```
+
+## Figure 2. Repeat-by-repeat paired outcomes
+
+```{r participant-identity-paired-figure, fig.width=7, fig.height=4, fig.cap="Accuracy by repeated partition on a fixed synthetic generating dataset; connecting lines summarize dependent algorithmic splits, not uncertainty intervals."}
+row_scores <- audit$heldout_accuracy[audit$split == "observation"]
+participant_scores <- audit$heldout_accuracy[audit$split == "participant"]
+graphics::plot(seq_along(row_scores), row_scores, type = "b", pch = 16,
+  ylim = c(0, 1), xlab = "Dependent partition repeat",
+  ylab = "Held-out accuracy", col = "#24577B",
+  main = "Row versus participant generalization")
+graphics::lines(seq_along(participant_scores), participant_scores,
+  type = "b", pch = 1, col = "#C05B43")
+graphics::abline(h = 0.5, lty = 3, col = "gray50")
+graphics::legend("bottomleft", legend = c("Rows", "Participants"),
+  col = c("#24577B", "#C05B43"), lty = 1, pch = c(16, 1), bty = "n")
+```
+
+## Interpretation and reporting constraints
+
+A row-wise split can allow the classifier to match held-out records to a participant already observed during training. A participant-disjoint split blocks this shortcut. The latter is the relevant split when the target is new-person generalization; neither alone resolves stimulus, site, device, temporal or preprocessing leakage. In real studies, all learned transforms must be fitted within training folds, and tuning must use an appropriate nested, group-aware partition.
+
+These results are generated from an artificial fingerprint-label design, not from GP3 recordings, external datasets or clinical/psychological outcomes. They do not establish hardware accuracy, real-world transportability, general model superiority, interval calibration, or causal mechanisms. To reproduce the figures outside pkgdown, load the R source from `inst/research/october_2026_participant_leakage.R` in a checkout, calculate the ledger and run `gp3ml_october_plot_leakage(audit)`.
+
+## Evidence boundary for CRAN
+
+This research vignette and non-exported R source belong to the GitHub development line until standard `R CMD check`, CRAN incoming checks and the package maintainer's release decision are completed. No new `gp3ml` public function or additional stable version is implied.
